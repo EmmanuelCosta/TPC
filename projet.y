@@ -132,7 +132,7 @@ InstrComp			: 	LACC SuiteInstr RACC
 						;
 Instr 				: 	LValue EGAL Exp PV /* MODIF DU 25 04 2013*/
 						{ 
-							
+
 							if(ytype.typey == STRING)
 							{
 									comment("INITIALISATION D'UN STRING\n");

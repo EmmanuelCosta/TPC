@@ -1,0 +1,50 @@
+#DECARATION D ENTIER
+
+#DECARATION D ENTIER
+
+name = e !!!!!!!!!!!!
+"test"#INITIALISATION D'UN STRING
+
+AJOUT DE : chaine e "test" 
+name = v !!!!!!!!!!!!
+"bn"#INITIALISATION D'UN STRING
+
+AJOUT DE : chaine v "bn" 
+name = a !!!!!!!!!!!!
+==> 7
+SET	7
+PUSH
+#INITIALISATION D'UN INT
+
+AJOUT DE : entier a 7
+name = c !!!!!!!!!!!!
+"rt"#INITIALISATION D'UN STRING
+
+AJOUT DE : chaine c "rt" 
+name = a !!!!!!!!!!!!
+==> 2
+SET	2
+PUSH
+#here not the same typeExp (in COMP)
+
+HALT
+POP
+SWAP
+POP
+GREAT
+PUSH
+POP
+JUMPF	0
+name = a !!!!!!!!!!!!
+==> 2
+SET	2
+PUSH
+POP
+SWAP
+POP
+ADD
+PUSH
+POP
+WRITE
+LABEL	0
+HALT
