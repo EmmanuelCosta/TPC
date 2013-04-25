@@ -2,11 +2,14 @@
 
 main(){
 	entier a;
-	chaine e;
+	entier e,v;
 	
-	a=7;
 	e="test";
+	v="bn";
+	a=7;
+
 	
+	c="rt";
 	if(a>2)
 		print(a+2);
 }
