@@ -48,11 +48,11 @@ my_map* alloue_map(char* type,char *ident,int v,int taille){
 int exist(my_map m[TAILLE],char *ident){
   int i,j;
   for(i=0;i<TAILLE;i++){
-    /*si definie et de type valeur*/
+    /*si definie est de type valeur*/
 
     if(m[i].define=='t' && strcmp(m[i].ident,ident)==0 && m[i].typevallex=='v')
         return 0;
-      /*si definie et de type tableau*/
+      /*si definie est de type tableau*/
      else if(m[i].define=='t' && strcmp(m[i].ident,ident)==0 && m[i].typevallex=='t'){
       /*si tableau plein*/
        if(m[i].vallex.tab.pos==m[i].vallex.tab.taille)
@@ -160,6 +160,8 @@ void affiche(my_map *map){
   }
   return;
 }
+
+
 
 /*
 int main(void){

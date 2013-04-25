@@ -17,7 +17,8 @@ int yylex();
  int ytype;
 
  my_map * gmap=NULL;
-
+ 
+char * name = NULL; /* MODIF DU 25 04 2013  POUR recuperer le nom de la variable*/
 %}
 
 
@@ -39,8 +40,9 @@ int yylex();
 %token<caractere>DIVSTAR
 %token<chaine>BOPE
 %token<caractere>NEGATION
+%token<chaine> TYPE /* MODIF DU 25 04 2013*/
 %token EGAL PV VRG LPAR RPAR LACC RACC LSQB RSQB CONST
-%token IF  ELSE WHILE RETURN PRINT READ READCH  MAIN TYPE VOID
+%token IF  ELSE WHILE RETURN PRINT READ READCH  MAIN  VOID
 
 %left BOPE COMP ADDSUB DIVSTAR NEGATION 
 %right ADDSUBUNAIRE
@@ -65,7 +67,10 @@ ListConst			:	 ListConst VRG IDENT EGAL Litteral
 Litteral  			: 	NombreSigne
 						| CHAINE 		
 						;
-NombreSigne			: 	NUM      		
+NombreSigne			: 	NUM  { /* MODIF DU 25 04 2013*/
+								instarg("SET",$1);
+								inst("PUSH");
+						}    		
 						| ADDSUB NUM	{/*conflit possible ici*/
 											if($1=='-'){
 												instarg("SET",$2);
@@ -74,7 +79,7 @@ NombreSigne			: 	NUM
 		                   					}
                    						}
 						;
-DeclVarPuisFonct 	:	 TYPE ListVar PV DeclVarPuisFonct
+DeclVarPuisFonct 	:	 TYPE ListVar PV DeclVarPuisFonct 
 						| DeclFonct
 						| /*rien*/
 						;
@@ -96,12 +101,21 @@ EnTeteFonct			:	TYPE IDENT LPAR Parametres RPAR
 Parametres			: 	VOID
 						| ListTypVar
 						;
-ListTypVar			: 	ListTypVar VRG TYPE IDENT
+ListTypVar			: 	ListTypVar VRG TYPE IDENT 
 						| TYPE IDENT
 						;
 Corps				: 	LACC DeclConst DeclVar SuiteInstr RACC
 						;
-DeclVar 			: 	DeclVar TYPE ListVar PV
+DeclVar 			: 	DeclVar TYPE ListVar PV { /* MODIF DU 25 04 2013*/
+							if(strcmp($2,"entier")==0){
+								comment("DECARATION D ENTIER\n");
+								ytype=ENTIER;
+							}
+							else {
+								comment("DECARATION DE STRING\n");
+								ytype=STRING;
+							}
+						}
 						| /*rien*/
 						;
 SuiteInstr			: 	SuiteInstr Instr
@@ -109,7 +123,29 @@ SuiteInstr			: 	SuiteInstr Instr
 						;
 InstrComp			: 	LACC SuiteInstr RACC
 						;
-Instr 				: 	LValue EGAL Exp PV { ytype=$3;}
+Instr 				: 	LValue EGAL Exp PV /* MODIF DU 25 04 2013*/
+						{ 
+							ytype=$3; 
+							if(ytype == STRING)
+							{
+									comment("INITIALISATION D'UN STRING\n");
+									ajouter(gmap,"chaine",name,0,0);
+									printf("AJOUT DE : chaine %s %s \n",name,$3);
+									
+
+							}
+							else
+							{
+									comment("INITIALISATION D'UN INT\n");
+									ajouter(gmap,"entier",name,$3,0);
+									printf("AJOUT DE : entier %s %d\n",name,$3);
+									
+
+							} 
+
+								
+
+						}
 						| IF LPAR Exp RPAR  FIXIF Instr %prec NELSE {instarg("LABEL",$5);} 
 						| IF LPAR Exp RPAR FIXIF Instr ELSE FIXELSE { instarg("LABEL",$5);} Instr { instarg("LABEL",$8);}
 						| WHILE ANCRE LPAR Exp RPAR  FIXIF Instr { instarg("JUMP", $2);instarg("LABEL",$6);}
@@ -132,7 +168,11 @@ Instr 				: 	LValue EGAL Exp PV { ytype=$3;}
 Arguments			: 	ListExp
 						| /*rien*/
 						;
-LValue				: 	IDENT 
+LValue				: 	IDENT /* MODIF DU 25 04 2013*/
+						{
+							name=malloc(sizeof(char*)*strlen($1)+1);
+							strcpy(name,$1);printf("name = %s !!!!!!!!!!!!\n",name);
+						}
 						| IDENT LSQB Exp RSQB 
 						;
 ListExp				: 	ListExp VRG Exp
@@ -142,7 +182,7 @@ Exp 				:	Exp ADDSUB Exp {
 											
 											if($1!=$3){
 
-												comment("here not1 ok\n");
+												comment("here not the same typeExp (in ADDSUB )\n");
 												inst("HALT");
 											}
 											inst("POP");
@@ -158,7 +198,12 @@ Exp 				:	Exp ADDSUB Exp {
 											}
 											inst("PUSH");
 										}
-						| Exp DIVSTAR Exp {
+						| Exp DIVSTAR Exp {		
+												if($1!=$3){
+
+												comment("here not the same typeExp (in DIVSTAR )\n");
+												inst("HALT");
+											}
 												inst("POP");
 												inst("SWAP"); 
 												inst("POP");
@@ -180,7 +225,8 @@ Exp 				:	Exp ADDSUB Exp {
 						| Exp COMP Exp  {
 											if($1!=$3){
 
-												comment("here not2 ok\n");
+												comment("here not the same typeExp (in COMP)\n");
+												
 												inst("HALT");
 											}
 											inst("POP");
@@ -255,12 +301,17 @@ Exp 				:	Exp ADDSUB Exp {
 						| LPAR Exp RPAR { $$=$$;}
 						| LValue { $$=ytype	;}
 						| NUM {	
+								
 								$$=ENTIER;
+								ytype = 1 ;	
 								instarg("SET",$1);
 	                   			inst("PUSH");
+
                    				}
                    		| CHAINE  {	
-                   			printf("%s",$1);
+                   			ytype = 0 ;
+                   			/*printf("%s",$1);*/
+									
 								$$=STRING;
                    				}            					
                    							
