@@ -14,12 +14,18 @@ int yylex();
  void comment(const char *);
 
  int depl=0;
- int ytype;
+
+ typedef struct _storeIdentValue_{
+	int typey;
+	char  value[100];
+	char  name[20] ;	
+ }storeIdentValue;
+ 
+ storeIdentValue ytype;
 
  my_map * gmap=NULL;
  
-char * name = NULL; /* MODIF DU 25 04 2013  POUR recuperer le nom de la variable*/
-%}
+ %}
 
 
 %union {
@@ -109,11 +115,12 @@ Corps				: 	LACC DeclConst DeclVar SuiteInstr RACC
 DeclVar 			: 	DeclVar TYPE ListVar PV { /* MODIF DU 25 04 2013*/
 							if(strcmp($2,"entier")==0){
 								comment("DECARATION D ENTIER\n");
-								ytype=ENTIER;
+								ytype.typey = ENTIER;
 							}
 							else {
 								comment("DECARATION DE STRING\n");
-								ytype=STRING;
+								ytype.typey = STRING;
+								
 							}
 						}
 						| /*rien*/
@@ -125,20 +132,19 @@ InstrComp			: 	LACC SuiteInstr RACC
 						;
 Instr 				: 	LValue EGAL Exp PV /* MODIF DU 25 04 2013*/
 						{ 
-							ytype=$3; 
-							if(ytype == STRING)
+							if(ytype.typey == STRING)
 							{
 									comment("INITIALISATION D'UN STRING\n");
-									ajouter(gmap,"chaine",name,0,0);
-									printf("AJOUT DE : chaine %s %s \n",name,$3);
+									ajouter(gmap,"chaine",ytype.name,0,0);
+									printf("AJOUT DE : chaine %s %s \n",ytype.name,ytype.value);
 									
 
 							}
 							else
 							{
 									comment("INITIALISATION D'UN INT\n");
-									ajouter(gmap,"entier",name,$3,0);
-									printf("AJOUT DE : entier %s %d\n",name,$3);
+									ajouter(gmap,"entier",ytype.name,$3,0);
+									printf("AJOUT DE : entier %s %d\n",ytype.name,atoi(ytype.value));
 									
 
 							} 
@@ -170,8 +176,8 @@ Arguments			: 	ListExp
 						;
 LValue				: 	IDENT /* MODIF DU 25 04 2013*/
 						{
-							name=malloc(sizeof(char*)*strlen($1)+1);
-							strcpy(name,$1);printf("name = %s !!!!!!!!!!!!\n",name);
+							
+							strcpy(ytype.name,$1);printf("name = %s !!!!!!!!!!!!\n",ytype.name);
 						}
 						| IDENT LSQB Exp RSQB 
 						;
@@ -299,19 +305,21 @@ Exp 				:	Exp ADDSUB Exp {
 
 									}
 						| LPAR Exp RPAR { $$=$$;}
-						| LValue { $$=ytype	;}
+						| LValue { $$=ytype.typey	;}
 						| NUM {	
 								
 								$$=ENTIER;
-								ytype = 1 ;	
+								ytype.typey = ENTIER ;
+								sprintf(ytype.value,"%d",$1);
+								printf("==> %d\n",$1);	
 								instarg("SET",$1);
 	                   			inst("PUSH");
 
                    				}
                    		| CHAINE  {	
-                   			ytype = 0 ;
-                   			/*printf("%s",$1);*/
-									
+                   			ytype.typey = STRING ;
+                   			printf("%s",$1);
+									strcpy(ytype.value,$1);
 								$$=STRING;
                    				}            					
                    							
