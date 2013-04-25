@@ -1,6 +1,6 @@
 CC=gcc
 CFLAGS=-Wall -ansi
-LDFLAGS=-Wall -lfl
+LDFLAGS=-Wall -lfl process.c -I ./
 EXEC=projet
 
 all: $(EXEC) clean

@@ -26,6 +26,13 @@ typedef struct _map_{
 
 }my_map;
 
+typedef struct _typeexp_{
+  union type{
+    int entier;
+    char *chaine;
+  }type;
+
+}TYPE_EXP;
 
 my_map* alloue_map(char* type,char *ident,int v,int taille);
 int exist(my_map m[TAILLE],char *ident);

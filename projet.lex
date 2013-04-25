@@ -1,6 +1,8 @@
 %{
 #include "projet.h"
 #include <math.h>
+#include "process.h"
+
 
   int fileno (FILE *stream); /*non ansi*/
 

@@ -161,6 +161,7 @@ void affiche(my_map *map){
   return;
 }
 
+/*
 int main(void){
   my_map *m=NULL;
 m=ajouter(m,"boolean","sep",2,2);
@@ -171,5 +172,5 @@ m=ajouter(m,"entier","coola",1,0);
   affiche(m);
   
   return 0;
-}
+}*/
 

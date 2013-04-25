@@ -1,8 +1,9 @@
 
 
 main(){
-entier a;
-a=1+2;
-read(a);
-print(a);
+	entier a;
+	a=-1;
+	b=5;
+	if(a>2)
+		print(a+2);
 }

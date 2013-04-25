@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include <unistd.h>
 #include <string.h>
+#include "process.h"
 
 int yyerror(char*);
 int yylex();
@@ -13,7 +14,9 @@ int yylex();
  void comment(const char *);
 
  int depl=0;
+ int ytype;
 
+ my_map * gmap=NULL;
 
 %}
 
@@ -22,6 +25,10 @@ int yylex();
    int entier;
    char * chaine;
    char caractere;
+    enum{
+   	   	STRING,ENTIER
+   }typeExp;
+
   }
 
 %token<entier>NUM
@@ -38,7 +45,9 @@ int yylex();
 %left BOPE COMP ADDSUB DIVSTAR NEGATION 
 %right ADDSUBUNAIRE
 
+%type <typeExp> Exp
 %type <entier> FIXIF FIXELSE ANCRE
+
 %nonassoc NELSE
 %nonassoc ELSE
 
@@ -100,8 +109,8 @@ SuiteInstr			: 	SuiteInstr Instr
 						;
 InstrComp			: 	LACC SuiteInstr RACC
 						;
-Instr 				: 	LValue EGAL Exp PV
-						| IF LPAR Exp RPAR FIXIF Instr %prec NELSE {instarg("LABEL",$5);}
+Instr 				: 	LValue EGAL Exp PV { ytype=$3;}
+						| IF LPAR Exp RPAR  FIXIF Instr %prec NELSE {instarg("LABEL",$5);} 
 						| IF LPAR Exp RPAR FIXIF Instr ELSE FIXELSE { instarg("LABEL",$5);} Instr { instarg("LABEL",$8);}
 						| WHILE ANCRE LPAR Exp RPAR  FIXIF Instr { instarg("JUMP", $2);instarg("LABEL",$6);}
 						| RETURN Exp PV
@@ -123,13 +132,19 @@ Instr 				: 	LValue EGAL Exp PV
 Arguments			: 	ListExp
 						| /*rien*/
 						;
-LValue				: 	IDENT
-						| IDENT LSQB Exp RSQB
+LValue				: 	IDENT 
+						| IDENT LSQB Exp RSQB 
 						;
 ListExp				: 	ListExp VRG Exp
 						| Exp
 						;
 Exp 				:	Exp ADDSUB Exp {	
+											
+											if($1!=$3){
+
+												comment("here not1 ok\n");
+												inst("HALT");
+											}
 											inst("POP");
 											inst("SWAP"); 
 											inst("POP");
@@ -163,6 +178,11 @@ Exp 				:	Exp ADDSUB Exp {
 											inst("PUSH");
 										}
 						| Exp COMP Exp  {
+											if($1!=$3){
+
+												comment("here not2 ok\n");
+												inst("HALT");
+											}
 											inst("POP");
 											inst("SWAP");
 											inst("POP");
@@ -232,15 +252,19 @@ Exp 				:	Exp ADDSUB Exp {
 										inst("PUSH");
 
 									}
-						| LPAR Exp RPAR
-						| LValue
+						| LPAR Exp RPAR { $$=$$;}
+						| LValue { $$=ytype	;}
 						| NUM {	
+								$$=ENTIER;
 								instarg("SET",$1);
 	                   			inst("PUSH");
                    				}
-                   		| CHAINE
-						
-						| IDENT LPAR Arguments RPAR
+                   		| CHAINE  {	
+                   			printf("%s",$1);
+								$$=STRING;
+                   				}            					
+                   							
+						| IDENT LPAR Arguments RPAR { $$=NUM;}
 					    ;
 FIXIF:				{
 						inst("POP");
