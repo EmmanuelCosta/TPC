@@ -125,11 +125,11 @@ InstrComp			: 	LACC SuiteInstr RACC
 						;
 Instr 				: 	LValue EGAL Exp PV /* MODIF DU 25 04 2013*/
 						{ 
-							ytype=$3; 
+							
 							if(ytype == STRING)
 							{
 									comment("INITIALISATION D'UN STRING\n");
-									ajouter(gmap,"chaine",name,0,0);
+									/*ajouter(gmap,"chaine",name,0,0);*/
 									printf("AJOUT DE : chaine %s %s \n",name,$3);
 									
 
@@ -137,12 +137,12 @@ Instr 				: 	LValue EGAL Exp PV /* MODIF DU 25 04 2013*/
 							else
 							{
 									comment("INITIALISATION D'UN INT\n");
-									ajouter(gmap,"entier",name,$3,0);
+									/*ajouter(gmap,"entier",name,$3,0);*/
 									printf("AJOUT DE : entier %s %d\n",name,$3);
 									
 
 							} 
-
+								
 								
 
 						}

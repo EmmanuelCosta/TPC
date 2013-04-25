@@ -161,11 +161,23 @@ void affiche(my_map *map){
   return;
 }
 
+char * recupe_chaine(char * chaine){
 
+    int i =1;
+    int j =0;
+    int k = strlen(chaine);
+    char * new =(char*)malloc(sizeof(char)*(k-1));
+    for(j=0;j<k-2;j++){
+      new[j] = chaine[i];
+      i++;
+    }
+
+    return new;
+}
 
 /*
 int main(void){
-  my_map *m=NULL;
+ my_map *m=NULL;
 m=ajouter(m,"boolean","sep",2,2);
 m=ajouter(m,"boolean","sep",1,2);
 
@@ -173,6 +185,8 @@ m=ajouter(m,"entier","coola",1,0);
 
   affiche(m);
   
+  
   return 0;
-}*/
+}
 
+*/

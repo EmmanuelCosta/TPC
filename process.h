@@ -44,4 +44,5 @@ void sup(my_map* m,char *id1,char *id2);
 void inf(my_map* m,char *id1,char *id2);
 void egal(my_map* m,char *id1,char *id2);
 void testBooleanExpression(my_map*m,float v1,int op,float v2,char *id1,char *id2);
+char * recupe_chaine(char * chaine);
 #endif
