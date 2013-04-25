@@ -89,8 +89,8 @@ DeclVarPuisFonct 	:	 TYPE ListVar PV DeclVarPuisFonct
 						| DeclFonct
 						| /*rien*/
 						;
-ListVar				: 	ListVar VRG IDENT
-						| IDENT
+ListVar				: 	ListVar VRG IDENT { printf("==>  %d-- %s \n",ytype.typey, $3);}
+						| IDENT { printf("==> %d-- %s \n",ytype.typey,$1);}
 						;
 DeclMain  			: 	EnTeteMain Corps
 						;
@@ -112,7 +112,7 @@ ListTypVar			: 	ListTypVar VRG TYPE IDENT
 						;
 Corps				: 	LACC DeclConst DeclVar SuiteInstr RACC
 						;
-DeclVar 			: 	DeclVar TYPE ListVar PV { /* MODIF DU 25 04 2013*/
+DeclVar 			: 	DeclVar TYPE ListVar PV { 
 							if(strcmp($2,"entier")==0){
 								comment("DECARATION D ENTIER\n");
 								ytype.typey = ENTIER;
@@ -312,14 +312,12 @@ Exp 				:	Exp ADDSUB Exp {
 								$$=ENTIER;
 								ytype.typey = ENTIER ;
 								sprintf(ytype.value,"%d",$1);
-								printf("==> %d\n",$1);	
 								instarg("SET",$1);
 	                   			inst("PUSH");
 
                    				}
                    		| CHAINE  {	
                    			ytype.typey = STRING ;
-                   			printf("%s",$1);
 									strcpy(ytype.value,$1);
 								$$=STRING;
                    				}            					
