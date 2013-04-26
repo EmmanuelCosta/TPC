@@ -171,7 +171,7 @@ char * recupe_chaine(char * chaine){
       new[j] = chaine[i];
       i++;
     }
-
+      
     return new;
 }
 
