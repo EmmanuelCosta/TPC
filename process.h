@@ -17,12 +17,13 @@ typedef struct _map_{
    union vallex{	
  	 int val;
  	 tableau tab;
+   char  val_chaine[100];
   }vallex;
   char *type;
   char *ident;
   char define;
   int adresse;
-  char typevallex; /*v pour union entier ou t pour tableau ou n not define*/
+  char typevallex; /*v pour union entier ou t pour tableau ou n not define s pour string*/
 
 }my_map;
 
