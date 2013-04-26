@@ -43,6 +43,8 @@ my_map* alloue_map(char* type,char *ident,int v,int taille){
    return m;
 
 }
+
+#if 0
 /*retourne 0 si identifiant existe deja */
 /* ou la position de la premiere case dispo dans la map*/
 int exist(my_map m[TAILLE],char *ident){
@@ -142,19 +144,28 @@ my_map* ajouter(my_map *map,char* type,char *ident,int v,int taille){
    return map;
 }
 
+#endif
 void affiche(my_map *map){
   int i=0;
   int j;
+  if(map == NULL){printf("la map est NULL\n");}
   for(i=0;i<TAILLE;i++){
      if(map[i].define=='t'){
         if(map[i].typevallex=='v')
-          printf("posi = %d %s %s %d\n",i,map[i].type,map[i].ident,map[i].vallex.val );
-        else
-          printf("posi =%d l'id : %s est  un tableau de %s de taille %d dont les valeurs sont:\n",i,map[i].ident,map[i].type,map[i].vallex.tab.taille );
+          printf("position = %d %s %s %d\n",i,map[i].type,map[i].ident,map[i].vallex.val );
+          else if(map[i].typevallex =='s'){
+              printf("position = %d %s %s %s\n",i,map[i].type,map[i].ident,map[i].vallex.val_chaine);
+          }
+
+          else{
+          printf("position =%d l'id : %s est  un tableau de %s de taille %d dont les valeurs sont:\n",i,map[i].ident,map[i].type,map[i].vallex.tab.taille );
           for(j=0;j<map[i].vallex.tab.pos;j++){
             printf("--> i=%d %d  j=%d",i,map[i].vallex.tab.tab[j],j);
+             
              printf("\n");
+           }
           }
+          
          
     }
   }
@@ -174,19 +185,167 @@ char * recupe_chaine(char * chaine){
       
     return new;
 }
+/**************************************update map **************************************************************/
 
+int exist2(my_map m[TAILLE],char *ident,char *type){
+    
+    int i=0;
+    int j;
+    if(strcmp("entier",type)==0 ){
+      for(i=0;i<TAILLE;i++){
+        if(m[i].typevallex=='v'){
+          if(strcmp(m[i].ident,ident)==0){
+              return i;
+          }
+        }
+        
+      }
+    }
+    else if( strcmp("chaine",type)==0){
+      for(i=0;i<TAILLE;i++){
+        if(m[i].typevallex=='s'){
+          if(strcmp(m[i].ident,ident)==0){            
+            return i;
+          }
+        }
+        
+      }
+    
+    }
+    #if 0
+    else {
+      for(i=0;i<TAILLE;i++){
+          if(strcmp(m[i].ident,ident)==0 && m[i].typevallex=='t'){
+
+          }
+      }
+    
+    }
+    #endif
+
+    return -1;
+
+}
+
+my_map * ajouter2(my_map *map,char* type,char *ident,int v,char *nom_chaine,int taille){
+  int k;
+  int i=0,j;
+  if(map==NULL){
+
+      map=alloue_map(type,ident,v,taille);
+       return map; 
+  }
+  k=exist2(map,ident,type);
+  
+
+  if( k != -1){
+    printf(" this element is already exist \n");
+    return map;
+  }
+  if(k>= TAILLE){
+    fprintf(stderr,"TABLE DES SYMBOLES PLEINE\n");
+    return map;
+  }
+  
+  /* rechercher d'une case libre */
+  while(map[i].define != 'f'){
+    i++;
+  }
+  
+
+  /* ici je suis a la bonne case */
+    if(taille == 0)
+    {
+   
+
+          if(strcmp("entier",type) == 0)
+          {
+            map[i].type=malloc(sizeof(char)*(strlen(type)+1));
+            strcpy(map[i].type,type);
+            map[i].ident=malloc(sizeof(char)*(strlen(ident)+1));
+            strcpy(map[i].ident,ident);
+            map[i].typevallex = 'v';
+            map[i].vallex.val = v;
+            map[i].define='t';
+           
+            return map;
+          }
+          else
+          {
+
+
+           map[i].type=malloc(sizeof(char)*(strlen(type)+1));
+            strcpy(map[i].type,type);
+            map[i].ident=malloc(sizeof(char)*(strlen(ident)+1));
+            strcpy(map[i].ident,ident);
+            map[i].typevallex = 's';
+            strcpy(map[i].vallex.val_chaine,nom_chaine);
+            map[i].define='t';
+            
+            return map;
+
+          }
+        
+
+
+    }
+    return map; 
+
+}
+
+void update(my_map *map,char *ident,int v,int taille,char * name,char*type){
+  int k=0;
+  if(map == NULL){
+    fprintf(stderr," la map est vide (update_int ) \n");
+    return  ;
+  }
+
+  k= exist2(map,ident,type);
+  
+  if(strcmp(type,"entier")==0){
+      if( k != -1 && taille==0){
+       
+                map[k].ident=malloc(sizeof(char)*(strlen(ident)+1));
+                strcpy(map[k].ident,ident);
+                map[k].vallex.val = v;
+                return ;
+      }
+      else{
+        printf(" L'entier n'existe pas\n");
+        return;
+      }
+
+  }
+  else if(strcmp(type,"chaine")==0){
+      if( k != -1 ){
+
+        map[k].ident=malloc(sizeof(char)*(strlen(ident)+1));
+        strcpy(map[k].ident,ident);
+        strcpy(map[k].vallex.val_chaine,name);
+        return ;
+      }else{
+        printf(" La chaine n'existe pas\n");
+        return;
+  
+      }
+  }      
+
+
+}
 /*
 int main(void){
  my_map *m=NULL;
-m=ajouter(m,"boolean","sep",2,2);
-m=ajouter(m,"boolean","sep",1,2);
+ my_map *s=NULL;
 
-m=ajouter(m,"entier","coola",1,0);
-
-  affiche(m);
-  
-  
+s=ajouter2(s,"entier","id",5,NULL,0);
+s=ajouter2(s,"chaine","a1",0,"aaaa",0);
+s=ajouter2(s,"chaine","pos",0,"aa",0);
+ 
+  affiche(s);
+ update(s,"a1",0,0,"b","chaine");
+ update(s,"id",19,0,NULL,"entier");
+ printf("********************\n\n");
+ affiche(s);
   return 0;
 }
-
 */
