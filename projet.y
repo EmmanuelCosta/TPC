@@ -14,6 +14,8 @@ int yylex();
  void comment(const char *);
 
  int depl=0;
+ int p=0;
+
 
  typedef struct _storeIdentValue_{
 	int typey;
@@ -35,7 +37,6 @@ int yylex();
     enum{
    	   	STRING,ENTIER
    }typeExp;
-
   }
 
 %token<entier>NUM
@@ -89,8 +90,21 @@ DeclVarPuisFonct 	:	 TYPE ListVar PV DeclVarPuisFonct
 						| DeclFonct
 						| /*rien*/
 						;
-ListVar				: 	ListVar VRG IDENT { printf("==>  %d-- %s \n",ytype.typey, $3);}
-						| IDENT { printf("==> %d-- %s \n",ytype.typey,$1);}
+ListVar				: 	ListVar VRG IDENT { printf("==>  %d-- %s == %d\n",ytype.typey,$3,p);
+											if(ytype.typey==ENTIER)
+												gmap=ajouter(gmap,"entier",$3,NULL,0,0,'e');
+											else
+												gmap=ajouter(gmap,"chaine",$3,"NULL",0,0,'s');
+												p++;
+											}
+						| IDENT {	
+									if(ytype.typey==ENTIER)
+												gmap=ajouter(gmap,"entier",$1,NULL,0,0,'e');
+											else
+												gmap=ajouter(gmap,"chaine",$1,"NULL",0,0,'s');
+												 printf("==> %d-- %s == %d \n",ytype.typey,$1,p);
+												 p++;
+												}
 						;
 DeclMain  			: 	EnTeteMain Corps
 						;
@@ -136,17 +150,18 @@ Instr 				: 	LValue EGAL Exp PV /* MODIF DU 25 04 2013*/
 							if(ytype.typey == STRING)
 							{
 									comment("INITIALISATION D'UN STRING\n");
-									ajouter(gmap,"chaine",ytype.name,0,0);
-									printf("AJOUT DE : chaine %s %s \n",ytype.name,ytype.value);
-									
+									printf("AJOUT DE : chaine %s %s == %d \n",ytype.name,ytype.value,p);
+									gmap=ajouter(gmap,"chaine",ytype.name,ytype.value,0,0,'s');
+									p++;
 
 							}
 							else
 							{
 									comment("INITIALISATION D'UN INT\n");
-									ajouter(gmap,"entier",ytype.name,$3,0);
-									printf("AJOUT DE : entier %s %d\n",ytype.name,atoi(ytype.value));
-									
+									printf("AJOUT DE : entier %s %d == %d\n",ytype.name,atoi(ytype.value),p);
+									gmap=ajouter(gmap,"entier",ytype.name,"NULL",atoi(ytype.value),0,'e');
+									p++;
+
 
 							} 
 								
