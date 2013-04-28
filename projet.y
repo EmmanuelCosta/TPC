@@ -1,8 +1,4 @@
 %{
-#include <stdlib.h>
-#include <stdio.h>
-#include <unistd.h>
-#include <string.h>
 #include "process.h"
 
 int yyerror(char*);
@@ -17,13 +13,8 @@ int yylex();
  int p=0;
 
 
- typedef struct _storeIdentValue_{
-	int typey;
-	char  value[100];
-	char  name[20] ;	
- }storeIdentValue;
- 
  storeIdentValue ytype;
+
 
  my_map * gmap=NULL;
  
@@ -31,12 +22,11 @@ int yylex();
 
 
 %union {
+
    int entier;
    char * chaine;
-   char caractere;
-    enum{
-   	   	STRING,ENTIER
-   }typeExp;
+   char caractere; 	
+   TYPEEXP typeExp;
   }
 
 %token<entier>NUM
@@ -126,7 +116,7 @@ ListTypVar			: 	ListTypVar VRG TYPE IDENT
 						;
 Corps				: 	LACC DeclConst DeclVar SuiteInstr RACC
 						;
-DeclVar 			: 	DeclVar TYPE ListVar PV { 
+DeclVar 			: 	DeclVar TYPE { 
 							if(strcmp($2,"entier")==0){
 								comment("DECARATION D ENTIER\n");
 								ytype.typey = ENTIER;
@@ -136,7 +126,7 @@ DeclVar 			: 	DeclVar TYPE ListVar PV {
 								ytype.typey = STRING;
 								
 							}
-						}
+						}  ListVar PV 
 						| /*rien*/
 						;
 SuiteInstr			: 	SuiteInstr Instr
@@ -195,18 +185,13 @@ LValue				: 	IDENT /* MODIF DU 25 04 2013*/
 							
 							strcpy(ytype.name,$1);printf("name = %s !!!!!!!!!!!!\n",ytype.name);
 						}
-						| IDENT LSQB Exp RSQB 
+						| IDENT LSQB Exp RSQB {comment("DECARATION D' UN TABLEAU\n");}
 						;
 ListExp				: 	ListExp VRG Exp
 						| Exp
 						;
 Exp 				:	Exp ADDSUB Exp {	
 											
-											if($1!=$3){
-
-												comment("here not the same typeExp (in ADDSUB )\n");
-												inst("HALT");
-											}
 											inst("POP");
 											inst("SWAP"); 
 											inst("POP");
@@ -221,11 +206,7 @@ Exp 				:	Exp ADDSUB Exp {
 											inst("PUSH");
 										}
 						| Exp DIVSTAR Exp {		
-												if($1!=$3){
-
-												comment("here not the same typeExp (in DIVSTAR )\n");
-												inst("HALT");
-											}
+												
 												inst("POP");
 												inst("SWAP"); 
 												inst("POP");
@@ -245,12 +226,7 @@ Exp 				:	Exp ADDSUB Exp {
 											inst("PUSH");
 										}
 						| Exp COMP Exp  {
-											if($1!=$3){
-
-												comment("here not the same typeExp (in COMP)\n");
-												
-												inst("HALT");
-											}
+											
 											inst("POP");
 											inst("SWAP");
 											inst("POP");
@@ -321,10 +297,10 @@ Exp 				:	Exp ADDSUB Exp {
 
 									}
 						| LPAR Exp RPAR { $$=$$;}
-						| LValue { $$=ytype.typey	;}
+						| LValue { $$.my_type=ytype.typey	;}
 						| NUM {	
 								
-								$$=ENTIER;
+								$$.my_type=ENTIER;
 								ytype.typey = ENTIER ;
 								sprintf(ytype.value,"%d",$1);
 								instarg("SET",$1);
@@ -334,10 +310,10 @@ Exp 				:	Exp ADDSUB Exp {
                    		| CHAINE  {	
                    			ytype.typey = STRING ;
 									strcpy(ytype.value,$1);
-								$$=STRING;
+								$$.my_type=STRING;
                    				}            					
                    							
-						| IDENT LPAR Arguments RPAR { $$=NUM;}
+						| IDENT LPAR Arguments RPAR { $$.my_type=NUM;}
 					    ;
 FIXIF:				{
 						inst("POP");

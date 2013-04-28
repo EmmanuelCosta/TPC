@@ -189,15 +189,20 @@ char * recupe_chaine(char * chaine){
 int exist2(my_map m[TAILLE],char *ident,char *type){
     
     int i=0;
+    printf("look : %s < == > %s \n",ident,type);
     /*si ident trouver */
     
     for(i=0;i<TAILLE;i++){
       if(strcmp(m[i].ident,ident)==0){
         if(m[i].typevallex=='v'){
+              printf("looker entier : %s < == > %s \n",ident,type);
+
           if(strcmp("entier",type)==0)
             return i;
           else return -2;
         }else if(m[i].typevallex=='s'){
+                        printf("looker string : %s < == > %s \n",ident,type);
+
           if(strcmp("chaine",type)==0 )           
             return i;
           else
