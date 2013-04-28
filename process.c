@@ -312,6 +312,26 @@ my_map* updateString(my_map *map,char* valchaine,int k){
 
   }
  
+ int getEntier(my_map * map,char * ident){
+  int i = 0;
+  for(i=0;i<TAILLE;i++){
+      if(strcmp(map[i].ident,ident)==0){
+        return map[i].vallex.val;
+      }
+  }
+
+} 
+
+char * getString(my_map * map,char * ident){
+
+  int i = 0;
+  for(i=0;i<TAILLE;i++){
+    if(strcmp(map[i].ident,ident)==0){
+      return map[i].vallex.val_chaine;
+    }
+  }  
+  return NULL;
+}
  #if 0 
 my_map* updateTab(my_map *map,int v,int k,int indice){
 
@@ -338,4 +358,21 @@ s=ajouter(s,"entier","id",NULL,15,0,'e');
   return 0;
 }
 
+
+
+int main(int argc, char  *argv[])
+{
+  my_map *s=NULL;
+  s=ajouter(s,"entier","e1",NULL,5,0,'e');
+  s=ajouter(s,"chaine","c1","aaaa",0,0,'c');
+  s=ajouter(s,"chaine","c2","aa",0,0,'c');
+
+  printf("valeur de c1 = %s\n",getString(s,"c1"));
+  printf("valeur de e1 = %d\n",getEntier(s,"e1"));
+  printf("**************************\n\n");
+  affiche(s);
+  s=ajouter(s,"chaine","c2","toto",0,0,'c');
+  affiche(s);
+  return 0;
+}
 #endif
