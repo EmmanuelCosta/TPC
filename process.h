@@ -19,18 +19,27 @@
 
    
 
-  typedef struct _storeIdentValue_{
+typedef struct _storeIdentValue_{
     int typey;
     char  value[100];
-    char  name[20] ;  
-  }storeIdentValue;
+    char  name[100] ;  
+    struct _storeIdentValue_ * next;
+  }_storeIdentValue, *storeIdentValue;
 
-  
+
+typedef struct _storeIdentValueAuxi_{
+    int typey;
+    char  value[100];
+    char  name[100] ;  
+  }storeIdentValueAuxi;
+
 
 
 typedef struct typeExp_{
     int my_type;
     char valeur[100];
+      char ident[100];
+
   }TYPEEXP;
 
 /* structure de gmap*/
@@ -69,7 +78,7 @@ typedef struct _typeexp_{
   
 my_map* alloue_map(char* type,char *ident,char *valchaine,int v,int taille,char typesup);
 int exist(my_map m[TAILLE],char *ident);
-my_map* ajouter(my_map *map,char* type,char *ident,char *valchaine,int v,int taille,char typesup);
+my_map* ajouter(my_map *map,char* type,char *ident,char *valchaine,int v,int taille,char typesup,int adresse);
 void affiche(my_map *map);
 my_map* updateEntier(my_map *map,int v,int k);
 my_map* updateString(my_map *map,char* valchaine,int k);
@@ -80,4 +89,19 @@ void inf(my_map* m,char *id1,char *id2);
 void egal(my_map* m,char *id1,char *id2);
 void testBooleanExpression(my_map*m,float v1,int op,float v2,char *id1,char *id2);
 char * recupe_chaine(char * chaine);
+
+void AjoutStoreIdentValue(storeIdentValue * l,char * name);
+void affiche_storeIdentValue(storeIdentValue liste);
+storeIdentValue ExtraitTete(storeIdentValue *l);
+storeIdentValue  AllocationStoreIdentValueInit(void);
+  int getType(my_map * map,char * ident);
+ int getEntier(my_map * map,char * ident);
+
+char * getString(my_map * map,char * ident);
+
+int max(int a,int b);
+
+int min(int a,int b);
+void libere_storeIdentValue(storeIdentValue *l);
+
 #endif
