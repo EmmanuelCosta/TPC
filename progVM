@@ -1,50 +1,68 @@
+ALLOC	500
 #DECARATION D ENTIER
 
-#DECARATION D ENTIER
-
-name = e !!!!!!!!!!!!
-"test"#INITIALISATION D'UN STRING
-
-AJOUT DE : chaine e "test" 
-name = v !!!!!!!!!!!!
-"bn"#INITIALISATION D'UN STRING
-
-AJOUT DE : chaine v "bn" 
-name = a !!!!!!!!!!!!
-==> 7
-SET	7
-PUSH
+###> 1>>adr= 0
+###> 2>>adr= 0
+###> 2>>adr= 0
 #INITIALISATION D'UN INT
 
-AJOUT DE : entier a 7
-name = c !!!!!!!!!!!!
-"rt"#INITIALISATION D'UN STRING
+###> 2>>adr= 0
+#depl=0 val =25
+SET	0
+SWAP
+SET	25
+SAVER
+#INITIALISATION D'UN INT
 
-AJOUT DE : chaine c "rt" 
-name = a !!!!!!!!!!!!
-==> 2
+###> 2>>adr= 1
+#depl=1 val =50
+SET	1
+SWAP
+SET	50
+SAVER
+#INITIALISATION D'UN INT
+
+###> 2>>adr= 2
+#depl=2 val =100
 SET	2
+SWAP
+SET	100
+SAVER
+LABEL	0
+SET	0
+LOADR
 PUSH
-#here not the same typeExp (in COMP)
-
-HALT
+#==> 0
+SET	100
+PUSH
 POP
 SWAP
 POP
-GREAT
+LOW
 PUSH
 POP
-JUMPF	0
-name = a !!!!!!!!!!!!
-==> 2
-SET	2
-PUSH
-POP
+JUMPF	1
+#ident=a
+READ
 SWAP
-POP
-ADD
+SET	0
+SWAP
+SAVER
+SET	1
+LOADR
 PUSH
 POP
 WRITE
-LABEL	0
+SET	0
+LOADR
+PUSH
+POP
+WRITE
+SET	2
+LOADR
+PUSH
+POP
+WRITE
+JUMP	0
+LABEL	1
 HALT

@@ -80,8 +80,8 @@ my_map* alloue_map(char* type,char *ident,char *valchaine,int v,int taille,char 
 int exist(my_map m[TAILLE],char *ident);
 my_map* ajouter(my_map *map,char* type,char *ident,char *valchaine,int v,int taille,char typesup,int adresse);
 void affiche(my_map *map);
-my_map* updateEntier(my_map *map,int v,int k);
-my_map* updateString(my_map *map,char* valchaine,int k);
+my_map* updateEntier(my_map *map,int v,int k,int adresse);
+my_map* updateString(my_map *map,char* valchaine,int k,int adresse);
 float getValue(my_map *m,char* ident);
 void setValue(my_map *m,char *ident,float val);
 void sup(my_map* m,char *id1,char *id2);
@@ -103,5 +103,5 @@ int max(int a,int b);
 
 int min(int a,int b);
 void libere_storeIdentValue(storeIdentValue *l);
-
+int getAdresse(my_map * map,char *ident);
 #endif

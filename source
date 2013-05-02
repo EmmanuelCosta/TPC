@@ -1,17 +1,20 @@
 
 
 main(){
-	entier a;
-	entier e,v;
+	entier a,b,e;
+	a=25;
+	e=50;
+	b=100;
 	
-	e="test";
-	v="bn";
-	a=7;
+	while(a<100){
+		
+		read(a);
+		print(e);
+		print(a);
+				print(b);
 
+	}	
 	
-	c="rt";
-	if(a>2)
-		print(a+2);
 }
 
 
