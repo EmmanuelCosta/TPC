@@ -43,7 +43,7 @@
 [A-Za-z]+[0-9_]* {yylval.chaine=malloc(sizeof(char)*(strlen(yytext)+1));
 			strcpy(yylval.chaine,yytext); return IDENT;}
 [0-9]+ {sscanf(yytext,"%d",&yylval.entier); return NUM;}
-["][A-Za-z]*["]|['][A-Za-z]['] {yylval.chaine=malloc(sizeof(char)*(strlen(yytext)+1));
+\"[^\"]*\" {yylval.chaine=malloc(sizeof(char)*(strlen(yytext)+1));
 			strcpy(yylval.chaine,yytext); return CHAINE;}
 .|\n return yytext[0];
 %%

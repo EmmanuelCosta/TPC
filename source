@@ -1,19 +1,24 @@
 
 
 main(){
-	entier a,b,e;
-	a=25;
-	e=50;
-	b=100;
-	
-	while(a<100){
-		
-		read(a);
-		print(e);
-		print(a);
-				print(b);
+	entier a,b,c,d,e,f,g,h ;
+  entier o ;
 
-	}	
+
+
+  a = 42 ;
+  e = 66 ;
+  g = 2431 ;
+  o = 1 ;
+  c = 909 ;
+
+  
+  if( 25 > 5 ) {
+    print(255);
+  }
+  else
+  print(10000);
+
 	
 }
 

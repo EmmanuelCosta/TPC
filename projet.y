@@ -6,10 +6,11 @@ int yylex();
  FILE* yyin; 
  int jump_label=0;
 
- void inst(const char *);
- void instarg(const char *,int);
- void comment(const char *);
- void sauvegardeEntier(int valeur);
+void inst(const char *);
+void instarg(const char *,int);
+void comment(const char *);
+void sauvegardeEntier(int valeur);
+void sauvegardeEntier2(int valeur,int adresse);
 void sauvegardeChaine(char * chaine);
 void chargerEntier(int adresse);
 void chargerString(int adresse);
@@ -25,7 +26,7 @@ void chargerString(int adresse);
 
 
  my_map * gmap=NULL;
- int valeur=0;
+ int test=0;
  %}
 
 
@@ -61,7 +62,7 @@ void chargerString(int adresse);
 %%
 PROGRAMME 			:	/* rien */ | PROGRAMME Prog
 						; 
-Prog            	:   DeclConst DeclVarPuisFonct DeclMain
+Prog            	:   DeclConst DeclVarPuisFonct {instarg("CALL",jump_label++);instarg("LABEL", 0);} DeclMain
 						;
 DeclConst			:	DeclConst CONST ListConst PV
 						|/*rien*/
@@ -89,20 +90,27 @@ DeclVarPuisFonct 	:	 TYPE ListVar PV DeclVarPuisFonct
 						| /*rien*/
 						;
 ListVar				: 	ListVar VRG IDENT { 
-
-											if(ytype_auxi.typey == ENTIER)
+											if(ytype_auxi.typey == ENTIER){
 												gmap=ajouter(gmap,"entier",$3,NULL,0,0,'e',depl);
+												instarg("ALLOC",1);
+												depl++;
+											}
 											else
 												gmap=ajouter(gmap,"chaine",$3,"NULL",0,0,'s',depl);
-												p++;
+												
 
 											}
 						| IDENT {	
-											if(ytype_auxi.typey==ENTIER)
+											if(ytype_auxi.typey == ENTIER){
 												gmap=ajouter(gmap,"entier",$1,NULL,0,0,'e',depl);
+												instarg("ALLOC",1);
+												
+												depl++;
+											}
 											else
 												gmap=ajouter(gmap,"chaine",$1,"NULL",0,0,'s',depl);
-												p++;
+												
+
 											}
 						;
 DeclMain  			: 	EnTeteMain Corps
@@ -149,17 +157,22 @@ Instr 				: 	LValue EGAL Exp PV {
 											if(ytype_auxi.typey == STRING){
 												comment("INITIALISATION D'UN STRING\n");
 												gmap=ajouter(gmap,"chaine",ytype_auxi.name,ytype_auxi.value,0,0,'s',depl);
-												p++;
-												sauvegardeChaine(ytype_auxi.value);
+												
+												/*sauvegardeChaine(ytype_auxi.value);*/
 
 
 											}
 											else{
-
+												inst("POP");
 												comment("INITIALISATION D'UN INT\n");
 												gmap=ajouter(gmap,"entier",ytype_auxi.name,"NULL",atoi(ytype_auxi.value),0,'e',depl);
-												p++;
-												sauvegardeEntier(atoi(ytype_auxi.value));
+												
+
+												printf("#name=%s et @ vaut= %d\n",ytype_auxi.name,getAdresse(gmap,ytype_auxi.name));
+
+												sauvegardeEntier2(atoi(ytype_auxi.value),getAdresse(gmap,ytype_auxi.name));
+												/*sauvegardeEntier(atoi(ytype_auxi.value));*/
+												affiche(gmap);
 											} 
 								
 								
@@ -190,9 +203,11 @@ Instr 				: 	LValue EGAL Exp PV {
 													inst("READCH");
 													inst("PUSH");
 													}
-						| PRINT LPAR Exp RPAR PV {
+						| PRINT {printf("#c bon \n");p=1;} LPAR Exp RPAR PV {
+													printf("#et val vaut\n");
 												  inst("POP"); 
                            						  inst("WRITE");
+                           						  p=0;
                            						}
 						| PV
 						| InstrComp
@@ -206,7 +221,9 @@ LValue				: 	IDENT /* MODIF DU 25 04 2013*/
 							AjoutStoreIdentValue(&ytype,ytype_auxi.name);ytype_auxi.typey=3;
 							ytype->typey=3;
 							strcpy(ytype->value,ytype_auxi.value);
+							printf("\n\t\t#p vaut=%d\n",p);
 							if(p==1){
+								printf("\n\t\t#je suis %s a l@ =%d\n",$1,getAdresse(gmap,$1));
 								chargerEntier(getAdresse(gmap,$1));
 								p=0;
 							}
@@ -380,7 +397,7 @@ Exp 				:	Exp ADDSUB Exp {
 											inst("PUSH");
 										}
 						| Exp COMP Exp  {
-
+											test=1;
 											ytypetemp=ExtraitTete(&ytype);
 											strcpy($1.ident,ytypetemp->name);
 											strcpy($1.valeur,ytypetemp->value);
@@ -413,8 +430,13 @@ Exp 				:	Exp ADDSUB Exp {
 											}
 											else{
 												strcpy($3.valeur,$3.ident);
+												
 												instarg("SET",atoi($3.ident));
 												inst("PUSH");
+
+
+
+												printf("# \tval=%d  comp ",atoi($3.ident));
 											}
 
 											if($1.my_type==3){
@@ -424,17 +446,22 @@ Exp 				:	Exp ADDSUB Exp {
 											
 											}
 											else {
+												printf("# val=%d\n",atoi($1.ident));
+												
 												strcpy($1.valeur,$1.ident);
 												instarg("SET",atoi($1.ident));
 												inst("PUSH");
+												
 											}
 
 
 											
-
+											
 											inst("POP");
 											inst("SWAP");
+											
 											inst("POP");
+
 
 											if(strcmp("==",$2)==0){
 												if(atoi($3.valeur)==atoi($1.valeur)){
@@ -456,6 +483,7 @@ Exp 				:	Exp ADDSUB Exp {
 											else if(strcmp("<",$2)==0){
 												if(min(atoi($3.valeur),atoi($1.valeur))==atoi($3.valeur)){
 													/*libere_storeIdentValue(&ytype);*/
+													printf("#je suis in\n");
 													AjoutStoreIdentValue(&ytype,$3.ident);
 													ytype->typey=$3.my_type;
 												}
@@ -517,8 +545,15 @@ Exp 				:	Exp ADDSUB Exp {
 												perror("ident inexistant");
 												exit(0);
 											}
-												if($2.my_type==3){
+											if($2.my_type==3){
 												sprintf($2.valeur,"%d",getEntier(gmap,$2.ident));
+												chargerEntier(getAdresse(gmap,$2.ident));printf("#==> %d\n",getAdresse(gmap,$2.ident));
+											}
+											else{
+
+												strcpy($2.valeur,$2.ident);
+												instarg("SET",atoi($2.ident));
+												inst("PUSH");
 											}
 																
 
@@ -529,7 +564,6 @@ Exp 				:	Exp ADDSUB Exp {
 											ytype->typey=ENTIER;
 											sprintf(ytype->value,"%d",-(atoi($2.valeur)));
 
-										
 
 											inst("POP"); 
 											inst("NEG");                  						
@@ -646,7 +680,16 @@ Exp 				:	Exp ADDSUB Exp {
 										}
 										if($2.my_type==3){
 											sprintf($2.valeur,"%d",getEntier(gmap,$2.ident));
+											chargerEntier(getAdresse(gmap,$2.ident));printf("#==> %d\n",getAdresse(gmap,$2.ident));
 										}
+										else{
+
+											strcpy($2.valeur,$2.ident);
+											instarg("SET",atoi($2.ident));
+											inst("PUSH");
+										}	
+
+										
 							
 
 
@@ -667,7 +710,7 @@ Exp 				:	Exp ADDSUB Exp {
 
 									}
 						| LPAR Exp RPAR { $$=$$;}
-						| LValue { $$.my_type=ytype_auxi.typey	;p=1;}
+						| LValue { $$.my_type=ytype_auxi.typey;printf("#je suis passe ici\n");p=1;}
 						| NUM {	
 				
 								ytype_auxi.typey = ENTIER ;
@@ -676,9 +719,12 @@ Exp 				:	Exp ADDSUB Exp {
 								AjoutStoreIdentValue(&ytype,ytype_auxi.value);
 								ytype->typey=ENTIER;
 
+								
+								
+								instarg("SET",$1);
+	                   			inst("PUSH");
 
-								/*instarg("SET",$1);
-	                   			inst("PUSH");*/
+
 
                    				}
 
@@ -747,6 +793,16 @@ void sauvegardeEntier(int valeur){
   inst("SAVER");
   
   depl++;
+}
+
+void sauvegardeEntier2(int valeur,int adresse){
+	printf("#depl=%d val =%d\n",depl,valeur);
+
+  instarg("SET",adresse);
+  inst("SWAP");
+  instarg("SET",valeur);
+  inst("SAVER");
+  
 }
 
 void sauvegardeChaine(char * chaine){

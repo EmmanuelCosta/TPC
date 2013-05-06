@@ -21,9 +21,9 @@ my_map* alloue_map(char* type,char *ident,char *valchaine,int v,int taille,char 
    for(i = 0;i<TAILLE;i++){
     m[i].define='f';
     m[i].typevallex='n';
+    m[i].adresse = -1;
 
-   }
-   
+   }   
   if( taille == 0 && typesup == 'c'){
     strcpy(m[0].vallex.val_chaine,valchaine);
     m[0].typevallex='s';
@@ -40,7 +40,6 @@ my_map* alloue_map(char* type,char *ident,char *valchaine,int v,int taille,char 
     strcpy(m[0].ident,ident);
     m[0].define='t';
 
-    m[0].adresse = 0;
     return m;
 
 }
@@ -133,6 +132,7 @@ my_map * ajouter(my_map *map,char* type,char *ident,char *valchaine,int v,int ta
   if(map == NULL){
 printf("###> 1>>adr= %d\n",adresse);
       map=alloue_map(type,ident,valchaine, v,taille, typesup);
+      map[0].adresse = adresse;
        return map; 
   }
   k=exist2(map,ident,type);
@@ -165,7 +165,13 @@ printf("###> 1>>adr= %d\n",adresse);
     fprintf(stderr,"TABLE DES SYMBOLES PLEINE\n");
     return map;
   }
-map[i].adresse = adresse;
+  if(map[i].adresse == -1){
+    map[i].adresse = adresse;
+    printf("\n# voila @ vaut %d\n",map[i].adresse);
+  }
+      
+
+    printf("#\n\t\t #ident =%s @=%d \n",map[i].ident,map[i].adresse);
   /* ici je suis a la bonne case */
     if(taille == 0)
     {
@@ -201,7 +207,6 @@ map[i].adresse = adresse;
 
     }
     else{
-      map[i].adresse = adresse;
       map[i].vallex.tab=alloue_tableau(taille, v);
       strcpy(map[i].type,type);
       strcpy(map[i].ident,ident);
@@ -213,7 +218,6 @@ map[i].adresse = adresse;
 
 my_map* updateEntier(my_map *map,int v,int k,int adresse){  
   map[k].vallex.val = v;
-   map[k].adresse = adresse;
   return map;
 
 }
@@ -222,7 +226,6 @@ my_map* updateString(my_map *map,char* valchaine,int k,int adresse){
     
   
   strcpy(map[k].vallex.val_chaine,valchaine);
-   map[k].adresse = adresse;
 
   return map;
 
