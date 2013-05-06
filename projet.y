@@ -464,55 +464,81 @@ Exp 				:	Exp ADDSUB Exp {
 
 
 											if(strcmp("==",$2)==0){
-												if(atoi($3.valeur)==atoi($1.valeur)){
-													libere_storeIdentValue(&ytype);
+												/*libere_storeIdentValue(&ytype);*/
+												if(atoi($3.valeur)==atoi($1.valeur)){													
 													AjoutStoreIdentValue(&ytype,$3.ident);
 													ytype->typey=$3.my_type;
+												}
+												else{
+													AjoutStoreIdentValue(&ytype,"0");
+													ytype->typey=ENTIER;
 												}
 												inst("EQUAL");
 											}
 											else if(strcmp("!=",$2)==0){
-												if(atoi($3.valeur)!=atoi($1.valeur)){
-													libere_storeIdentValue(&ytype);
+												/*libere_storeIdentValue(&ytype);*/
+												if(atoi($3.valeur)!=atoi($1.valeur)){													
 													AjoutStoreIdentValue(&ytype,$3.ident);
 													ytype->typey=$3.my_type;
+												}
+												else{
+													AjoutStoreIdentValue(&ytype,"0");
+													ytype->typey=ENTIER;
 												}
 												
 												inst("NOTEQ");
 											}
 											else if(strcmp("<",$2)==0){
+												/*libere_storeIdentValue(&ytype);*/
+
 												if(min(atoi($3.valeur),atoi($1.valeur))==atoi($3.valeur)){
-													/*libere_storeIdentValue(&ytype);*/
-													printf("#je suis in\n");
 													AjoutStoreIdentValue(&ytype,$3.ident);
 													ytype->typey=$3.my_type;
+												}
+												else{
+													AjoutStoreIdentValue(&ytype,"0");
+													ytype->typey=ENTIER;
 												}
 
 												inst("LOW");
 											}
 											else if(strcmp("<=",$2)==0){
+												/*libere_storeIdentValue(&ytype);*/
 												if(min(atoi($3.valeur),atoi($1.valeur))==atoi($3.valeur)){
-													libere_storeIdentValue(&ytype);
 													AjoutStoreIdentValue(&ytype,$3.ident);
 													ytype->typey=$3.my_type;
+												}
+												else{
+													AjoutStoreIdentValue(&ytype,"0");
+													ytype->typey=ENTIER;
 												}
 
 												inst("LEQ");
 											}
 											else if(strcmp(">",$2)==0){
+												/*libere_storeIdentValue(&ytype);*/
 												if(max(atoi($3.valeur),atoi($1.valeur))==atoi($3.valeur)){
-													libere_storeIdentValue(&ytype);
+													
 													AjoutStoreIdentValue(&ytype,$3.ident);
 													ytype->typey=$3.my_type;
 												}
-
+												else{
+													AjoutStoreIdentValue(&ytype,"0");
+													ytype->typey=ENTIER;
+												}
+												affiche_storeIdentValue(ytype);
 												inst("GREAT");
 											}
 											else if(strcmp(">=",$2)==0){
+												/*libere_storeIdentValue(&ytype);*/
 												if(max(atoi($3.valeur),atoi($1.valeur))==atoi($3.valeur)){
-													libere_storeIdentValue(&ytype);
+													
 													AjoutStoreIdentValue(&ytype,$3.ident);
 													ytype->typey=$3.my_type;
+												}
+												else{
+													AjoutStoreIdentValue(&ytype,"0");
+													ytype->typey=ENTIER;
 												}
 
 												inst("GEQ");
@@ -580,7 +606,7 @@ Exp 				:	Exp ADDSUB Exp {
 											strcpy($3.valeur,ytypetemp->value);
 											$3.my_type=ytypetemp->typey;
 
-
+											printf("#im inside now %d %d\n",atoi($1.valeur),atoi($3.valeur)); 
 											if($1.my_type==STRING || $3.my_type==STRING){
 												perror("pas de comparaison de string");
 												exit(0);
@@ -631,18 +657,20 @@ Exp 				:	Exp ADDSUB Exp {
 
 											if(strcmp("&&",$2)==0){
 												
-												libere_storeIdentValue(&ytype);
+											/*	libere_storeIdentValue(&ytype);*/
 												AjoutStoreIdentValue(&ytype,"resultat");
 												sprintf(ytype->name,"%d",atoi($3.valeur)&&atoi($1.valeur));
 												ytype->typey=ENTIER;
 												sprintf(ytype->value,"%d",atoi($3.valeur)&&atoi($1.valeur));
-	
+												
 												instarg("SET",2); /* r1 = 2 */
-												inst("EQUAL");/* si r1 vaut 1 donc exp1=1 et exp2=1 le && est verifier . sinon le && n est pas verifier */
+												inst("SWAP");
+												inst("GREAT");/* si r1 vaut 1 donc exp1=1 et exp2=1 le && est verifier . sinon le && n est pas verifier */
+
 											}
 											else {
 
-												libere_storeIdentValue(&ytype);
+												/*libere_storeIdentValue(&ytype);*/
 												AjoutStoreIdentValue(&ytype,"resultat");
 												sprintf(ytype->name,"%d",atoi($3.valeur)||atoi($1.valeur));
 												ytype->typey=ENTIER;
@@ -743,12 +771,17 @@ Exp 				:	Exp ADDSUB Exp {
 						| IDENT LPAR Arguments RPAR { $$.my_type=NUM;}
 
 					    ;
-FIXIF:				{
+FIXIF:				{	
+						/*je vide ma liste ytype apres une instruction de controle ex: if(.....) et je vide*/
+						libere_storeIdentValue(&ytype);
+
 						inst("POP");
 						instarg("JUMPF", $$=jump_label++);
 					}
 					;
 FIXELSE :  			{
+						libere_storeIdentValue(&ytype);
+
 	  					instarg("JUMP", $$=jump_label++);
 					 }
 					 ;
