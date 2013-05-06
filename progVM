@@ -1,204 +1,63 @@
 ALLOC	500
+#			init2
+# je vaux 5
 CALL	0
 LABEL	0
-#DECARATION D ENTIER
-
-###> 1>>adr= 0
 ALLOC	1
-###> 2>>adr= 1
-
-# voila @ vaut 1
-#
-		 #ident = @=1 
-ALLOC	1
-###> 2>>adr= 2
-
-# voila @ vaut 2
-#
-		 #ident = @=2 
-ALLOC	1
-###> 2>>adr= 3
-
-# voila @ vaut 3
-#
-		 #ident = @=3 
-ALLOC	1
-###> 2>>adr= 4
-
-# voila @ vaut 4
-#
-		 #ident = @=4 
-ALLOC	1
-###> 2>>adr= 5
-
-# voila @ vaut 5
-#
-		 #ident = @=5 
-ALLOC	1
-###> 2>>adr= 6
-
-# voila @ vaut 6
-#
-		 #ident = @=6 
-ALLOC	1
-###> 2>>adr= 7
-
-# voila @ vaut 7
-#
-		 #ident = @=7 
-ALLOC	1
-#DECARATION D ENTIER
-
-###> 2>>adr= 8
-
-# voila @ vaut 8
-#
-		 #ident = @=8 
-ALLOC	1
-
-		#p vaut=0
-SET	42
-PUSH
-POP
-#INITIALISATION D'UN INT
-
-###> 2>>adr= 9
-#name=a et @ vaut= 0
-#depl=9 val =42
+#depl=1 val =5
 SET	0
 SWAP
-SET	42
-SAVER
-# position = 0 entier a 42 == 0
-# position = 1 entier b 0 == 1
-# position = 2 entier c 0 == 2
-# position = 3 entier d 0 == 3
-# position = 4 entier e 0 == 4
-# position = 5 entier f 0 == 5
-# position = 6 entier g 0 == 6
-# position = 7 entier h 0 == 7
-# position = 8 entier o 0 == 8
-
-		#p vaut=0
-SET	66
-PUSH
-POP
-#INITIALISATION D'UN INT
-
-###> 2>>adr= 9
-#name=e et @ vaut= 4
-#depl=9 val =66
-SET	4
-SWAP
-SET	66
-SAVER
-# position = 0 entier a 42 == 0
-# position = 1 entier b 0 == 1
-# position = 2 entier c 0 == 2
-# position = 3 entier d 0 == 3
-# position = 4 entier e 66 == 4
-# position = 5 entier f 0 == 5
-# position = 6 entier g 0 == 6
-# position = 7 entier h 0 == 7
-# position = 8 entier o 0 == 8
-
-		#p vaut=0
-SET	2431
-PUSH
-POP
-#INITIALISATION D'UN INT
-
-###> 2>>adr= 9
-#name=g et @ vaut= 6
-#depl=9 val =2431
-SET	6
-SWAP
-SET	2431
-SAVER
-# position = 0 entier a 42 == 0
-# position = 1 entier b 0 == 1
-# position = 2 entier c 0 == 2
-# position = 3 entier d 0 == 3
-# position = 4 entier e 66 == 4
-# position = 5 entier f 0 == 5
-# position = 6 entier g 2431 == 6
-# position = 7 entier h 0 == 7
-# position = 8 entier o 0 == 8
-
-		#p vaut=0
-SET	1
-PUSH
-POP
-#INITIALISATION D'UN INT
-
-###> 2>>adr= 9
-#name=o et @ vaut= 8
-#depl=9 val =1
-SET	8
-SWAP
-SET	1
-SAVER
-# position = 0 entier a 42 == 0
-# position = 1 entier b 0 == 1
-# position = 2 entier c 0 == 2
-# position = 3 entier d 0 == 3
-# position = 4 entier e 66 == 4
-# position = 5 entier f 0 == 5
-# position = 6 entier g 2431 == 6
-# position = 7 entier h 0 == 7
-# position = 8 entier o 1 == 8
-
-		#p vaut=0
-SET	909
-PUSH
-POP
-#INITIALISATION D'UN INT
-
-###> 2>>adr= 9
-#name=c et @ vaut= 2
-#depl=9 val =909
-SET	2
-SWAP
-SET	909
-SAVER
-# position = 0 entier a 42 == 0
-# position = 1 entier b 0 == 1
-# position = 2 entier c 909 == 2
-# position = 3 entier d 0 == 3
-# position = 4 entier e 66 == 4
-# position = 5 entier f 0 == 5
-# position = 6 entier g 2431 == 6
-# position = 7 entier h 0 == 7
-# position = 8 entier o 1 == 8
-SET	25
-PUSH
 SET	5
-PUSH
-SET	25
-PUSH
-# 	val=25  comp # val=5
+SAVER
+#DECARATION D ENTIER
+
+ALLOC	1
+
+		#p vaut=0
 SET	5
 PUSH
 POP
+#INITIALISATION D'UN INT
+
+#name=a et @ vaut= 1
+#depl=2 val =5
+SET	1
 SWAP
-POP
-GREAT
-PUSH
-POP
-JUMPF	1
+SET	5
+SAVER
+#position = 0 entier v 5 ==adresse = 0
+#position = 1 entier a 5 ==adresse = 1
 #c bon 
-SET	255
+
+		#p vaut=1
+
+		#je suis v a l@ =0
+SET	0
+LOADR
+PUSH
+#je suis passe ici
+
+		#p vaut=1
+
+		#je suis a a l@ =1
+SET	1
+LOADR
+PUSH
+#je suis passe ici
+SET	0
+LOADR
+PUSH
+#==> 0
+SET	1
+LOADR
+PUSH
+#==>1
+POP
+SWAP
+POP
+ADD
 PUSH
 #et val vaut
 POP
 WRITE
-JUMP	2
-LABEL	1
-#c bon 
-SET	10000
-PUSH
-#et val vaut
-POP
-WRITE
-LABEL	2
 HALT

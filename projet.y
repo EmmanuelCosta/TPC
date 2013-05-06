@@ -13,20 +13,24 @@ void sauvegardeEntier(int valeur);
 void sauvegardeEntier2(int valeur,int adresse);
 void sauvegardeChaine(char * chaine);
 void chargerEntier(int adresse);
+void chargerEntierTAS(int adresse);
 void chargerString(int adresse);
 
  int depl=0;
  int p=0;
+ int tas=0;
 
 
- storeIdentValue ytype;
- storeIdentValueAuxi ytype_auxi;
-  storeIdentValue ytypetemp;
+storeIdentValue ytype;
+storeIdentValueAuxi ytype_auxi;
+storeIdentValue ytypetemp;
 
 
 
  my_map * gmap=NULL;
+ my_map * gmap2=NULL;
  int test=0;
+ int i=0;
  %}
 
 
@@ -62,20 +66,55 @@ void chargerString(int adresse);
 %%
 PROGRAMME 			:	/* rien */ | PROGRAMME Prog
 						; 
-Prog            	:   DeclConst DeclVarPuisFonct {instarg("CALL",jump_label++);instarg("LABEL", 0);} DeclMain
+Prog            	:   DeclConst DeclVarPuisFonct {instarg("CALL",jump_label++);instarg("LABEL", 0);} SAVEGLOBAVAR  DeclMain
 						;
 DeclConst			:	DeclConst CONST ListConst PV
 						|/*rien*/
 					;
-ListConst			:	 ListConst VRG IDENT EGAL Litteral
-						| IDENT EGAL Litteral
+ListConst			:	 ListConst VRG IDENT EGAL Litteral {
+															strcpy(ytype_auxi.name,$3);
+															
+															if(ytype_auxi.typey == ENTIER){
+																gmap=ajouter(gmap,"entier",ytype_auxi.name,"NULL",atoi(ytype_auxi.value),0,'c',depl);
+															
+																
+																depl++;
+
+															}						
+															else{
+																printf("#\t\t %s\n\n",ytype_auxi.value);
+																gmap=ajouter(gmap,"chaine",ytype_auxi.name,ytype_auxi.value,0,0,'c',depl);
+																sauvegardeChaine(ytype_auxi.value);
+
+															}
+																
+
+											  }
+						| IDENT EGAL Litteral {
+												strcpy(ytype_auxi.name,$1);
+												if(ytype_auxi.typey == ENTIER){
+													gmap=ajouter(gmap,"entier",ytype_auxi.name,"NULL",atoi(ytype_auxi.value),0,'c',depl);
+													printf("# je vaux %d\n",atoi(ytype_auxi.value));
+													
+													depl++;
+												}													
+												else{
+													gmap=ajouter(gmap,"chaine",ytype_auxi.name,ytype_auxi.value,0,0,'c',depl);
+													sauvegardeChaine(ytype_auxi.value);
+
+												}
+													
+
+											  }
 						;
 Litteral  			: 	NombreSigne
 						| CHAINE 		
 						;
 NombreSigne			: 	NUM  { /* MODIF DU 25 04 2013*/
-								instarg("SET",$1);
-								inst("PUSH");
+								ytype_auxi.typey=ENTIER; 
+								sprintf(ytype_auxi.value,"%d",$1); 
+								/*instarg("SET",$1);
+								inst("PUSH");**/
 						}    		
 						| ADDSUB NUM	{/*conflit possible ici*/
 											if($1=='-'){
@@ -134,6 +173,8 @@ ListTypVar			: 	ListTypVar VRG TYPE IDENT
 Corps				: 	LACC DeclConst DeclVar SuiteInstr RACC
 						;
 DeclVar 			: 	DeclVar TYPE { 
+
+										
 										if(strcmp($2,"entier")==0){
 											comment("DECARATION D ENTIER\n");
 											ytype_auxi.typey = ENTIER;
@@ -224,6 +265,7 @@ LValue				: 	IDENT /* MODIF DU 25 04 2013*/
 							printf("\n\t\t#p vaut=%d\n",p);
 							if(p==1){
 								printf("\n\t\t#je suis %s a l@ =%d\n",$1,getAdresse(gmap,$1));
+								
 								chargerEntier(getAdresse(gmap,$1));
 								p=0;
 							}
@@ -787,8 +829,24 @@ FIXELSE :  			{
 					 ;
 ANCRE	:
   					{
-  						instarg("LABEL",$$=jump_label++); }
+  						instarg("LABEL",$$=jump_label++);
+  					}
   					;
+SAVEGLOBAVAR :		{
+						while(gmap[i].define!='f'){
+
+							if(getType(gmap,gmap[i].ident)==ENTIER){
+								instarg("ALLOC",1);
+								sauvegardeEntier2(getEntier(gmap,gmap[i].ident),getAdresse(gmap,gmap[i].ident));
+								i++;
+							}
+							else{
+								/*mettre ici la gestion des chaines global*/
+							}
+							i++;
+						}
+					}
+						;
 %%
 
 
@@ -818,14 +876,14 @@ int yyerror(char* s) {
 
 
 void sauvegardeEntier(int valeur){
-	printf("#depl=%d val =%d\n",depl,valeur);
+	printf("#depl=%d val =%d\n",tas,valeur);
 
-  instarg("SET",depl);
+  instarg("SET",tas);
   inst("SWAP");
   instarg("SET",valeur);
   inst("SAVER");
   
-  depl++;
+  tas++;
 }
 
 void sauvegardeEntier2(int valeur,int adresse){
@@ -866,6 +924,12 @@ void sauvegardeChaine(char * chaine){
 void chargerEntier(int adresse){
   instarg("SET",adresse);
   inst("LOADR"); /* Palce dans reg1 la valeur situé à l adresse reg1 */
+  inst("PUSH"); /* on le remet en tete de pile (pas forcément necessaire) */
+}
+
+void chargerEntierTAS(int adresse){
+  instarg("SET",adresse);
+  inst("LOAD"); /* Palce dans reg1 la valeur situé à l adresse reg1 */
   inst("PUSH"); /* on le remet en tete de pile (pas forcément necessaire) */
 }
 

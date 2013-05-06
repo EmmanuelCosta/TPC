@@ -24,22 +24,22 @@ my_map* alloue_map(char* type,char *ident,char *valchaine,int v,int taille,char 
     m[i].adresse = -1;
 
    }   
-  if( taille == 0 && typesup == 'c'){
+    m[0].typevallex=typesup; 
+   if( taille == 0 && strcmp(type,"chaine")==0){
+    printf("#\t\t\tinit\n");
     strcpy(m[0].vallex.val_chaine,valchaine);
-    m[0].typevallex='s';
 
-  }else if(taille == 0 && typesup == 'e'){
+  }else if(taille == 0 && strcmp(type,"entier")==0){
+     printf("#\t\t\tinit2\n");
     m[0].vallex.val=v;
-    m[0].typevallex='e';
   }else{
     m[0].vallex.tab=alloue_tableau( taille, v);
-    m[0].typevallex='t';
 
   }
     strcpy(m[0].type,type);
     strcpy(m[0].ident,ident);
     m[0].define='t';
-
+     m[0].adresse = 0;
     return m;
 
 }
@@ -49,17 +49,17 @@ my_map* alloue_map(char* type,char *ident,char *valchaine,int v,int taille,char 
 void affiche(my_map *map){
   int i=0;
   int j;
-  if(map == NULL){printf("la map est NULL\n");}
+  if(map == NULL){printf("#la map est NULL\n");}
   for(i=0;i<TAILLE;i++){
      if(map[i].define=='t'){
-        if(map[i].typevallex=='e')
-          printf("# position = %d %s %s %d == %d\n",i,map[i].type,map[i].ident,map[i].vallex.val,map[i].adresse );
-          else if(map[i].typevallex =='s'){
-              printf("# position = %d %s %s %s\n",i,map[i].type,map[i].ident,map[i].vallex.val_chaine);
+        if(map[i].typevallex=='e' ||(map[i].typevallex=='c'&& strcmp("entier",map[i].type)==0 ) )
+          printf("#position = %d %s %s %d ==adresse = %d\n",i,map[i].type,map[i].ident,map[i].vallex.val,map[i].adresse );
+          else if(map[i].typevallex =='s' || (map[i].typevallex=='c'&& strcmp("chaine",map[i].type)==0 ) ){
+              printf("#position = %d %s %s %s\n",i,map[i].type,map[i].ident,map[i].vallex.val_chaine);
           }
 
           else{
-          printf("# position =%d l'id : %s est  un tableau de %s de taille %d dont les valeurs sont:\n",i,map[i].ident,map[i].type,map[i].vallex.tab.taille );
+          printf("#position =%d l'id : %s est  un tableau de %s de taille %d dont les valeurs sont:\n",i,map[i].ident,map[i].type,map[i].vallex.tab.taille );
           for(j=0;j<map[i].vallex.tab.pos;j++){
             printf("#--> i=%d %d  j=%d",i,map[i].vallex.tab.tab[j],j);
              
@@ -110,6 +110,10 @@ int exist2(my_map m[TAILLE],char *ident,char *type){
           else
             return -2;
           
+        }else if(m[i].typevallex=='c'){
+
+         return -3;
+          
         }else {
           if(m[i].typevallex=='t'){
             if(strcmp("entier",type)==0)
@@ -130,18 +134,21 @@ my_map * ajouter(my_map *map,char* type,char *ident,char *valchaine,int v,int ta
 
  
   if(map == NULL){
-printf("###> 1>>adr= %d\n",adresse);
       map=alloue_map(type,ident,valchaine, v,taille, typesup);
       map[0].adresse = adresse;
        return map; 
   }
   k=exist2(map,ident,type);
   if(k == -2){
-    printf("Cette identifiant a deja ete declare avec un autre type\n");
-    perror("identifiant existant \n");
+    printf("\n#Cette identifiant a deja ete declare avec un autre type\n");
+    perror("#\nidentifiant existant \n");
     exit(0);
   }
- printf("###> 2>>adr= %d\n",adresse);
+  if(k==-3){
+    printf("#Cette identifiant est une constante et ne peut pas etre modifie\n");
+    perror("\n#identifiant declare comme constante ne peut etre redeclare\n");
+    exit(0);
+  }
    
   if( k != -1){
     if(taille==0 && typesup=='e'){
@@ -167,11 +174,9 @@ printf("###> 1>>adr= %d\n",adresse);
   }
   if(map[i].adresse == -1){
     map[i].adresse = adresse;
-    printf("\n# voila @ vaut %d\n",map[i].adresse);
   }
       
 
-    printf("#\n\t\t #ident =%s @=%d \n",map[i].ident,map[i].adresse);
   /* ici je suis a la bonne case */
     if(taille == 0)
     {
@@ -235,7 +240,7 @@ my_map* updateString(my_map *map,char* valchaine,int k,int adresse){
   for(i=0;i<TAILLE;i++){
       if(strcmp(map[i].ident,ident)==0){
 /*printf("# lid = %s vaut %c\n",ident,map[i].typevallex);*/
-          if(map[i].typevallex=='e')
+          if(strcmp(map[i].type,"entier")==0)
              return ENTIER;
            else return STRING;
       }
