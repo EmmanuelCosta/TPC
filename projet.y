@@ -15,6 +15,8 @@ void sauvegardeChaine(char * chaine);
 void chargerEntier(int adresse);
 void chargerEntierTAS(int adresse);
 void chargerString(int adresse);
+void storeGlobal();
+
 
  int depl=0;
  int p=0;
@@ -30,7 +32,9 @@ storeIdentValue ytypetemp;
  my_map * gmap=NULL;
  my_map * gmap2=NULL;
  int test=0;
- int i=0;
+ int reg=0;
+ int lconst=0;
+ char recupIdent[100];
  %}
 
 
@@ -75,10 +79,18 @@ ListConst			:	 ListConst VRG IDENT EGAL Litteral {
 															strcpy(ytype_auxi.name,$3);
 															
 															if(ytype_auxi.typey == ENTIER){
-																gmap=ajouter(gmap,"entier",ytype_auxi.name,"NULL",atoi(ytype_auxi.value),0,'c',depl);
-															
 																
-																depl++;
+																if(lconst==0){
+																	gmap=ajouter(gmap,"entier",ytype_auxi.name,"NULL",atoi(ytype_auxi.value),0,'c',depl);
+																	depl++;		
+															
+																}else if(lconst==1){
+																	gmap=ajouter(gmap,"entier",ytype_auxi.name,"NULL",atoi(ytype_auxi.value),0,'C',depl);
+																	instarg("ALLOC",10);
+																	sauvegardeEntier2(atoi(ytype_auxi.value),getAdresse(gmap,ytype_auxi.name));
+
+																	depl++;	
+																}
 
 															}						
 															else{
@@ -93,10 +105,20 @@ ListConst			:	 ListConst VRG IDENT EGAL Litteral {
 						| IDENT EGAL Litteral {
 												strcpy(ytype_auxi.name,$1);
 												if(ytype_auxi.typey == ENTIER){
-													gmap=ajouter(gmap,"entier",ytype_auxi.name,"NULL",atoi(ytype_auxi.value),0,'c',depl);
-													printf("# je vaux %d\n",atoi(ytype_auxi.value));
+
+													if(lconst==0){
 													
+													gmap=ajouter(gmap,"entier",ytype_auxi.name,"NULL",atoi(ytype_auxi.value),0,'c',depl);
 													depl++;
+													}else if(lconst==1){
+														gmap=ajouter(gmap,"entier",ytype_auxi.name,"NULL",atoi(ytype_auxi.value),0,'C',depl);
+														printf("#im inside %s %d %d \n",ytype_auxi.name,atoi(ytype_auxi.value),getAdresse(gmap,ytype_auxi.name));
+														instarg("ALLOC",1);
+														sauvegardeEntier2(atoi(ytype_auxi.value),getAdresse(gmap,ytype_auxi.name));
+														affiche(gmap);
+														depl++;	
+
+													}
 												}													
 												else{
 													gmap=ajouter(gmap,"chaine",ytype_auxi.name,ytype_auxi.value,0,0,'c',depl);
@@ -124,12 +146,15 @@ NombreSigne			: 	NUM  { /* MODIF DU 25 04 2013*/
 		                   					}
                    						}
 						;
-DeclVarPuisFonct 	:	 TYPE ListVar PV DeclVarPuisFonct 
+DeclVarPuisFonct 	:	 TYPE ListVar {putTypeInStorage(&ytype,$1);} PV DeclVarPuisFonct 
 						| DeclFonct
 						| /*rien*/
 						;
 ListVar				: 	ListVar VRG IDENT { 
-											if(ytype_auxi.typey == ENTIER){
+											if(reg==0){
+												AjoutStoreIdentValue(&ytype,$3);
+											}
+											else if(ytype_auxi.typey == ENTIER){
 												gmap=ajouter(gmap,"entier",$3,NULL,0,0,'e',depl);
 												instarg("ALLOC",1);
 												depl++;
@@ -140,7 +165,10 @@ ListVar				: 	ListVar VRG IDENT {
 
 											}
 						| IDENT {	
-											if(ytype_auxi.typey == ENTIER){
+											if(reg==0){
+												AjoutStoreIdentValue(&ytype,$1);
+											}
+											else if(ytype_auxi.typey == ENTIER){
 												gmap=ajouter(gmap,"entier",$1,NULL,0,0,'e',depl);
 												instarg("ALLOC",1);
 												
@@ -170,17 +198,17 @@ Parametres			: 	VOID
 ListTypVar			: 	ListTypVar VRG TYPE IDENT 
 						| TYPE IDENT
 						;
-Corps				: 	LACC DeclConst DeclVar SuiteInstr RACC
+Corps				: 	LACC {lconst=1;} DeclConst {lconst=0;} DeclVar SuiteInstr RACC
 						;
 DeclVar 			: 	DeclVar TYPE { 
 
 										
 										if(strcmp($2,"entier")==0){
-											comment("DECARATION D ENTIER\n");
+											comment("DECLARATION D ENTIER\n");
 											ytype_auxi.typey = ENTIER;
 										}
 										else {
-										comment("DECARATION DE STRING\n");
+										comment("DECLARATION DE STRING\n");
 
 										ytype_auxi.typey = STRING;
 
@@ -193,9 +221,17 @@ SuiteInstr			: 	SuiteInstr Instr
 						;
 InstrComp			: 	LACC SuiteInstr RACC
 						;
-Instr 				: 	LValue EGAL Exp PV { 
+Instr 				: 	LValue {strcpy(recupIdent,ytype_auxi.name);} EGAL Exp PV { 
 
-											if(ytype_auxi.typey == STRING){
+											if(ytype_auxi.typey==3){
+												printf("#%s == %s\n",recupIdent,ytype_auxi.name);
+
+												updateIdent(gmap,recupIdent,ytype_auxi.name);
+												affiche(gmap);
+												sauvegardeEntier2(getEntier(gmap,recupIdent),getAdresse(gmap,recupIdent));
+
+											}
+											else if(ytype_auxi.typey == STRING){
 												comment("INITIALISATION D'UN STRING\n");
 												gmap=ajouter(gmap,"chaine",ytype_auxi.name,ytype_auxi.value,0,0,'s',depl);
 												
@@ -209,7 +245,6 @@ Instr 				: 	LValue EGAL Exp PV {
 												gmap=ajouter(gmap,"entier",ytype_auxi.name,"NULL",atoi(ytype_auxi.value),0,'e',depl);
 												
 
-												printf("#name=%s et @ vaut= %d\n",ytype_auxi.name,getAdresse(gmap,ytype_auxi.name));
 
 												sauvegardeEntier2(atoi(ytype_auxi.value),getAdresse(gmap,ytype_auxi.name));
 												/*sauvegardeEntier(atoi(ytype_auxi.value));*/
@@ -262,15 +297,13 @@ LValue				: 	IDENT /* MODIF DU 25 04 2013*/
 							AjoutStoreIdentValue(&ytype,ytype_auxi.name);ytype_auxi.typey=3;
 							ytype->typey=3;
 							strcpy(ytype->value,ytype_auxi.value);
-							printf("\n\t\t#p vaut=%d\n",p);
 							if(p==1){
-								printf("\n\t\t#je suis %s a l@ =%d\n",$1,getAdresse(gmap,$1));
 								
 								chargerEntier(getAdresse(gmap,$1));
 								p=0;
 							}
 						}
-						| IDENT LSQB Exp RSQB {comment("DECARATION D' UN TABLEAU\n");}
+						| IDENT LSQB Exp RSQB {comment("DECLARATION D' UN TABLEAU\n");}
 						;
 ListExp				: 	ListExp VRG Exp
 						| Exp
@@ -333,7 +366,7 @@ Exp 				:	Exp ADDSUB Exp {
 
 											if($2=='+'){
 												
-												libere_storeIdentValue(&ytype);
+												/*libere_storeIdentValue(&ytype);*/
 												AjoutStoreIdentValue(&ytype,"resultat");
 												sprintf(ytype->name,"%d",atoi($3.valeur)+atoi($1.valeur));
 												ytype->typey=ENTIER;
@@ -342,7 +375,7 @@ Exp 				:	Exp ADDSUB Exp {
 												inst("ADD");
 												
 											}else {
-												libere_storeIdentValue(&ytype);
+												/*libere_storeIdentValue(&ytype);*/
 												AjoutStoreIdentValue(&ytype,"resultat");
 												sprintf(ytype->name,"%d",atoi($3.valeur)-atoi($1.valeur));
 												ytype->typey=ENTIER;
@@ -780,7 +813,7 @@ Exp 				:	Exp ADDSUB Exp {
 
 									}
 						| LPAR Exp RPAR { $$=$$;}
-						| LValue { $$.my_type=ytype_auxi.typey;printf("#je suis passe ici\n");p=1;}
+						| LValue { $$.my_type=ytype_auxi.typey;printf("#je suis passe dans lvalue\n");p=1;}
 						| NUM {	
 				
 								ytype_auxi.typey = ENTIER ;
@@ -833,18 +866,23 @@ ANCRE	:
   					}
   					;
 SAVEGLOBAVAR :		{
-						while(gmap[i].define!='f'){
+					printf("#je suis entree\n");
+					storeGlobal();
+					if(gmap!=NULL){
+							while(gmap[reg].define!='f'){
 
-							if(getType(gmap,gmap[i].ident)==ENTIER){
-								instarg("ALLOC",1);
-								sauvegardeEntier2(getEntier(gmap,gmap[i].ident),getAdresse(gmap,gmap[i].ident));
-								i++;
+								if(getType(gmap,gmap[reg].ident)==ENTIER){
+									instarg("ALLOC",1);
+									sauvegardeEntier2(getEntier(gmap,gmap[reg].ident),getAdresse(gmap,gmap[reg].ident));
+									reg++;
+								}
+								else{
+									/*mettre ici la gestion des chaines global*/
+								}
+							reg++;
 							}
-							else{
-								/*mettre ici la gestion des chaines global*/
-							}
-							i++;
-						}
+						}	
+						reg=1;
 					}
 						;
 %%
@@ -873,7 +911,18 @@ int yyerror(char* s) {
   return 0;
 }
 
+void storeGlobal(){
 
+  while(ytype!=NULL){
+  		printf("#in storeg() depl =%d\n",depl);
+    gmap=ajouter(gmap,"entier",ytype->name,NULL,0,0,'g',depl);
+    printf("# %s @ vaut= %d\n",ytype->name,getAdresse(gmap,ytype->name));
+  	instarg("ALLOC",1);
+    depl++;
+    ytype=ytype->next;
+  }
+  
+}
 
 void sauvegardeEntier(int valeur){
 	printf("#depl=%d val =%d\n",tas,valeur);
@@ -887,7 +936,7 @@ void sauvegardeEntier(int valeur){
 }
 
 void sauvegardeEntier2(int valeur,int adresse){
-	printf("#depl=%d val =%d\n",depl,valeur);
+	printf("#adresse=%d val =%d\n",adresse,valeur);
 
   instarg("SET",adresse);
   inst("SWAP");

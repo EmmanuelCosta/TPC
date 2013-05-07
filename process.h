@@ -59,7 +59,7 @@ typedef struct _map_{
   char ident[N];
   char define;
   int adresse;
-  char typevallex; /*v pour union entier ou t pour tableau  s pour string ou n not define*/
+  char typevallex; /*v pour union entier ou t pour tableau  s pour string ou n not define c const global,g pour var gobal qlconque*/
 
 }my_map;
 
@@ -104,4 +104,6 @@ int max(int a,int b);
 int min(int a,int b);
 void libere_storeIdentValue(storeIdentValue *l);
 int getAdresse(my_map * map,char *ident);
+void putTypeInStorage(storeIdentValue *ytype,char* name);
+ void updateIdent(my_map*map,char *cible,char *source);
 #endif

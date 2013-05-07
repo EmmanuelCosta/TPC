@@ -1,10 +1,14 @@
-const v=5;
 
-main(){
-	entier a;
-  a=5;
-	print(v+a);
+main() {
+entier a,n;
+a=8;
+n=18;
+a=n;
+n=5;
+print(a+n+100);
+
+  
+  
+
+  
 }
-
-
-

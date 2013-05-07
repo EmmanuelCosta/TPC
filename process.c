@@ -52,9 +52,9 @@ void affiche(my_map *map){
   if(map == NULL){printf("#la map est NULL\n");}
   for(i=0;i<TAILLE;i++){
      if(map[i].define=='t'){
-        if(map[i].typevallex=='e' ||(map[i].typevallex=='c'&& strcmp("entier",map[i].type)==0 ) )
+        if(map[i].typevallex=='e' ||((map[i].typevallex=='c' || map[i].typevallex=='C')&& strcmp("entier",map[i].type)==0 ) )
           printf("#position = %d %s %s %d ==adresse = %d\n",i,map[i].type,map[i].ident,map[i].vallex.val,map[i].adresse );
-          else if(map[i].typevallex =='s' || (map[i].typevallex=='c'&& strcmp("chaine",map[i].type)==0 ) ){
+          else if(map[i].typevallex =='s' || ((map[i].typevallex=='c' || map[i].typevallex=='C')&& strcmp("chaine",map[i].type)==0 ) ){
               printf("#position = %d %s %s %s\n",i,map[i].type,map[i].ident,map[i].vallex.val_chaine);
           }
 
@@ -95,8 +95,9 @@ int exist2(my_map m[TAILLE],char *ident,char *type){
     
     int i=0;
     /*si ident trouver */
-    
     for(i=0;i<TAILLE;i++){
+
+
       if(strcmp(m[i].ident,ident)==0){
         if(m[i].typevallex=='e'){
 
@@ -110,9 +111,12 @@ int exist2(my_map m[TAILLE],char *ident,char *type){
           else
             return -2;
           
-        }else if(m[i].typevallex=='c'){
-
+        }else if(m[i].typevallex=='c' || m[i].typevallex=='C'){
          return -3;
+          
+        }else if(m[i].typevallex=='g'){
+
+         return -4;
           
         }else {
           if(m[i].typevallex=='t'){
@@ -129,6 +133,8 @@ int exist2(my_map m[TAILLE],char *ident,char *type){
     return -1;
  }
 
+
+/*ajouter gestion des variables non initialisees*/
 my_map * ajouter(my_map *map,char* type,char *ident,char *valchaine,int v,int taille,char typesup,int adresse){
   int i=0,k;
 
@@ -151,7 +157,7 @@ my_map * ajouter(my_map *map,char* type,char *ident,char *valchaine,int v,int ta
   }
    
   if( k != -1){
-    if(taille==0 && typesup=='e'){
+    if(taille==0 && (typesup=='e' || typesup=='g')){
        return updateEntier(map,v,k,adresse);
 
     }
@@ -182,12 +188,15 @@ my_map * ajouter(my_map *map,char* type,char *ident,char *valchaine,int v,int ta
     {
          
        
-
+      printf("##allant %c\n",typesup );
           if(strcmp("entier",type) == 0)
           {
             strcpy(map[i].type,type);
             strcpy(map[i].ident,ident);
-            map[i].typevallex = 'e';
+            if(typesup=='C'){
+              map[i].typevallex = 'C';
+            }
+              map[i].typevallex = 'e';
             map[i].vallex.val = v;
             map[i].define='t';
 
@@ -235,6 +244,29 @@ my_map* updateString(my_map *map,char* valchaine,int k,int adresse){
   return map;
 
   }
+/*utilise pour modifier la valeur dun identifiant
+*en fonction dun autre ident
+****/
+ void updateIdent(my_map*map,char *cible,char *source){
+    int i=0;
+    int t;
+    if(map == NULL)
+      return ;
+    t=getType(map,cible);
+    if(t!=getType(map,source)){
+      perror("AFFECTATION DANS IDENTIFIANT DE TYPE DIFFERENT");
+      exit(0);
+    }
+    while(i<TAILLE && strcmp(cible,map[i].ident)!=0)
+      i++;
+
+    if(t == ENTIER){
+        map[i].vallex.val=getEntier(map,source);
+    }
+    else
+        strcpy(map[i].vallex.val_chaine,getString(map,source));
+
+   }
   int getType(my_map * map,char * ident){
     int i = 0;
   for(i=0;i<TAILLE;i++){
@@ -272,51 +304,7 @@ char * getString(my_map * map,char * ident){
   }  
   return NULL;
 }
- #if 0 
-my_map* updateTab(my_map *map,int v,int k,int indice){
-
-
-}
-int main(void){
- my_map *m=NULL;
- my_map *s=NULL;
-
-s=ajouter(s,"entier","id",NULL,5,0,'e');
-s=ajouter(s,"chaine","a1","aaaa",0,0,'c');
-s=ajouter(s,"chaine","pos","aa",0,0,'c');
  
- printf(" %s %s %s\n\n",s[1].type,s[1].vallex.val_chaine,s[1].ident);
-s=ajouter(s,"chaine","a1","bb",0,0,'c');
- printf(" %s %s %s\n\n",s[1].type,s[1].vallex.val_chaine,s[1].ident);
-s=ajouter(s,"entier","id",NULL,15,0,'e');
-
- /* affiche(s);
- update(s,"a1",0,0,"b","chaine");
- update(s,"id",19,0,NULL,"entier");
- printf("********************\n\n");
- affiche(s);*/
-  return 0;
-}
-
-
-
-int main(int argc, char  *argv[])
-{
-  my_map *s=NULL;
-  s=ajouter(s,"entier","e1",NULL,5,0,'e');
-  s=ajouter(s,"chaine","c1","aaaa",0,0,'c');
-  s=ajouter(s,"chaine","c2","aa",0,0,'c');
-
-  printf("valeur de c1 = %s\n",getString(s,"c1"));
-  printf("valeur de e1 = %d\n",getEntier(s,"e1"));
-  printf("**************************\n\n");
-  affiche(s);
-  s=ajouter(s,"chaine","c2","toto",0,0,'c');
-  affiche(s);
-  return 0;
-}
-#endif
-
 /************************MODULE DE LISTE ***************************************************/
 
 
@@ -388,16 +376,15 @@ storeIdentValue  ExtraitTete(storeIdentValue *l){
 void libere_storeIdentValue(storeIdentValue *l){
   if(*l == NULL)
       return ;
-  /*char * n =malloc(sizeof(char)*(strlen((*l)->name)+1));*/
-  /**strcpy(n,(*l)->name);*/
+    printf("#aavant seg\n");
   storeIdentValue courant; 
   while(*l!=NULL){
     courant=*l; 
     *l=(*l)->next;
     free(courant);
   }
-  
-
+  *l=NULL;
+printf("#aapres seg\n");
 }
 
 int getAdresse(my_map * map,char *ident){
@@ -411,6 +398,18 @@ int getAdresse(my_map * map,char *ident){
   return -1;
 }
 
+void putTypeInStorage(storeIdentValue *ytype,char* name){
+  if(ytype==NULL) return;
+  storeIdentValue courant=*ytype;
+  while(courant!=NULL){
+    if(strcmp(name,"entier")==0)
+    courant->typey=ENTIER;
+    else
+       courant->typey=STRING;
+    courant=courant->next;
+  }
+  
+}
 /***************MODULE DE CONTROLE ***********************/
 int max(int a,int b){
   if(a>b)
@@ -423,6 +422,8 @@ int min(int a,int b){
     return a;
   return b;
 }
+
+
 /*
 int main(int argc, char *argv[])
 {

@@ -1,49 +1,70 @@
 ALLOC	500
-#			init2
-# je vaux 5
 CALL	0
 LABEL	0
+#je suis entree
+#DECLARATION D ENTIER
+
+#			init2
 ALLOC	1
-#depl=1 val =5
+##allant e
+ALLOC	1
+SET	8
+PUSH
+POP
+#INITIALISATION D'UN INT
+
+#adresse=0 val =8
 SET	0
 SWAP
-SET	5
+SET	8
 SAVER
-#DECARATION D ENTIER
+#position = 0 entier a 8 ==adresse = 0
+#position = 1 entier n 0 ==adresse = 1
+SET	18
+PUSH
+POP
+#INITIALISATION D'UN INT
 
-ALLOC	1
-
-		#p vaut=0
+#adresse=1 val =18
+SET	1
+SWAP
+SET	18
+SAVER
+#position = 0 entier a 8 ==adresse = 0
+#position = 1 entier n 18 ==adresse = 1
+#je suis passe dans lvalue
+#a == n
+#position = 0 entier a 18 ==adresse = 0
+#position = 1 entier n 18 ==adresse = 1
+#adresse=0 val =18
+SET	0
+SWAP
+SET	18
+SAVER
+SET	1
+LOADR
+PUSH
 SET	5
 PUSH
 POP
 #INITIALISATION D'UN INT
 
-#name=a et @ vaut= 1
-#depl=2 val =5
+#adresse=1 val =5
 SET	1
 SWAP
 SET	5
 SAVER
-#position = 0 entier v 5 ==adresse = 0
-#position = 1 entier a 5 ==adresse = 1
+#position = 0 entier a 18 ==adresse = 0
+#position = 1 entier n 5 ==adresse = 1
 #c bon 
-
-		#p vaut=1
-
-		#je suis v a l@ =0
 SET	0
 LOADR
 PUSH
-#je suis passe ici
-
-		#p vaut=1
-
-		#je suis a a l@ =1
+#je suis passe dans lvalue
 SET	1
 LOADR
 PUSH
-#je suis passe ici
+#je suis passe dans lvalue
 SET	0
 LOADR
 PUSH
@@ -52,6 +73,17 @@ SET	1
 LOADR
 PUSH
 #==>1
+POP
+SWAP
+POP
+ADD
+PUSH
+SET	100
+PUSH
+SET	23
+PUSH
+SET	100
+PUSH
 POP
 SWAP
 POP
