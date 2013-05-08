@@ -223,7 +223,7 @@ InstrComp			: 	LACC SuiteInstr RACC
 						;
 Instr 				: 	LValue {strcpy(recupIdent,ytype_auxi.name);} EGAL Exp PV { 
 
-											if(ytype_auxi.typey==3){
+											 if(ytype_auxi.typey==3){
 												printf("#%s == %s\n",recupIdent,ytype_auxi.name);
 
 												updateIdent(gmap,recupIdent,ytype_auxi.name);
@@ -240,7 +240,6 @@ Instr 				: 	LValue {strcpy(recupIdent,ytype_auxi.name);} EGAL Exp PV {
 
 											}
 											else{
-												inst("POP");
 												comment("INITIALISATION D'UN INT\n");
 												gmap=ajouter(gmap,"entier",ytype_auxi.name,"NULL",atoi(ytype_auxi.value),0,'e',depl);
 												
@@ -283,6 +282,7 @@ Instr 				: 	LValue {strcpy(recupIdent,ytype_auxi.name);} EGAL Exp PV {
 													printf("#et val vaut\n");
 												  inst("POP"); 
                            						  inst("WRITE");
+                           						  affiche(gmap);
                            						  p=0;
                            						}
 						| PV
@@ -869,12 +869,11 @@ SAVEGLOBAVAR :		{
 					printf("#je suis entree\n");
 					storeGlobal();
 					if(gmap!=NULL){
-							while(gmap[reg].define!='f'){
+							while(gmap[reg].define!='f' && reg<TAILLE){
 
 								if(getType(gmap,gmap[reg].ident)==ENTIER){
 									instarg("ALLOC",1);
 									sauvegardeEntier2(getEntier(gmap,gmap[reg].ident),getAdresse(gmap,gmap[reg].ident));
-									reg++;
 								}
 								else{
 									/*mettre ici la gestion des chaines global*/
@@ -917,7 +916,7 @@ void storeGlobal(){
   		printf("#in storeg() depl =%d\n",depl);
     gmap=ajouter(gmap,"entier",ytype->name,NULL,0,0,'g',depl);
     printf("# %s @ vaut= %d\n",ytype->name,getAdresse(gmap,ytype->name));
-  	instarg("ALLOC",1);
+  	/*instarg("ALLOC",1);*/
     depl++;
     ytype=ytype->next;
   }

@@ -52,8 +52,8 @@ void affiche(my_map *map){
   if(map == NULL){printf("#la map est NULL\n");}
   for(i=0;i<TAILLE;i++){
      if(map[i].define=='t'){
-        if(map[i].typevallex=='e' ||((map[i].typevallex=='c' || map[i].typevallex=='C')&& strcmp("entier",map[i].type)==0 ) )
-          printf("#position = %d %s %s %d ==adresse = %d\n",i,map[i].type,map[i].ident,map[i].vallex.val,map[i].adresse );
+        if(map[i].typevallex=='e' ||((map[i].typevallex=='c' || map[i].typevallex=='g'|| map[i].typevallex=='C')&& strcmp("entier",map[i].type)==0 ) )
+          printf("#position = %d %s %s %d ==adresse = %d  == %c\n",i,map[i].type,map[i].ident,map[i].vallex.val,map[i].adresse,map[i].typevallex );
           else if(map[i].typevallex =='s' || ((map[i].typevallex=='c' || map[i].typevallex=='C')&& strcmp("chaine",map[i].type)==0 ) ){
               printf("#position = %d %s %s %s\n",i,map[i].type,map[i].ident,map[i].vallex.val_chaine);
           }
@@ -116,7 +116,7 @@ int exist2(my_map m[TAILLE],char *ident,char *type){
           
         }else if(m[i].typevallex=='g'){
 
-         return -4;
+         return i;
           
         }else {
           if(m[i].typevallex=='t'){
@@ -186,17 +186,14 @@ my_map * ajouter(my_map *map,char* type,char *ident,char *valchaine,int v,int ta
   /* ici je suis a la bonne case */
     if(taille == 0)
     {
-         
+            map[i].typevallex = typesup;
        
-      printf("##allant %c\n",typesup );
           if(strcmp("entier",type) == 0)
           {
             strcpy(map[i].type,type);
             strcpy(map[i].ident,ident);
-            if(typesup=='C'){
-              map[i].typevallex = 'C';
-            }
-              map[i].typevallex = 'e';
+            
+           
             map[i].vallex.val = v;
             map[i].define='t';
 
@@ -250,8 +247,11 @@ my_map* updateString(my_map *map,char* valchaine,int k,int adresse){
  void updateIdent(my_map*map,char *cible,char *source){
     int i=0;
     int t;
-    if(map == NULL)
-      return ;
+    if(map == NULL){
+      perror("la map ne peut etre nulle lors dune mise a jour");
+      exit(0);
+    }
+      
     t=getType(map,cible);
     if(t!=getType(map,source)){
       perror("AFFECTATION DANS IDENTIFIANT DE TYPE DIFFERENT");

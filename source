@@ -1,13 +1,19 @@
 
 main() {
-entier a,n;
-a=8;
-n=18;
-a=n;
-n=5;
-print(a+n+100);
 
-  
+entier a,b,v;
+a=1;
+b=20;
+v=14;
+b=4;
+a=v;
+b=8;
+
+print(a);
+print(b);
+print(v);
+print(qs);
+  print(5+a+b+v);
   
 
   

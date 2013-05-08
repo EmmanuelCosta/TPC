@@ -6,69 +6,149 @@ LABEL	0
 
 #			init2
 ALLOC	1
-##allant e
 ALLOC	1
-SET	8
+ALLOC	1
+SET	1
 PUSH
-POP
 #INITIALISATION D'UN INT
 
-#adresse=0 val =8
+#adresse=0 val =1
 SET	0
 SWAP
-SET	8
+SET	1
 SAVER
-#position = 0 entier a 8 ==adresse = 0
-#position = 1 entier n 0 ==adresse = 1
-SET	18
+#position = 0 entier a 1 ==adresse = 0  == e
+#position = 1 entier b 0 ==adresse = 1  == e
+#position = 2 entier v 0 ==adresse = 2  == e
+SET	20
 PUSH
-POP
 #INITIALISATION D'UN INT
 
-#adresse=1 val =18
+#adresse=1 val =20
 SET	1
 SWAP
-SET	18
+SET	20
 SAVER
-#position = 0 entier a 8 ==adresse = 0
-#position = 1 entier n 18 ==adresse = 1
+#position = 0 entier a 1 ==adresse = 0  == e
+#position = 1 entier b 20 ==adresse = 1  == e
+#position = 2 entier v 0 ==adresse = 2  == e
+SET	14
+PUSH
+#INITIALISATION D'UN INT
+
+#adresse=2 val =14
+SET	2
+SWAP
+SET	14
+SAVER
+#position = 0 entier a 1 ==adresse = 0  == e
+#position = 1 entier b 20 ==adresse = 1  == e
+#position = 2 entier v 14 ==adresse = 2  == e
+SET	4
+PUSH
+#INITIALISATION D'UN INT
+
+#adresse=1 val =4
+SET	1
+SWAP
+SET	4
+SAVER
+#position = 0 entier a 1 ==adresse = 0  == e
+#position = 1 entier b 4 ==adresse = 1  == e
+#position = 2 entier v 14 ==adresse = 2  == e
 #je suis passe dans lvalue
-#a == n
-#position = 0 entier a 18 ==adresse = 0
-#position = 1 entier n 18 ==adresse = 1
-#adresse=0 val =18
+#a == v
+#position = 0 entier a 14 ==adresse = 0  == e
+#position = 1 entier b 4 ==adresse = 1  == e
+#position = 2 entier v 14 ==adresse = 2  == e
+#adresse=0 val =14
 SET	0
 SWAP
-SET	18
+SET	14
 SAVER
 SET	1
 LOADR
 PUSH
-SET	5
+SET	8
 PUSH
-POP
 #INITIALISATION D'UN INT
 
-#adresse=1 val =5
+#adresse=1 val =8
 SET	1
 SWAP
-SET	5
+SET	8
 SAVER
-#position = 0 entier a 18 ==adresse = 0
-#position = 1 entier n 5 ==adresse = 1
+#position = 0 entier a 14 ==adresse = 0  == e
+#position = 1 entier b 8 ==adresse = 1  == e
+#position = 2 entier v 14 ==adresse = 2  == e
 #c bon 
 SET	0
 LOADR
 PUSH
 #je suis passe dans lvalue
+#et val vaut
+POP
+WRITE
+#position = 0 entier a 14 ==adresse = 0  == e
+#position = 1 entier b 8 ==adresse = 1  == e
+#position = 2 entier v 14 ==adresse = 2  == e
+#c bon 
 SET	1
 LOADR
 PUSH
 #je suis passe dans lvalue
+#et val vaut
+POP
+WRITE
+#position = 0 entier a 14 ==adresse = 0  == e
+#position = 1 entier b 8 ==adresse = 1  == e
+#position = 2 entier v 14 ==adresse = 2  == e
+#c bon 
+SET	2
+LOADR
+PUSH
+#je suis passe dans lvalue
+#et val vaut
+POP
+WRITE
+#position = 0 entier a 14 ==adresse = 0  == e
+#position = 1 entier b 8 ==adresse = 1  == e
+#position = 2 entier v 14 ==adresse = 2  == e
+#c bon 
+SET	-1
+LOADR
+PUSH
+#je suis passe dans lvalue
+#et val vaut
+POP
+WRITE
+#position = 0 entier a 14 ==adresse = 0  == e
+#position = 1 entier b 8 ==adresse = 1  == e
+#position = 2 entier v 14 ==adresse = 2  == e
+#c bon 
+SET	5
+PUSH
 SET	0
 LOADR
 PUSH
-#==> 0
+#je suis passe dans lvalue
+SET	5
+PUSH
+SET	0
+LOADR
+PUSH
+#==>0
+POP
+SWAP
+POP
+ADD
+PUSH
+SET	1
+LOADR
+PUSH
+#je suis passe dans lvalue
+SET	19
+PUSH
 SET	1
 LOADR
 PUSH
@@ -78,12 +158,16 @@ SWAP
 POP
 ADD
 PUSH
-SET	100
+SET	2
+LOADR
 PUSH
-SET	23
+#je suis passe dans lvalue
+SET	27
 PUSH
-SET	100
+SET	2
+LOADR
 PUSH
+#==>2
 POP
 SWAP
 POP
@@ -92,4 +176,7 @@ PUSH
 #et val vaut
 POP
 WRITE
+#position = 0 entier a 14 ==adresse = 0  == e
+#position = 1 entier b 8 ==adresse = 1  == e
+#position = 2 entier v 14 ==adresse = 2  == e
 HALT
