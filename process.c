@@ -13,7 +13,7 @@ tableau alloue_tableau(int taille,int v){
   return tabl;
 }
 /*type e pour entier c pour chaine et t tableau*/
-my_map* alloue_map(char* type,char *ident,char *valchaine,int v,int taille,char typesup){
+my_map* alloue_map(char* type,char *ident,char *valchaine,int v,int taille,char typesup,listvar var){
    int i=0;
    /*allocation de la map*/
   my_map *m=(my_map*)malloc(sizeof(my_map)*TAILLE);
@@ -32,8 +32,9 @@ my_map* alloue_map(char* type,char *ident,char *valchaine,int v,int taille,char 
   }else if(taille == 0 && strcmp(type,"entier")==0){
      printf("#\t\t\tinit2\n");
     m[0].vallex.val=v;
+
   }else{
-    m[0].vallex.tab=alloue_tableau( taille, v);
+    m[0].vallex.var=var;
 
   }
     strcpy(m[0].type,type);
@@ -135,12 +136,12 @@ int exist2(my_map m[TAILLE],char *ident,char *type){
 
 
 /*ajouter gestion des variables non initialisees*/
-my_map * ajouter(my_map *map,char* type,char *ident,char *valchaine,int v,int taille,char typesup,int adresse){
+my_map * ajouter(my_map *map,char* type,char *ident,char *valchaine,int v,int taille,char typesup,int adresse,listvar var){
   int i=0,k;
 
  
   if(map == NULL){
-      map=alloue_map(type,ident,valchaine, v,taille, typesup);
+      map=alloue_map(type,ident,valchaine, v,taille, typesup,var);
       map[0].adresse = adresse;
        return map; 
   }
@@ -423,6 +424,49 @@ int min(int a,int b){
   return b;
 }
 
+
+struct _listvar_ * alloueListvar(char *name,char*value,int type){
+  listvar var=(listvar)malloc(sizeof(struct _listvar_));
+  if(var ==NULL){
+    printf("error in allocation\n");
+    return NULL;
+  }
+  var->type=type;
+  var->name=malloc(sizeof(char)*(strlen(name)));
+  var->value=malloc(sizeof(char)*(strlen(value)));
+  strcpy(var->name,name);
+
+  strcpy(var->value,value);
+  var->next=NULL;
+  return var;
+}
+
+void ajoutListvar(listvar *var,char *name,char*value,int type){
+  struct _listvar_ * temp;
+  if(*var==NULL){
+    *var= alloueListvar(name,value,type);
+    return;
+  }
+  temp=*var;
+  while(temp->next!=NULL){
+    temp=temp->next;
+  }
+  temp->next= alloueListvar(name,value,type);
+}
+
+char * getVar(listvar var,char *name){
+  if(var==NULL){
+    printf("There isn' t any internal variable \n");
+    return NULL;
+  }
+  while(var!=NULL){
+    if(strcmp(var->name,name)==0)
+      return var->value;
+    var=var->next;
+  }
+  printf("The variable needed doesn 't exist yet \n");
+  return NULL;
+}
 
 /*
 int main(int argc, char *argv[])

@@ -1,20 +1,45 @@
 
+
 main() {
+	const hj=10;
+  entier a,b,c,d,e,f,g,h ;
+  chaine u,v,w ;
+  entier o ;
 
-entier a,b,v;
-a=1;
-b=20;
-v=14;
-b=4;
-a=v;
-b=8;
 
-print(a);
-print(b);
-print(v);
-print(qs);
-  print(5+a+b+v);
+
+    a = 42 ;
+      e = 66 ;
+  g = 2431 ;
+  o = 1 ;
+  c = 909 ;
+
+  print(a);
+
+  print(g) ;
+  print(e) ;
+  print(o) ;
+  o = 666 ;
+  print(o+a+14+10) ;
+
   
 
-  
+c=22;
+  print(c) ;
+  if( 25 < 5 ) {
+    print(255);
+  }
+  else { 
+    if ( a < e ) {
+      print(a);
+    }
+    else {
+    print(7878);
+    }
+   }
+  print(10000);
+
+  print(a) ; print(e) ;
+  a = e ;
+  print(a) ;
 }

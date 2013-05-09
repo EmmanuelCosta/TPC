@@ -2,153 +2,259 @@ ALLOC	500
 CALL	0
 LABEL	0
 #je suis entree
+#			init2
+#im inside hj 10 0 
+ALLOC	1
+#adresse=0 val =10
+SET	0
+SWAP
+SET	10
+SAVER
+#position = 0 entier hj 10 ==adresse = 0  == C
 #DECLARATION D ENTIER
 
-#			init2
 ALLOC	1
 ALLOC	1
 ALLOC	1
+ALLOC	1
+ALLOC	1
+ALLOC	1
+ALLOC	1
+ALLOC	1
+#DECLARATION DE STRING
+
+#DECLARATION D ENTIER
+
+ALLOC	1
+SET	42
+PUSH
+#INITIALISATION D'UN INT
+
+#adresse=1 val =42
+SET	1
+SWAP
+SET	42
+SAVER
+#position = 0 entier hj 10 ==adresse = 0  == C
+#position = 1 entier a 42 ==adresse = 1  == e
+#position = 2 entier b 0 ==adresse = 2  == e
+#position = 3 entier c 0 ==adresse = 3  == e
+#position = 4 entier d 0 ==adresse = 4  == e
+#position = 5 entier e 0 ==adresse = 5  == e
+#position = 6 entier f 0 ==adresse = 6  == e
+#position = 7 entier g 0 ==adresse = 7  == e
+#position = 8 entier h 0 ==adresse = 8  == e
+#position = 9 chaine u NULL
+#position = 10 chaine v NULL
+#position = 11 chaine w NULL
+#position = 12 entier o 0 ==adresse = 9  == e
+SET	66
+PUSH
+#INITIALISATION D'UN INT
+
+#adresse=5 val =66
+SET	5
+SWAP
+SET	66
+SAVER
+#position = 0 entier hj 10 ==adresse = 0  == C
+#position = 1 entier a 42 ==adresse = 1  == e
+#position = 2 entier b 0 ==adresse = 2  == e
+#position = 3 entier c 0 ==adresse = 3  == e
+#position = 4 entier d 0 ==adresse = 4  == e
+#position = 5 entier e 66 ==adresse = 5  == e
+#position = 6 entier f 0 ==adresse = 6  == e
+#position = 7 entier g 0 ==adresse = 7  == e
+#position = 8 entier h 0 ==adresse = 8  == e
+#position = 9 chaine u NULL
+#position = 10 chaine v NULL
+#position = 11 chaine w NULL
+#position = 12 entier o 0 ==adresse = 9  == e
+SET	2431
+PUSH
+#INITIALISATION D'UN INT
+
+#adresse=7 val =2431
+SET	7
+SWAP
+SET	2431
+SAVER
+#position = 0 entier hj 10 ==adresse = 0  == C
+#position = 1 entier a 42 ==adresse = 1  == e
+#position = 2 entier b 0 ==adresse = 2  == e
+#position = 3 entier c 0 ==adresse = 3  == e
+#position = 4 entier d 0 ==adresse = 4  == e
+#position = 5 entier e 66 ==adresse = 5  == e
+#position = 6 entier f 0 ==adresse = 6  == e
+#position = 7 entier g 2431 ==adresse = 7  == e
+#position = 8 entier h 0 ==adresse = 8  == e
+#position = 9 chaine u NULL
+#position = 10 chaine v NULL
+#position = 11 chaine w NULL
+#position = 12 entier o 0 ==adresse = 9  == e
 SET	1
 PUSH
 #INITIALISATION D'UN INT
 
-#adresse=0 val =1
-SET	0
+#adresse=9 val =1
+SET	9
 SWAP
 SET	1
 SAVER
-#position = 0 entier a 1 ==adresse = 0  == e
-#position = 1 entier b 0 ==adresse = 1  == e
-#position = 2 entier v 0 ==adresse = 2  == e
-SET	20
+#position = 0 entier hj 10 ==adresse = 0  == C
+#position = 1 entier a 42 ==adresse = 1  == e
+#position = 2 entier b 0 ==adresse = 2  == e
+#position = 3 entier c 0 ==adresse = 3  == e
+#position = 4 entier d 0 ==adresse = 4  == e
+#position = 5 entier e 66 ==adresse = 5  == e
+#position = 6 entier f 0 ==adresse = 6  == e
+#position = 7 entier g 2431 ==adresse = 7  == e
+#position = 8 entier h 0 ==adresse = 8  == e
+#position = 9 chaine u NULL
+#position = 10 chaine v NULL
+#position = 11 chaine w NULL
+#position = 12 entier o 1 ==adresse = 9  == e
+SET	909
 PUSH
 #INITIALISATION D'UN INT
 
-#adresse=1 val =20
-SET	1
+#adresse=3 val =909
+SET	3
 SWAP
-SET	20
+SET	909
 SAVER
-#position = 0 entier a 1 ==adresse = 0  == e
-#position = 1 entier b 20 ==adresse = 1  == e
-#position = 2 entier v 0 ==adresse = 2  == e
-SET	14
-PUSH
-#INITIALISATION D'UN INT
-
-#adresse=2 val =14
-SET	2
-SWAP
-SET	14
-SAVER
-#position = 0 entier a 1 ==adresse = 0  == e
-#position = 1 entier b 20 ==adresse = 1  == e
-#position = 2 entier v 14 ==adresse = 2  == e
-SET	4
-PUSH
-#INITIALISATION D'UN INT
-
-#adresse=1 val =4
-SET	1
-SWAP
-SET	4
-SAVER
-#position = 0 entier a 1 ==adresse = 0  == e
-#position = 1 entier b 4 ==adresse = 1  == e
-#position = 2 entier v 14 ==adresse = 2  == e
-#je suis passe dans lvalue
-#a == v
-#position = 0 entier a 14 ==adresse = 0  == e
-#position = 1 entier b 4 ==adresse = 1  == e
-#position = 2 entier v 14 ==adresse = 2  == e
-#adresse=0 val =14
-SET	0
-SWAP
-SET	14
-SAVER
-SET	1
-LOADR
-PUSH
-SET	8
-PUSH
-#INITIALISATION D'UN INT
-
-#adresse=1 val =8
-SET	1
-SWAP
-SET	8
-SAVER
-#position = 0 entier a 14 ==adresse = 0  == e
-#position = 1 entier b 8 ==adresse = 1  == e
-#position = 2 entier v 14 ==adresse = 2  == e
+#position = 0 entier hj 10 ==adresse = 0  == C
+#position = 1 entier a 42 ==adresse = 1  == e
+#position = 2 entier b 0 ==adresse = 2  == e
+#position = 3 entier c 909 ==adresse = 3  == e
+#position = 4 entier d 0 ==adresse = 4  == e
+#position = 5 entier e 66 ==adresse = 5  == e
+#position = 6 entier f 0 ==adresse = 6  == e
+#position = 7 entier g 2431 ==adresse = 7  == e
+#position = 8 entier h 0 ==adresse = 8  == e
+#position = 9 chaine u NULL
+#position = 10 chaine v NULL
+#position = 11 chaine w NULL
+#position = 12 entier o 1 ==adresse = 9  == e
 #c bon 
-SET	0
+SET	1
 LOADR
 PUSH
 #je suis passe dans lvalue
 #et val vaut
 POP
 WRITE
-#position = 0 entier a 14 ==adresse = 0  == e
-#position = 1 entier b 8 ==adresse = 1  == e
-#position = 2 entier v 14 ==adresse = 2  == e
+#position = 0 entier hj 10 ==adresse = 0  == C
+#position = 1 entier a 42 ==adresse = 1  == e
+#position = 2 entier b 0 ==adresse = 2  == e
+#position = 3 entier c 909 ==adresse = 3  == e
+#position = 4 entier d 0 ==adresse = 4  == e
+#position = 5 entier e 66 ==adresse = 5  == e
+#position = 6 entier f 0 ==adresse = 6  == e
+#position = 7 entier g 2431 ==adresse = 7  == e
+#position = 8 entier h 0 ==adresse = 8  == e
+#position = 9 chaine u NULL
+#position = 10 chaine v NULL
+#position = 11 chaine w NULL
+#position = 12 entier o 1 ==adresse = 9  == e
 #c bon 
-SET	1
+SET	7
 LOADR
 PUSH
 #je suis passe dans lvalue
 #et val vaut
 POP
 WRITE
-#position = 0 entier a 14 ==adresse = 0  == e
-#position = 1 entier b 8 ==adresse = 1  == e
-#position = 2 entier v 14 ==adresse = 2  == e
-#c bon 
-SET	2
-LOADR
-PUSH
-#je suis passe dans lvalue
-#et val vaut
-POP
-WRITE
-#position = 0 entier a 14 ==adresse = 0  == e
-#position = 1 entier b 8 ==adresse = 1  == e
-#position = 2 entier v 14 ==adresse = 2  == e
-#c bon 
-SET	-1
-LOADR
-PUSH
-#je suis passe dans lvalue
-#et val vaut
-POP
-WRITE
-#position = 0 entier a 14 ==adresse = 0  == e
-#position = 1 entier b 8 ==adresse = 1  == e
-#position = 2 entier v 14 ==adresse = 2  == e
+#position = 0 entier hj 10 ==adresse = 0  == C
+#position = 1 entier a 42 ==adresse = 1  == e
+#position = 2 entier b 0 ==adresse = 2  == e
+#position = 3 entier c 909 ==adresse = 3  == e
+#position = 4 entier d 0 ==adresse = 4  == e
+#position = 5 entier e 66 ==adresse = 5  == e
+#position = 6 entier f 0 ==adresse = 6  == e
+#position = 7 entier g 2431 ==adresse = 7  == e
+#position = 8 entier h 0 ==adresse = 8  == e
+#position = 9 chaine u NULL
+#position = 10 chaine v NULL
+#position = 11 chaine w NULL
+#position = 12 entier o 1 ==adresse = 9  == e
 #c bon 
 SET	5
-PUSH
-SET	0
 LOADR
 PUSH
 #je suis passe dans lvalue
-SET	5
-PUSH
-SET	0
+#et val vaut
+POP
+WRITE
+#position = 0 entier hj 10 ==adresse = 0  == C
+#position = 1 entier a 42 ==adresse = 1  == e
+#position = 2 entier b 0 ==adresse = 2  == e
+#position = 3 entier c 909 ==adresse = 3  == e
+#position = 4 entier d 0 ==adresse = 4  == e
+#position = 5 entier e 66 ==adresse = 5  == e
+#position = 6 entier f 0 ==adresse = 6  == e
+#position = 7 entier g 2431 ==adresse = 7  == e
+#position = 8 entier h 0 ==adresse = 8  == e
+#position = 9 chaine u NULL
+#position = 10 chaine v NULL
+#position = 11 chaine w NULL
+#position = 12 entier o 1 ==adresse = 9  == e
+#c bon 
+SET	9
 LOADR
 PUSH
-#==>0
+#je suis passe dans lvalue
+#et val vaut
 POP
-SWAP
-POP
-ADD
+WRITE
+#position = 0 entier hj 10 ==adresse = 0  == C
+#position = 1 entier a 42 ==adresse = 1  == e
+#position = 2 entier b 0 ==adresse = 2  == e
+#position = 3 entier c 909 ==adresse = 3  == e
+#position = 4 entier d 0 ==adresse = 4  == e
+#position = 5 entier e 66 ==adresse = 5  == e
+#position = 6 entier f 0 ==adresse = 6  == e
+#position = 7 entier g 2431 ==adresse = 7  == e
+#position = 8 entier h 0 ==adresse = 8  == e
+#position = 9 chaine u NULL
+#position = 10 chaine v NULL
+#position = 11 chaine w NULL
+#position = 12 entier o 1 ==adresse = 9  == e
+SET	666
 PUSH
+#INITIALISATION D'UN INT
+
+#adresse=9 val =666
+SET	9
+SWAP
+SET	666
+SAVER
+#position = 0 entier hj 10 ==adresse = 0  == C
+#position = 1 entier a 42 ==adresse = 1  == e
+#position = 2 entier b 0 ==adresse = 2  == e
+#position = 3 entier c 909 ==adresse = 3  == e
+#position = 4 entier d 0 ==adresse = 4  == e
+#position = 5 entier e 66 ==adresse = 5  == e
+#position = 6 entier f 0 ==adresse = 6  == e
+#position = 7 entier g 2431 ==adresse = 7  == e
+#position = 8 entier h 0 ==adresse = 8  == e
+#position = 9 chaine u NULL
+#position = 10 chaine v NULL
+#position = 11 chaine w NULL
+#position = 12 entier o 666 ==adresse = 9  == e
+#c bon 
+SET	9
+LOADR
+PUSH
+#je suis passe dans lvalue
 SET	1
 LOADR
 PUSH
 #je suis passe dans lvalue
-SET	19
+SET	9
+LOADR
 PUSH
+#==> 9
 SET	1
 LOADR
 PUSH
@@ -158,16 +264,23 @@ SWAP
 POP
 ADD
 PUSH
-SET	2
-LOADR
+SET	14
 PUSH
-#je suis passe dans lvalue
-SET	27
+SET	708
 PUSH
-SET	2
-LOADR
+SET	14
 PUSH
-#==>2
+POP
+SWAP
+POP
+ADD
+PUSH
+SET	10
+PUSH
+SET	722
+PUSH
+SET	10
+PUSH
 POP
 SWAP
 POP
@@ -176,7 +289,271 @@ PUSH
 #et val vaut
 POP
 WRITE
-#position = 0 entier a 14 ==adresse = 0  == e
-#position = 1 entier b 8 ==adresse = 1  == e
-#position = 2 entier v 14 ==adresse = 2  == e
+#position = 0 entier hj 10 ==adresse = 0  == C
+#position = 1 entier a 42 ==adresse = 1  == e
+#position = 2 entier b 0 ==adresse = 2  == e
+#position = 3 entier c 909 ==adresse = 3  == e
+#position = 4 entier d 0 ==adresse = 4  == e
+#position = 5 entier e 66 ==adresse = 5  == e
+#position = 6 entier f 0 ==adresse = 6  == e
+#position = 7 entier g 2431 ==adresse = 7  == e
+#position = 8 entier h 0 ==adresse = 8  == e
+#position = 9 chaine u NULL
+#position = 10 chaine v NULL
+#position = 11 chaine w NULL
+#position = 12 entier o 666 ==adresse = 9  == e
+SET	22
+PUSH
+#INITIALISATION D'UN INT
+
+#adresse=3 val =22
+SET	3
+SWAP
+SET	22
+SAVER
+#position = 0 entier hj 10 ==adresse = 0  == C
+#position = 1 entier a 42 ==adresse = 1  == e
+#position = 2 entier b 0 ==adresse = 2  == e
+#position = 3 entier c 22 ==adresse = 3  == e
+#position = 4 entier d 0 ==adresse = 4  == e
+#position = 5 entier e 66 ==adresse = 5  == e
+#position = 6 entier f 0 ==adresse = 6  == e
+#position = 7 entier g 2431 ==adresse = 7  == e
+#position = 8 entier h 0 ==adresse = 8  == e
+#position = 9 chaine u NULL
+#position = 10 chaine v NULL
+#position = 11 chaine w NULL
+#position = 12 entier o 666 ==adresse = 9  == e
+#c bon 
+SET	3
+LOADR
+PUSH
+#je suis passe dans lvalue
+#et val vaut
+POP
+WRITE
+#position = 0 entier hj 10 ==adresse = 0  == C
+#position = 1 entier a 42 ==adresse = 1  == e
+#position = 2 entier b 0 ==adresse = 2  == e
+#position = 3 entier c 22 ==adresse = 3  == e
+#position = 4 entier d 0 ==adresse = 4  == e
+#position = 5 entier e 66 ==adresse = 5  == e
+#position = 6 entier f 0 ==adresse = 6  == e
+#position = 7 entier g 2431 ==adresse = 7  == e
+#position = 8 entier h 0 ==adresse = 8  == e
+#position = 9 chaine u NULL
+#position = 10 chaine v NULL
+#position = 11 chaine w NULL
+#position = 12 entier o 666 ==adresse = 9  == e
+SET	25
+PUSH
+SET	5
+PUSH
+SET	25
+PUSH
+# 	val=25  comp # val=5
+SET	5
+PUSH
+POP
+SWAP
+POP
+LOW
+PUSH
+#aavant seg
+#aapres seg
+POP
+JUMPF	1
+#c bon 
+SET	255
+PUSH
+#et val vaut
+POP
+WRITE
+#position = 0 entier hj 10 ==adresse = 0  == C
+#position = 1 entier a 42 ==adresse = 1  == e
+#position = 2 entier b 0 ==adresse = 2  == e
+#position = 3 entier c 22 ==adresse = 3  == e
+#position = 4 entier d 0 ==adresse = 4  == e
+#position = 5 entier e 66 ==adresse = 5  == e
+#position = 6 entier f 0 ==adresse = 6  == e
+#position = 7 entier g 2431 ==adresse = 7  == e
+#position = 8 entier h 0 ==adresse = 8  == e
+#position = 9 chaine u NULL
+#position = 10 chaine v NULL
+#position = 11 chaine w NULL
+#position = 12 entier o 666 ==adresse = 9  == e
+#aavant seg
+#aapres seg
+JUMP	2
+LABEL	1
+#je suis passe dans lvalue
+SET	5
+LOADR
+PUSH
+#je suis passe dans lvalue
+SET	1
+LOADR
+PUSH
+#==> 1
+SET	5
+LOADR
+PUSH
+#==>5
+POP
+SWAP
+POP
+LOW
+PUSH
+#aavant seg
+#aapres seg
+POP
+JUMPF	3
+#c bon 
+SET	1
+LOADR
+PUSH
+#je suis passe dans lvalue
+#et val vaut
+POP
+WRITE
+#position = 0 entier hj 10 ==adresse = 0  == C
+#position = 1 entier a 42 ==adresse = 1  == e
+#position = 2 entier b 0 ==adresse = 2  == e
+#position = 3 entier c 22 ==adresse = 3  == e
+#position = 4 entier d 0 ==adresse = 4  == e
+#position = 5 entier e 66 ==adresse = 5  == e
+#position = 6 entier f 0 ==adresse = 6  == e
+#position = 7 entier g 2431 ==adresse = 7  == e
+#position = 8 entier h 0 ==adresse = 8  == e
+#position = 9 chaine u NULL
+#position = 10 chaine v NULL
+#position = 11 chaine w NULL
+#position = 12 entier o 666 ==adresse = 9  == e
+#aavant seg
+#aapres seg
+JUMP	4
+LABEL	3
+#c bon 
+SET	7878
+PUSH
+#et val vaut
+POP
+WRITE
+#position = 0 entier hj 10 ==adresse = 0  == C
+#position = 1 entier a 42 ==adresse = 1  == e
+#position = 2 entier b 0 ==adresse = 2  == e
+#position = 3 entier c 22 ==adresse = 3  == e
+#position = 4 entier d 0 ==adresse = 4  == e
+#position = 5 entier e 66 ==adresse = 5  == e
+#position = 6 entier f 0 ==adresse = 6  == e
+#position = 7 entier g 2431 ==adresse = 7  == e
+#position = 8 entier h 0 ==adresse = 8  == e
+#position = 9 chaine u NULL
+#position = 10 chaine v NULL
+#position = 11 chaine w NULL
+#position = 12 entier o 666 ==adresse = 9  == e
+LABEL	4
+LABEL	2
+#c bon 
+SET	10000
+PUSH
+#et val vaut
+POP
+WRITE
+#position = 0 entier hj 10 ==adresse = 0  == C
+#position = 1 entier a 42 ==adresse = 1  == e
+#position = 2 entier b 0 ==adresse = 2  == e
+#position = 3 entier c 22 ==adresse = 3  == e
+#position = 4 entier d 0 ==adresse = 4  == e
+#position = 5 entier e 66 ==adresse = 5  == e
+#position = 6 entier f 0 ==adresse = 6  == e
+#position = 7 entier g 2431 ==adresse = 7  == e
+#position = 8 entier h 0 ==adresse = 8  == e
+#position = 9 chaine u NULL
+#position = 10 chaine v NULL
+#position = 11 chaine w NULL
+#position = 12 entier o 666 ==adresse = 9  == e
+#c bon 
+SET	1
+LOADR
+PUSH
+#je suis passe dans lvalue
+#et val vaut
+POP
+WRITE
+#position = 0 entier hj 10 ==adresse = 0  == C
+#position = 1 entier a 42 ==adresse = 1  == e
+#position = 2 entier b 0 ==adresse = 2  == e
+#position = 3 entier c 22 ==adresse = 3  == e
+#position = 4 entier d 0 ==adresse = 4  == e
+#position = 5 entier e 66 ==adresse = 5  == e
+#position = 6 entier f 0 ==adresse = 6  == e
+#position = 7 entier g 2431 ==adresse = 7  == e
+#position = 8 entier h 0 ==adresse = 8  == e
+#position = 9 chaine u NULL
+#position = 10 chaine v NULL
+#position = 11 chaine w NULL
+#position = 12 entier o 666 ==adresse = 9  == e
+#c bon 
+SET	5
+LOADR
+PUSH
+#je suis passe dans lvalue
+#et val vaut
+POP
+WRITE
+#position = 0 entier hj 10 ==adresse = 0  == C
+#position = 1 entier a 42 ==adresse = 1  == e
+#position = 2 entier b 0 ==adresse = 2  == e
+#position = 3 entier c 22 ==adresse = 3  == e
+#position = 4 entier d 0 ==adresse = 4  == e
+#position = 5 entier e 66 ==adresse = 5  == e
+#position = 6 entier f 0 ==adresse = 6  == e
+#position = 7 entier g 2431 ==adresse = 7  == e
+#position = 8 entier h 0 ==adresse = 8  == e
+#position = 9 chaine u NULL
+#position = 10 chaine v NULL
+#position = 11 chaine w NULL
+#position = 12 entier o 666 ==adresse = 9  == e
+#je suis passe dans lvalue
+#a == e
+#position = 0 entier hj 10 ==adresse = 0  == C
+#position = 1 entier a 66 ==adresse = 1  == e
+#position = 2 entier b 0 ==adresse = 2  == e
+#position = 3 entier c 22 ==adresse = 3  == e
+#position = 4 entier d 0 ==adresse = 4  == e
+#position = 5 entier e 66 ==adresse = 5  == e
+#position = 6 entier f 0 ==adresse = 6  == e
+#position = 7 entier g 2431 ==adresse = 7  == e
+#position = 8 entier h 0 ==adresse = 8  == e
+#position = 9 chaine u NULL
+#position = 10 chaine v NULL
+#position = 11 chaine w NULL
+#position = 12 entier o 666 ==adresse = 9  == e
+#adresse=1 val =66
+SET	1
+SWAP
+SET	66
+SAVER
+#c bon 
+SET	1
+LOADR
+PUSH
+#je suis passe dans lvalue
+#et val vaut
+POP
+WRITE
+#position = 0 entier hj 10 ==adresse = 0  == C
+#position = 1 entier a 66 ==adresse = 1  == e
+#position = 2 entier b 0 ==adresse = 2  == e
+#position = 3 entier c 22 ==adresse = 3  == e
+#position = 4 entier d 0 ==adresse = 4  == e
+#position = 5 entier e 66 ==adresse = 5  == e
+#position = 6 entier f 0 ==adresse = 6  == e
+#position = 7 entier g 2431 ==adresse = 7  == e
+#position = 8 entier h 0 ==adresse = 8  == e
+#position = 9 chaine u NULL
+#position = 10 chaine v NULL
+#position = 11 chaine w NULL
+#position = 12 entier o 666 ==adresse = 9  == e
 HALT

@@ -81,11 +81,11 @@ ListConst			:	 ListConst VRG IDENT EGAL Litteral {
 															if(ytype_auxi.typey == ENTIER){
 																
 																if(lconst==0){
-																	gmap=ajouter(gmap,"entier",ytype_auxi.name,"NULL",atoi(ytype_auxi.value),0,'c',depl);
+																	gmap=ajouter(gmap,"entier",ytype_auxi.name,"NULL",atoi(ytype_auxi.value),0,'c',depl,NULL);
 																	depl++;		
 															
 																}else if(lconst==1){
-																	gmap=ajouter(gmap,"entier",ytype_auxi.name,"NULL",atoi(ytype_auxi.value),0,'C',depl);
+																	gmap=ajouter(gmap,"entier",ytype_auxi.name,"NULL",atoi(ytype_auxi.value),0,'C',depl,NULL);
 																	instarg("ALLOC",10);
 																	sauvegardeEntier2(atoi(ytype_auxi.value),getAdresse(gmap,ytype_auxi.name));
 
@@ -95,7 +95,7 @@ ListConst			:	 ListConst VRG IDENT EGAL Litteral {
 															}						
 															else{
 																printf("#\t\t %s\n\n",ytype_auxi.value);
-																gmap=ajouter(gmap,"chaine",ytype_auxi.name,ytype_auxi.value,0,0,'c',depl);
+																gmap=ajouter(gmap,"chaine",ytype_auxi.name,ytype_auxi.value,0,0,'c',depl,NULL);
 																sauvegardeChaine(ytype_auxi.value);
 
 															}
@@ -108,10 +108,10 @@ ListConst			:	 ListConst VRG IDENT EGAL Litteral {
 
 													if(lconst==0){
 													
-													gmap=ajouter(gmap,"entier",ytype_auxi.name,"NULL",atoi(ytype_auxi.value),0,'c',depl);
+													gmap=ajouter(gmap,"entier",ytype_auxi.name,"NULL",atoi(ytype_auxi.value),0,'c',depl,NULL);
 													depl++;
 													}else if(lconst==1){
-														gmap=ajouter(gmap,"entier",ytype_auxi.name,"NULL",atoi(ytype_auxi.value),0,'C',depl);
+														gmap=ajouter(gmap,"entier",ytype_auxi.name,"NULL",atoi(ytype_auxi.value),0,'C',depl,NULL);
 														printf("#im inside %s %d %d \n",ytype_auxi.name,atoi(ytype_auxi.value),getAdresse(gmap,ytype_auxi.name));
 														instarg("ALLOC",1);
 														sauvegardeEntier2(atoi(ytype_auxi.value),getAdresse(gmap,ytype_auxi.name));
@@ -121,7 +121,7 @@ ListConst			:	 ListConst VRG IDENT EGAL Litteral {
 													}
 												}													
 												else{
-													gmap=ajouter(gmap,"chaine",ytype_auxi.name,ytype_auxi.value,0,0,'c',depl);
+													gmap=ajouter(gmap,"chaine",ytype_auxi.name,ytype_auxi.value,0,0,'c',depl,NULL);
 													sauvegardeChaine(ytype_auxi.value);
 
 												}
@@ -155,12 +155,12 @@ ListVar				: 	ListVar VRG IDENT {
 												AjoutStoreIdentValue(&ytype,$3);
 											}
 											else if(ytype_auxi.typey == ENTIER){
-												gmap=ajouter(gmap,"entier",$3,NULL,0,0,'e',depl);
+												gmap=ajouter(gmap,"entier",$3,NULL,0,0,'e',depl,NULL);
 												instarg("ALLOC",1);
 												depl++;
 											}
 											else
-												gmap=ajouter(gmap,"chaine",$3,"NULL",0,0,'s',depl);
+												gmap=ajouter(gmap,"chaine",$3,"NULL",0,0,'s',depl,NULL);
 												
 
 											}
@@ -169,13 +169,13 @@ ListVar				: 	ListVar VRG IDENT {
 												AjoutStoreIdentValue(&ytype,$1);
 											}
 											else if(ytype_auxi.typey == ENTIER){
-												gmap=ajouter(gmap,"entier",$1,NULL,0,0,'e',depl);
+												gmap=ajouter(gmap,"entier",$1,NULL,0,0,'e',depl,NULL);
 												instarg("ALLOC",1);
 												
 												depl++;
 											}
 											else
-												gmap=ajouter(gmap,"chaine",$1,"NULL",0,0,'s',depl);
+												gmap=ajouter(gmap,"chaine",$1,"NULL",0,0,'s',depl,NULL);
 												
 
 											}
@@ -233,7 +233,7 @@ Instr 				: 	LValue {strcpy(recupIdent,ytype_auxi.name);} EGAL Exp PV {
 											}
 											else if(ytype_auxi.typey == STRING){
 												comment("INITIALISATION D'UN STRING\n");
-												gmap=ajouter(gmap,"chaine",ytype_auxi.name,ytype_auxi.value,0,0,'s',depl);
+												gmap=ajouter(gmap,"chaine",ytype_auxi.name,ytype_auxi.value,0,0,'s',depl,NULL);
 												
 												/*sauvegardeChaine(ytype_auxi.value);*/
 
@@ -241,7 +241,7 @@ Instr 				: 	LValue {strcpy(recupIdent,ytype_auxi.name);} EGAL Exp PV {
 											}
 											else{
 												comment("INITIALISATION D'UN INT\n");
-												gmap=ajouter(gmap,"entier",ytype_auxi.name,"NULL",atoi(ytype_auxi.value),0,'e',depl);
+												gmap=ajouter(gmap,"entier",ytype_auxi.name,"NULL",atoi(ytype_auxi.value),0,'e',depl,NULL);
 												
 
 
@@ -914,7 +914,7 @@ void storeGlobal(){
 
   while(ytype!=NULL){
   		printf("#in storeg() depl =%d\n",depl);
-    gmap=ajouter(gmap,"entier",ytype->name,NULL,0,0,'g',depl);
+    gmap=ajouter(gmap,"entier",ytype->name,NULL,0,0,'g',depl,NULL);
     printf("# %s @ vaut= %d\n",ytype->name,getAdresse(gmap,ytype->name));
   	/*instarg("ALLOC",1);*/
     depl++;
