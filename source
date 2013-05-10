@@ -1,4 +1,14 @@
-
+const war=47;
+entier z;
+entier costa(entier au, chaine brr){
+  
+}
+chaine tcosta(entier cq, chaine rw){
+  
+}
+chaine tfcosta(entier xs, chaine zer){
+  
+}
 
 main() {
 	const hj=10;
@@ -13,13 +23,13 @@ main() {
   g = 2431 ;
   o = 1 ;
   c = 909 ;
-
   print(a);
 
   print(g) ;
   print(e) ;
   print(o) ;
-  o = 666 ;
+  o = war ;
+    print(o) ;
   print(o+a+14+10) ;
 
   

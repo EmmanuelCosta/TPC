@@ -27,6 +27,8 @@ storeIdentValue ytype;
 storeIdentValueAuxi ytype_auxi;
 storeIdentValue ytypetemp;
 
+listvar param=NULL;
+fonction my_funct=NULL;
 
 
  my_map * gmap=NULL;
@@ -70,7 +72,7 @@ storeIdentValue ytypetemp;
 %%
 PROGRAMME 			:	/* rien */ | PROGRAMME Prog
 						; 
-Prog            	:   DeclConst DeclVarPuisFonct {instarg("CALL",jump_label++);instarg("LABEL", 0);} SAVEGLOBAVAR  DeclMain
+Prog            	:   DeclConst DeclVarPuisFonct {instarg("CALL",jump_label++);instarg("LABEL", 0);} SAVEGLOBAVAR {gmap=chargeFunctionToGmap(my_funct,gmap);} DeclMain
 						;
 DeclConst			:	DeclConst CONST ListConst PV
 						|/*rien*/
@@ -189,14 +191,14 @@ DeclFonct 			:	 DeclFonct DeclUneFonct
 						;
 DeclUneFonct		: 	EnTeteFonct Corps
 						;
-EnTeteFonct			:	TYPE IDENT LPAR Parametres RPAR
-						| VOID IDENT LPAR Parametres RPAR
+EnTeteFonct			:	TYPE IDENT LPAR Parametres RPAR {printf("#=============\n");ajoutFonction(&my_funct,$2,$1,param); afficheFonction(my_funct);  freeListvar(&param);}
+						| VOID IDENT LPAR Parametres RPAR { ajoutFonction(&my_funct,$2,"void",param);  freeListvar(&param);}
 						;
-Parametres			: 	VOID
+Parametres			: 	VOID 
 						| ListTypVar
 						;
-ListTypVar			: 	ListTypVar VRG TYPE IDENT 
-						| TYPE IDENT
+ListTypVar			: 	ListTypVar VRG TYPE IDENT { ajoutListvar(&param,$4,"0",$3);}
+						| TYPE IDENT { ajoutListvar(&param,$2,"0",$1);}
 						;
 Corps				: 	LACC {lconst=1;} DeclConst {lconst=0;} DeclVar SuiteInstr RACC
 						;

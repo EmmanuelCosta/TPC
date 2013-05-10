@@ -49,23 +49,20 @@ my_map* alloue_map(char* type,char *ident,char *valchaine,int v,int taille,char 
 
 void affiche(my_map *map){
   int i=0;
-  int j;
-  if(map == NULL){printf("#la map est NULL\n");}
+  if(map == NULL){printf("#la map est NULL\n");return;}
   for(i=0;i<TAILLE;i++){
      if(map[i].define=='t'){
         if(map[i].typevallex=='e' ||((map[i].typevallex=='c' || map[i].typevallex=='g'|| map[i].typevallex=='C')&& strcmp("entier",map[i].type)==0 ) )
           printf("#position = %d %s %s %d ==adresse = %d  == %c\n",i,map[i].type,map[i].ident,map[i].vallex.val,map[i].adresse,map[i].typevallex );
-          else if(map[i].typevallex =='s' || ((map[i].typevallex=='c' || map[i].typevallex=='C')&& strcmp("chaine",map[i].type)==0 ) ){
+          else if(map[i].typevallex =='s' || ((map[i].typevallex=='c' || map[i].typevallex=='g'|| map[i].typevallex=='C')&& strcmp("chaine",map[i].type)==0 ) ){
               printf("#position = %d %s %s %s\n",i,map[i].type,map[i].ident,map[i].vallex.val_chaine);
           }
 
           else{
-          printf("#position =%d l'id : %s est  un tableau de %s de taille %d dont les valeurs sont:\n",i,map[i].ident,map[i].type,map[i].vallex.tab.taille );
-          for(j=0;j<map[i].vallex.tab.pos;j++){
-            printf("#--> i=%d %d  j=%d",i,map[i].vallex.tab.tab[j],j);
-             
-             printf("\n");
-           }
+            printf("#position = %d %s %s(..) :adresse = %d  == %c\n",i,map[i].type,map[i].ident,map[i].adresse,map[i].typevallex );
+
+              afficheListvar(map[i].vallex.var);
+
           }
           
          
@@ -120,10 +117,10 @@ int exist2(my_map m[TAILLE],char *ident,char *type){
          return i;
           
         }else {
-          if(m[i].typevallex=='t'){
-            if(strcmp("entier",type)==0)
-             return i;
-            else return -2;
+          if(m[i].typevallex=='f'){
+           
+             return -3;
+           
           }
         }
 
@@ -134,7 +131,24 @@ int exist2(my_map m[TAILLE],char *ident,char *type){
     return -1;
  }
 
+my_map* chargeFunctionToGmap(fonction func,my_map *map){
 
+  if(func==NULL)
+    return NULL;
+
+  if(map==NULL){
+    map=alloue_map(func->type,func->name,NULL,0,1,'f',func->var);
+    map[0].adresse = -1;
+    
+  }
+  func=func->next;
+  while(func!=NULL){
+    map=ajouter(map,func->type,func->name,NULL,0,1,'f',-1,func->var);
+    func=func->next;
+  }
+  return map;
+
+}
 /*ajouter gestion des variables non initialisees*/
 my_map * ajouter(my_map *map,char* type,char *ident,char *valchaine,int v,int taille,char typesup,int adresse,listvar var){
   int i=0,k;
@@ -219,10 +233,11 @@ my_map * ajouter(my_map *map,char* type,char *ident,char *valchaine,int v,int ta
 
     }
     else{
-      map[i].vallex.tab=alloue_tableau(taille, v);
+      map[i].vallex.var=var;
       strcpy(map[i].type,type);
       strcpy(map[i].ident,ident);
-      map[i].typevallex='t';
+      map[i].typevallex='f';
+      map[i].define='t';
     }
     return map; 
 
@@ -425,13 +440,14 @@ int min(int a,int b){
 }
 
 
-struct _listvar_ * alloueListvar(char *name,char*value,int type){
+struct _listvar_ * alloueListvar(char *name,char*value,char* type){
   listvar var=(listvar)malloc(sizeof(struct _listvar_));
   if(var ==NULL){
     printf("error in allocation\n");
     return NULL;
   }
-  var->type=type;
+  var->type=malloc(sizeof(char)*(strlen(type)));
+  strcpy(var->type,type);
   var->name=malloc(sizeof(char)*(strlen(name)));
   var->value=malloc(sizeof(char)*(strlen(value)));
   strcpy(var->name,name);
@@ -441,7 +457,7 @@ struct _listvar_ * alloueListvar(char *name,char*value,int type){
   return var;
 }
 
-void ajoutListvar(listvar *var,char *name,char*value,int type){
+void ajoutListvar(listvar *var,char *name,char*value,char* type){
   struct _listvar_ * temp;
   if(*var==NULL){
     *var= alloueListvar(name,value,type);
@@ -467,6 +483,94 @@ char * getVar(listvar var,char *name){
   printf("The variable needed doesn 't exist yet \n");
   return NULL;
 }
+void afficheListvar(listvar var){
+  if(var==NULL){
+    printf("#je suis null dans affiche list var\n");
+  }
+  while(var!=NULL){
+    printf(" #%s \n",var->name );
+    var=var->next;
+  }
+}
+void freeListvar(listvar *var){
+  listvar courant;
+  while(*var!=NULL){
+    courant=*var;
+    free((*var)->name);
+     free((*var)->type);
+      free((*var)->value);
+    free(courant);
+    *var=(*var)->next;
+  }
+}
+
+
+
+
+/************** fonction******************************/
+struct _fonction_ * alloueFonction(char *name,char* type,listvar var){
+  fonction func=(fonction)malloc(sizeof(struct _fonction_));
+  if(func ==NULL){
+    printf("error in allocation\n");
+    return NULL;
+  }
+  func->type=malloc(sizeof(char)*(strlen(type)));
+  strcpy(func->type,type);
+  func->name=malloc(sizeof(char)*(strlen(name)));
+  strcpy(func->name,name);
+  while(var!=NULL){
+   ajoutListvar(&(func->var),var->name,var->value,var->type);
+   var=var->next;
+ }
+  func->next=NULL;
+
+  return func;
+}
+
+void ajoutFonction(fonction *func,char *name,char* type,listvar var){
+  struct _fonction_ * temp;
+  if(*func==NULL){
+    *func= alloueFonction(name,type,var);
+
+    return;
+  }
+  temp=*func;
+  while(temp->next!=NULL){
+    temp=temp->next;
+  }
+  temp->next= alloueFonction(name,type,var);
+}
+
+int existFonction(fonction var,char *name){
+  if(var==NULL){
+    printf("There isn' t any internal variable \n");
+    return 0;
+  }
+  while(var!=NULL){
+    if(strcmp(var->name,name)==0)
+      return 1;
+    var=var->next;
+  }
+  printf("The variable needed doesn 't exist yet \n");
+  return 0;
+}
+void afficheFonction(fonction var){
+  while(var!=NULL){
+    printf(" #==>%s %s\n",var->type,var->name );
+    afficheListvar(var->var);
+    var=var->next;
+  }
+}
+void freeFonction(fonction *var){
+  fonction courant=*var;
+  while(*var!=NULL){
+    courant=*var;
+    freeListvar(&(courant->var));
+    free(courant);
+    *var=(*var)->next;
+  }
+}
+
 
 /*
 int main(int argc, char *argv[])

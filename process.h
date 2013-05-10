@@ -12,14 +12,22 @@
 #define TAILLE 1024
 #define N 100
 
+/***gestion des fonctions **/
 typedef struct _listvar_ {
   char * name ;
   char * value ;
-  int type;
+  char* type;
   struct  _listvar_ *next;
  }_listvar,*listvar;
 
+typedef struct _fonction_ {
+  char * name ;
+  char* type;
+  listvar var;
+  struct  _fonction_ *next;
+ }_fonction,*fonction;
 
+/************************************/
   enum{
     STRING,ENTIER
   }typage;
@@ -113,12 +121,21 @@ void libere_storeIdentValue(storeIdentValue *l);
 int getAdresse(my_map * map,char *ident);
 void putTypeInStorage(storeIdentValue *ytype,char* name);
  void updateIdent(my_map*map,char *cible,char *source);
+ my_map* chargeFunctionToGmap(fonction func,my_map *map);
 
-/***gestion des fonctions***/
- struct _listvar_ * alloueListvar(char *name,char*value,int type);
-void ajoutListvar(listvar *var,char *name,char*value,int type);
+/***gestion des parametres***/
+ struct _listvar_ * alloueListvar(char *name,char*value,char* type);
+void ajoutListvar(listvar *var,char *name,char*value,char* type);
 void afficheListvar(listvar var);
 char * getVar(listvar var,char *name);
-  
+void afficheListvar(listvar var);
+void freeListvar(listvar *var);
+
+/**** gestion des fonctions**************/
+struct _fonction_ * alloueFonction(char *name,char* type,listvar var);
+void ajoutFonction(fonction *func,char *name,char* type,listvar var);
+int existFonction(fonction var,char *name);
+void afficheFonction(fonction var);
+void freeFonction(fonction *var); 
 
 #endif

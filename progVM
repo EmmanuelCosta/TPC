@@ -1,16 +1,59 @@
 ALLOC	500
+#			init2
+#=============
+ #==>entier costa
+ #au 
+ #brr 
+#=============
+ #==>entier costa
+ #au 
+ #brr 
+ #==>chaine tcosta
+ #cq 
+ #rw 
+#=============
+ #==>entier costa
+ #au 
+ #brr 
+ #==>chaine tcosta
+ #cq 
+ #rw 
+ #==>chaine tfcosta
+ #xs 
+ #zer 
 CALL	0
 LABEL	0
 #je suis entree
-#			init2
-#im inside hj 10 0 
+#in storeg() depl =1
+# z @ vaut= 1
 ALLOC	1
-#adresse=0 val =10
+#adresse=0 val =47
 SET	0
+SWAP
+SET	47
+SAVER
+ALLOC	1
+#adresse=1 val =0
+SET	1
+SWAP
+SET	0
+SAVER
+#im inside hj 10 2 
+ALLOC	1
+#adresse=2 val =10
+SET	2
 SWAP
 SET	10
 SAVER
-#position = 0 entier hj 10 ==adresse = 0  == C
+#position = 0 entier war 47 ==adresse = 0  == c
+#position = 1 entier z 0 ==adresse = 1  == g
+#position = 2 chaine tcosta(..) :adresse = -1  == f
+ #cq 
+ #rw 
+#position = 3 chaine tfcosta(..) :adresse = -1  == f
+ #xs 
+ #zer 
+#position = 4 entier hj 10 ==adresse = 2  == C
 #DECLARATION D ENTIER
 
 ALLOC	1
@@ -30,133 +73,210 @@ SET	42
 PUSH
 #INITIALISATION D'UN INT
 
-#adresse=1 val =42
-SET	1
+#adresse=3 val =42
+SET	3
 SWAP
 SET	42
 SAVER
-#position = 0 entier hj 10 ==adresse = 0  == C
-#position = 1 entier a 42 ==adresse = 1  == e
-#position = 2 entier b 0 ==adresse = 2  == e
-#position = 3 entier c 0 ==adresse = 3  == e
-#position = 4 entier d 0 ==adresse = 4  == e
-#position = 5 entier e 0 ==adresse = 5  == e
-#position = 6 entier f 0 ==adresse = 6  == e
-#position = 7 entier g 0 ==adresse = 7  == e
-#position = 8 entier h 0 ==adresse = 8  == e
-#position = 9 chaine u NULL
-#position = 10 chaine v NULL
-#position = 11 chaine w NULL
-#position = 12 entier o 0 ==adresse = 9  == e
+#position = 0 entier war 47 ==adresse = 0  == c
+#position = 1 entier z 0 ==adresse = 1  == g
+#position = 2 chaine tcosta(..) :adresse = -1  == f
+ #cq 
+ #rw 
+#position = 3 chaine tfcosta(..) :adresse = -1  == f
+ #xs 
+ #zer 
+#position = 4 entier hj 10 ==adresse = 2  == C
+#position = 5 entier a 42 ==adresse = 3  == e
+#position = 6 entier b 0 ==adresse = 4  == e
+#position = 7 entier c 0 ==adresse = 5  == e
+#position = 8 entier d 0 ==adresse = 6  == e
+#position = 9 entier e 0 ==adresse = 7  == e
+#position = 10 entier f 0 ==adresse = 8  == e
+#position = 11 entier g 0 ==adresse = 9  == e
+#position = 12 entier h 0 ==adresse = 10  == e
+#position = 13 chaine u NULL
+#position = 14 chaine v NULL
+#position = 15 chaine w NULL
+#position = 16 entier o 0 ==adresse = 11  == e
 SET	66
 PUSH
 #INITIALISATION D'UN INT
 
-#adresse=5 val =66
-SET	5
-SWAP
-SET	66
-SAVER
-#position = 0 entier hj 10 ==adresse = 0  == C
-#position = 1 entier a 42 ==adresse = 1  == e
-#position = 2 entier b 0 ==adresse = 2  == e
-#position = 3 entier c 0 ==adresse = 3  == e
-#position = 4 entier d 0 ==adresse = 4  == e
-#position = 5 entier e 66 ==adresse = 5  == e
-#position = 6 entier f 0 ==adresse = 6  == e
-#position = 7 entier g 0 ==adresse = 7  == e
-#position = 8 entier h 0 ==adresse = 8  == e
-#position = 9 chaine u NULL
-#position = 10 chaine v NULL
-#position = 11 chaine w NULL
-#position = 12 entier o 0 ==adresse = 9  == e
-SET	2431
-PUSH
-#INITIALISATION D'UN INT
-
-#adresse=7 val =2431
+#adresse=7 val =66
 SET	7
 SWAP
+SET	66
+SAVER
+#position = 0 entier war 47 ==adresse = 0  == c
+#position = 1 entier z 0 ==adresse = 1  == g
+#position = 2 chaine tcosta(..) :adresse = -1  == f
+ #cq 
+ #rw 
+#position = 3 chaine tfcosta(..) :adresse = -1  == f
+ #xs 
+ #zer 
+#position = 4 entier hj 10 ==adresse = 2  == C
+#position = 5 entier a 42 ==adresse = 3  == e
+#position = 6 entier b 0 ==adresse = 4  == e
+#position = 7 entier c 0 ==adresse = 5  == e
+#position = 8 entier d 0 ==adresse = 6  == e
+#position = 9 entier e 66 ==adresse = 7  == e
+#position = 10 entier f 0 ==adresse = 8  == e
+#position = 11 entier g 0 ==adresse = 9  == e
+#position = 12 entier h 0 ==adresse = 10  == e
+#position = 13 chaine u NULL
+#position = 14 chaine v NULL
+#position = 15 chaine w NULL
+#position = 16 entier o 0 ==adresse = 11  == e
+SET	2431
+PUSH
+#INITIALISATION D'UN INT
+
+#adresse=9 val =2431
+SET	9
+SWAP
 SET	2431
 SAVER
-#position = 0 entier hj 10 ==adresse = 0  == C
-#position = 1 entier a 42 ==adresse = 1  == e
-#position = 2 entier b 0 ==adresse = 2  == e
-#position = 3 entier c 0 ==adresse = 3  == e
-#position = 4 entier d 0 ==adresse = 4  == e
-#position = 5 entier e 66 ==adresse = 5  == e
-#position = 6 entier f 0 ==adresse = 6  == e
-#position = 7 entier g 2431 ==adresse = 7  == e
-#position = 8 entier h 0 ==adresse = 8  == e
-#position = 9 chaine u NULL
-#position = 10 chaine v NULL
-#position = 11 chaine w NULL
-#position = 12 entier o 0 ==adresse = 9  == e
+#position = 0 entier war 47 ==adresse = 0  == c
+#position = 1 entier z 0 ==adresse = 1  == g
+#position = 2 chaine tcosta(..) :adresse = -1  == f
+ #cq 
+ #rw 
+#position = 3 chaine tfcosta(..) :adresse = -1  == f
+ #xs 
+ #zer 
+#position = 4 entier hj 10 ==adresse = 2  == C
+#position = 5 entier a 42 ==adresse = 3  == e
+#position = 6 entier b 0 ==adresse = 4  == e
+#position = 7 entier c 0 ==adresse = 5  == e
+#position = 8 entier d 0 ==adresse = 6  == e
+#position = 9 entier e 66 ==adresse = 7  == e
+#position = 10 entier f 0 ==adresse = 8  == e
+#position = 11 entier g 2431 ==adresse = 9  == e
+#position = 12 entier h 0 ==adresse = 10  == e
+#position = 13 chaine u NULL
+#position = 14 chaine v NULL
+#position = 15 chaine w NULL
+#position = 16 entier o 0 ==adresse = 11  == e
 SET	1
 PUSH
 #INITIALISATION D'UN INT
 
-#adresse=9 val =1
-SET	9
+#adresse=11 val =1
+SET	11
 SWAP
 SET	1
 SAVER
-#position = 0 entier hj 10 ==adresse = 0  == C
-#position = 1 entier a 42 ==adresse = 1  == e
-#position = 2 entier b 0 ==adresse = 2  == e
-#position = 3 entier c 0 ==adresse = 3  == e
-#position = 4 entier d 0 ==adresse = 4  == e
-#position = 5 entier e 66 ==adresse = 5  == e
-#position = 6 entier f 0 ==adresse = 6  == e
-#position = 7 entier g 2431 ==adresse = 7  == e
-#position = 8 entier h 0 ==adresse = 8  == e
-#position = 9 chaine u NULL
-#position = 10 chaine v NULL
-#position = 11 chaine w NULL
-#position = 12 entier o 1 ==adresse = 9  == e
+#position = 0 entier war 47 ==adresse = 0  == c
+#position = 1 entier z 0 ==adresse = 1  == g
+#position = 2 chaine tcosta(..) :adresse = -1  == f
+ #cq 
+ #rw 
+#position = 3 chaine tfcosta(..) :adresse = -1  == f
+ #xs 
+ #zer 
+#position = 4 entier hj 10 ==adresse = 2  == C
+#position = 5 entier a 42 ==adresse = 3  == e
+#position = 6 entier b 0 ==adresse = 4  == e
+#position = 7 entier c 0 ==adresse = 5  == e
+#position = 8 entier d 0 ==adresse = 6  == e
+#position = 9 entier e 66 ==adresse = 7  == e
+#position = 10 entier f 0 ==adresse = 8  == e
+#position = 11 entier g 2431 ==adresse = 9  == e
+#position = 12 entier h 0 ==adresse = 10  == e
+#position = 13 chaine u NULL
+#position = 14 chaine v NULL
+#position = 15 chaine w NULL
+#position = 16 entier o 1 ==adresse = 11  == e
 SET	909
 PUSH
 #INITIALISATION D'UN INT
 
-#adresse=3 val =909
+#adresse=5 val =909
+SET	5
+SWAP
+SET	909
+SAVER
+#position = 0 entier war 47 ==adresse = 0  == c
+#position = 1 entier z 0 ==adresse = 1  == g
+#position = 2 chaine tcosta(..) :adresse = -1  == f
+ #cq 
+ #rw 
+#position = 3 chaine tfcosta(..) :adresse = -1  == f
+ #xs 
+ #zer 
+#position = 4 entier hj 10 ==adresse = 2  == C
+#position = 5 entier a 42 ==adresse = 3  == e
+#position = 6 entier b 0 ==adresse = 4  == e
+#position = 7 entier c 909 ==adresse = 5  == e
+#position = 8 entier d 0 ==adresse = 6  == e
+#position = 9 entier e 66 ==adresse = 7  == e
+#position = 10 entier f 0 ==adresse = 8  == e
+#position = 11 entier g 2431 ==adresse = 9  == e
+#position = 12 entier h 0 ==adresse = 10  == e
+#position = 13 chaine u NULL
+#position = 14 chaine v NULL
+#position = 15 chaine w NULL
+#position = 16 entier o 1 ==adresse = 11  == e
+#c bon 
 SET	3
-SWAP
-SET	909
-SAVER
-#position = 0 entier hj 10 ==adresse = 0  == C
-#position = 1 entier a 42 ==adresse = 1  == e
-#position = 2 entier b 0 ==adresse = 2  == e
-#position = 3 entier c 909 ==adresse = 3  == e
-#position = 4 entier d 0 ==adresse = 4  == e
-#position = 5 entier e 66 ==adresse = 5  == e
-#position = 6 entier f 0 ==adresse = 6  == e
-#position = 7 entier g 2431 ==adresse = 7  == e
-#position = 8 entier h 0 ==adresse = 8  == e
-#position = 9 chaine u NULL
-#position = 10 chaine v NULL
-#position = 11 chaine w NULL
-#position = 12 entier o 1 ==adresse = 9  == e
-#c bon 
-SET	1
 LOADR
 PUSH
 #je suis passe dans lvalue
 #et val vaut
 POP
 WRITE
-#position = 0 entier hj 10 ==adresse = 0  == C
-#position = 1 entier a 42 ==adresse = 1  == e
-#position = 2 entier b 0 ==adresse = 2  == e
-#position = 3 entier c 909 ==adresse = 3  == e
-#position = 4 entier d 0 ==adresse = 4  == e
-#position = 5 entier e 66 ==adresse = 5  == e
-#position = 6 entier f 0 ==adresse = 6  == e
-#position = 7 entier g 2431 ==adresse = 7  == e
-#position = 8 entier h 0 ==adresse = 8  == e
-#position = 9 chaine u NULL
-#position = 10 chaine v NULL
-#position = 11 chaine w NULL
-#position = 12 entier o 1 ==adresse = 9  == e
+#position = 0 entier war 47 ==adresse = 0  == c
+#position = 1 entier z 0 ==adresse = 1  == g
+#position = 2 chaine tcosta(..) :adresse = -1  == f
+ #cq 
+ #rw 
+#position = 3 chaine tfcosta(..) :adresse = -1  == f
+ #xs 
+ #zer 
+#position = 4 entier hj 10 ==adresse = 2  == C
+#position = 5 entier a 42 ==adresse = 3  == e
+#position = 6 entier b 0 ==adresse = 4  == e
+#position = 7 entier c 909 ==adresse = 5  == e
+#position = 8 entier d 0 ==adresse = 6  == e
+#position = 9 entier e 66 ==adresse = 7  == e
+#position = 10 entier f 0 ==adresse = 8  == e
+#position = 11 entier g 2431 ==adresse = 9  == e
+#position = 12 entier h 0 ==adresse = 10  == e
+#position = 13 chaine u NULL
+#position = 14 chaine v NULL
+#position = 15 chaine w NULL
+#position = 16 entier o 1 ==adresse = 11  == e
+#c bon 
+SET	9
+LOADR
+PUSH
+#je suis passe dans lvalue
+#et val vaut
+POP
+WRITE
+#position = 0 entier war 47 ==adresse = 0  == c
+#position = 1 entier z 0 ==adresse = 1  == g
+#position = 2 chaine tcosta(..) :adresse = -1  == f
+ #cq 
+ #rw 
+#position = 3 chaine tfcosta(..) :adresse = -1  == f
+ #xs 
+ #zer 
+#position = 4 entier hj 10 ==adresse = 2  == C
+#position = 5 entier a 42 ==adresse = 3  == e
+#position = 6 entier b 0 ==adresse = 4  == e
+#position = 7 entier c 909 ==adresse = 5  == e
+#position = 8 entier d 0 ==adresse = 6  == e
+#position = 9 entier e 66 ==adresse = 7  == e
+#position = 10 entier f 0 ==adresse = 8  == e
+#position = 11 entier g 2431 ==adresse = 9  == e
+#position = 12 entier h 0 ==adresse = 10  == e
+#position = 13 chaine u NULL
+#position = 14 chaine v NULL
+#position = 15 chaine w NULL
+#position = 16 entier o 1 ==adresse = 11  == e
 #c bon 
 SET	7
 LOADR
@@ -165,100 +285,130 @@ PUSH
 #et val vaut
 POP
 WRITE
-#position = 0 entier hj 10 ==adresse = 0  == C
-#position = 1 entier a 42 ==adresse = 1  == e
-#position = 2 entier b 0 ==adresse = 2  == e
-#position = 3 entier c 909 ==adresse = 3  == e
-#position = 4 entier d 0 ==adresse = 4  == e
-#position = 5 entier e 66 ==adresse = 5  == e
-#position = 6 entier f 0 ==adresse = 6  == e
-#position = 7 entier g 2431 ==adresse = 7  == e
-#position = 8 entier h 0 ==adresse = 8  == e
-#position = 9 chaine u NULL
-#position = 10 chaine v NULL
-#position = 11 chaine w NULL
-#position = 12 entier o 1 ==adresse = 9  == e
+#position = 0 entier war 47 ==adresse = 0  == c
+#position = 1 entier z 0 ==adresse = 1  == g
+#position = 2 chaine tcosta(..) :adresse = -1  == f
+ #cq 
+ #rw 
+#position = 3 chaine tfcosta(..) :adresse = -1  == f
+ #xs 
+ #zer 
+#position = 4 entier hj 10 ==adresse = 2  == C
+#position = 5 entier a 42 ==adresse = 3  == e
+#position = 6 entier b 0 ==adresse = 4  == e
+#position = 7 entier c 909 ==adresse = 5  == e
+#position = 8 entier d 0 ==adresse = 6  == e
+#position = 9 entier e 66 ==adresse = 7  == e
+#position = 10 entier f 0 ==adresse = 8  == e
+#position = 11 entier g 2431 ==adresse = 9  == e
+#position = 12 entier h 0 ==adresse = 10  == e
+#position = 13 chaine u NULL
+#position = 14 chaine v NULL
+#position = 15 chaine w NULL
+#position = 16 entier o 1 ==adresse = 11  == e
 #c bon 
-SET	5
+SET	11
 LOADR
 PUSH
 #je suis passe dans lvalue
 #et val vaut
 POP
 WRITE
-#position = 0 entier hj 10 ==adresse = 0  == C
-#position = 1 entier a 42 ==adresse = 1  == e
-#position = 2 entier b 0 ==adresse = 2  == e
-#position = 3 entier c 909 ==adresse = 3  == e
-#position = 4 entier d 0 ==adresse = 4  == e
-#position = 5 entier e 66 ==adresse = 5  == e
-#position = 6 entier f 0 ==adresse = 6  == e
-#position = 7 entier g 2431 ==adresse = 7  == e
-#position = 8 entier h 0 ==adresse = 8  == e
-#position = 9 chaine u NULL
-#position = 10 chaine v NULL
-#position = 11 chaine w NULL
-#position = 12 entier o 1 ==adresse = 9  == e
-#c bon 
-SET	9
-LOADR
-PUSH
+#position = 0 entier war 47 ==adresse = 0  == c
+#position = 1 entier z 0 ==adresse = 1  == g
+#position = 2 chaine tcosta(..) :adresse = -1  == f
+ #cq 
+ #rw 
+#position = 3 chaine tfcosta(..) :adresse = -1  == f
+ #xs 
+ #zer 
+#position = 4 entier hj 10 ==adresse = 2  == C
+#position = 5 entier a 42 ==adresse = 3  == e
+#position = 6 entier b 0 ==adresse = 4  == e
+#position = 7 entier c 909 ==adresse = 5  == e
+#position = 8 entier d 0 ==adresse = 6  == e
+#position = 9 entier e 66 ==adresse = 7  == e
+#position = 10 entier f 0 ==adresse = 8  == e
+#position = 11 entier g 2431 ==adresse = 9  == e
+#position = 12 entier h 0 ==adresse = 10  == e
+#position = 13 chaine u NULL
+#position = 14 chaine v NULL
+#position = 15 chaine w NULL
+#position = 16 entier o 1 ==adresse = 11  == e
 #je suis passe dans lvalue
-#et val vaut
-POP
-WRITE
-#position = 0 entier hj 10 ==adresse = 0  == C
-#position = 1 entier a 42 ==adresse = 1  == e
-#position = 2 entier b 0 ==adresse = 2  == e
-#position = 3 entier c 909 ==adresse = 3  == e
-#position = 4 entier d 0 ==adresse = 4  == e
-#position = 5 entier e 66 ==adresse = 5  == e
-#position = 6 entier f 0 ==adresse = 6  == e
-#position = 7 entier g 2431 ==adresse = 7  == e
-#position = 8 entier h 0 ==adresse = 8  == e
-#position = 9 chaine u NULL
-#position = 10 chaine v NULL
-#position = 11 chaine w NULL
-#position = 12 entier o 1 ==adresse = 9  == e
-SET	666
-PUSH
-#INITIALISATION D'UN INT
-
-#adresse=9 val =666
-SET	9
+#o == war
+#position = 0 entier war 47 ==adresse = 0  == c
+#position = 1 entier z 0 ==adresse = 1  == g
+#position = 2 chaine tcosta(..) :adresse = -1  == f
+ #cq 
+ #rw 
+#position = 3 chaine tfcosta(..) :adresse = -1  == f
+ #xs 
+ #zer 
+#position = 4 entier hj 10 ==adresse = 2  == C
+#position = 5 entier a 42 ==adresse = 3  == e
+#position = 6 entier b 0 ==adresse = 4  == e
+#position = 7 entier c 909 ==adresse = 5  == e
+#position = 8 entier d 0 ==adresse = 6  == e
+#position = 9 entier e 66 ==adresse = 7  == e
+#position = 10 entier f 0 ==adresse = 8  == e
+#position = 11 entier g 2431 ==adresse = 9  == e
+#position = 12 entier h 0 ==adresse = 10  == e
+#position = 13 chaine u NULL
+#position = 14 chaine v NULL
+#position = 15 chaine w NULL
+#position = 16 entier o 47 ==adresse = 11  == e
+#adresse=11 val =47
+SET	11
 SWAP
-SET	666
+SET	47
 SAVER
-#position = 0 entier hj 10 ==adresse = 0  == C
-#position = 1 entier a 42 ==adresse = 1  == e
-#position = 2 entier b 0 ==adresse = 2  == e
-#position = 3 entier c 909 ==adresse = 3  == e
-#position = 4 entier d 0 ==adresse = 4  == e
-#position = 5 entier e 66 ==adresse = 5  == e
-#position = 6 entier f 0 ==adresse = 6  == e
-#position = 7 entier g 2431 ==adresse = 7  == e
-#position = 8 entier h 0 ==adresse = 8  == e
-#position = 9 chaine u NULL
-#position = 10 chaine v NULL
-#position = 11 chaine w NULL
-#position = 12 entier o 666 ==adresse = 9  == e
 #c bon 
-SET	9
+SET	11
 LOADR
 PUSH
 #je suis passe dans lvalue
-SET	1
+#et val vaut
+POP
+WRITE
+#position = 0 entier war 47 ==adresse = 0  == c
+#position = 1 entier z 0 ==adresse = 1  == g
+#position = 2 chaine tcosta(..) :adresse = -1  == f
+ #cq 
+ #rw 
+#position = 3 chaine tfcosta(..) :adresse = -1  == f
+ #xs 
+ #zer 
+#position = 4 entier hj 10 ==adresse = 2  == C
+#position = 5 entier a 42 ==adresse = 3  == e
+#position = 6 entier b 0 ==adresse = 4  == e
+#position = 7 entier c 909 ==adresse = 5  == e
+#position = 8 entier d 0 ==adresse = 6  == e
+#position = 9 entier e 66 ==adresse = 7  == e
+#position = 10 entier f 0 ==adresse = 8  == e
+#position = 11 entier g 2431 ==adresse = 9  == e
+#position = 12 entier h 0 ==adresse = 10  == e
+#position = 13 chaine u NULL
+#position = 14 chaine v NULL
+#position = 15 chaine w NULL
+#position = 16 entier o 47 ==adresse = 11  == e
+#c bon 
+SET	11
 LOADR
 PUSH
 #je suis passe dans lvalue
-SET	9
+SET	3
 LOADR
 PUSH
-#==> 9
-SET	1
+#je suis passe dans lvalue
+SET	11
 LOADR
 PUSH
-#==>1
+#==> 11
+SET	3
+LOADR
+PUSH
+#==>3
 POP
 SWAP
 POP
@@ -266,7 +416,7 @@ ADD
 PUSH
 SET	14
 PUSH
-SET	708
+SET	89
 PUSH
 SET	14
 PUSH
@@ -277,7 +427,7 @@ ADD
 PUSH
 SET	10
 PUSH
-SET	722
+SET	103
 PUSH
 SET	10
 PUSH
@@ -289,62 +439,86 @@ PUSH
 #et val vaut
 POP
 WRITE
-#position = 0 entier hj 10 ==adresse = 0  == C
-#position = 1 entier a 42 ==adresse = 1  == e
-#position = 2 entier b 0 ==adresse = 2  == e
-#position = 3 entier c 909 ==adresse = 3  == e
-#position = 4 entier d 0 ==adresse = 4  == e
-#position = 5 entier e 66 ==adresse = 5  == e
-#position = 6 entier f 0 ==adresse = 6  == e
-#position = 7 entier g 2431 ==adresse = 7  == e
-#position = 8 entier h 0 ==adresse = 8  == e
-#position = 9 chaine u NULL
-#position = 10 chaine v NULL
-#position = 11 chaine w NULL
-#position = 12 entier o 666 ==adresse = 9  == e
+#position = 0 entier war 47 ==adresse = 0  == c
+#position = 1 entier z 0 ==adresse = 1  == g
+#position = 2 chaine tcosta(..) :adresse = -1  == f
+ #cq 
+ #rw 
+#position = 3 chaine tfcosta(..) :adresse = -1  == f
+ #xs 
+ #zer 
+#position = 4 entier hj 10 ==adresse = 2  == C
+#position = 5 entier a 42 ==adresse = 3  == e
+#position = 6 entier b 0 ==adresse = 4  == e
+#position = 7 entier c 909 ==adresse = 5  == e
+#position = 8 entier d 0 ==adresse = 6  == e
+#position = 9 entier e 66 ==adresse = 7  == e
+#position = 10 entier f 0 ==adresse = 8  == e
+#position = 11 entier g 2431 ==adresse = 9  == e
+#position = 12 entier h 0 ==adresse = 10  == e
+#position = 13 chaine u NULL
+#position = 14 chaine v NULL
+#position = 15 chaine w NULL
+#position = 16 entier o 47 ==adresse = 11  == e
 SET	22
 PUSH
 #INITIALISATION D'UN INT
 
-#adresse=3 val =22
-SET	3
+#adresse=5 val =22
+SET	5
 SWAP
 SET	22
 SAVER
-#position = 0 entier hj 10 ==adresse = 0  == C
-#position = 1 entier a 42 ==adresse = 1  == e
-#position = 2 entier b 0 ==adresse = 2  == e
-#position = 3 entier c 22 ==adresse = 3  == e
-#position = 4 entier d 0 ==adresse = 4  == e
-#position = 5 entier e 66 ==adresse = 5  == e
-#position = 6 entier f 0 ==adresse = 6  == e
-#position = 7 entier g 2431 ==adresse = 7  == e
-#position = 8 entier h 0 ==adresse = 8  == e
-#position = 9 chaine u NULL
-#position = 10 chaine v NULL
-#position = 11 chaine w NULL
-#position = 12 entier o 666 ==adresse = 9  == e
+#position = 0 entier war 47 ==adresse = 0  == c
+#position = 1 entier z 0 ==adresse = 1  == g
+#position = 2 chaine tcosta(..) :adresse = -1  == f
+ #cq 
+ #rw 
+#position = 3 chaine tfcosta(..) :adresse = -1  == f
+ #xs 
+ #zer 
+#position = 4 entier hj 10 ==adresse = 2  == C
+#position = 5 entier a 42 ==adresse = 3  == e
+#position = 6 entier b 0 ==adresse = 4  == e
+#position = 7 entier c 22 ==adresse = 5  == e
+#position = 8 entier d 0 ==adresse = 6  == e
+#position = 9 entier e 66 ==adresse = 7  == e
+#position = 10 entier f 0 ==adresse = 8  == e
+#position = 11 entier g 2431 ==adresse = 9  == e
+#position = 12 entier h 0 ==adresse = 10  == e
+#position = 13 chaine u NULL
+#position = 14 chaine v NULL
+#position = 15 chaine w NULL
+#position = 16 entier o 47 ==adresse = 11  == e
 #c bon 
-SET	3
+SET	5
 LOADR
 PUSH
 #je suis passe dans lvalue
 #et val vaut
 POP
 WRITE
-#position = 0 entier hj 10 ==adresse = 0  == C
-#position = 1 entier a 42 ==adresse = 1  == e
-#position = 2 entier b 0 ==adresse = 2  == e
-#position = 3 entier c 22 ==adresse = 3  == e
-#position = 4 entier d 0 ==adresse = 4  == e
-#position = 5 entier e 66 ==adresse = 5  == e
-#position = 6 entier f 0 ==adresse = 6  == e
-#position = 7 entier g 2431 ==adresse = 7  == e
-#position = 8 entier h 0 ==adresse = 8  == e
-#position = 9 chaine u NULL
-#position = 10 chaine v NULL
-#position = 11 chaine w NULL
-#position = 12 entier o 666 ==adresse = 9  == e
+#position = 0 entier war 47 ==adresse = 0  == c
+#position = 1 entier z 0 ==adresse = 1  == g
+#position = 2 chaine tcosta(..) :adresse = -1  == f
+ #cq 
+ #rw 
+#position = 3 chaine tfcosta(..) :adresse = -1  == f
+ #xs 
+ #zer 
+#position = 4 entier hj 10 ==adresse = 2  == C
+#position = 5 entier a 42 ==adresse = 3  == e
+#position = 6 entier b 0 ==adresse = 4  == e
+#position = 7 entier c 22 ==adresse = 5  == e
+#position = 8 entier d 0 ==adresse = 6  == e
+#position = 9 entier e 66 ==adresse = 7  == e
+#position = 10 entier f 0 ==adresse = 8  == e
+#position = 11 entier g 2431 ==adresse = 9  == e
+#position = 12 entier h 0 ==adresse = 10  == e
+#position = 13 chaine u NULL
+#position = 14 chaine v NULL
+#position = 15 chaine w NULL
+#position = 16 entier o 47 ==adresse = 11  == e
 SET	25
 PUSH
 SET	5
@@ -369,36 +543,44 @@ PUSH
 #et val vaut
 POP
 WRITE
-#position = 0 entier hj 10 ==adresse = 0  == C
-#position = 1 entier a 42 ==adresse = 1  == e
-#position = 2 entier b 0 ==adresse = 2  == e
-#position = 3 entier c 22 ==adresse = 3  == e
-#position = 4 entier d 0 ==adresse = 4  == e
-#position = 5 entier e 66 ==adresse = 5  == e
-#position = 6 entier f 0 ==adresse = 6  == e
-#position = 7 entier g 2431 ==adresse = 7  == e
-#position = 8 entier h 0 ==adresse = 8  == e
-#position = 9 chaine u NULL
-#position = 10 chaine v NULL
-#position = 11 chaine w NULL
-#position = 12 entier o 666 ==adresse = 9  == e
+#position = 0 entier war 47 ==adresse = 0  == c
+#position = 1 entier z 0 ==adresse = 1  == g
+#position = 2 chaine tcosta(..) :adresse = -1  == f
+ #cq 
+ #rw 
+#position = 3 chaine tfcosta(..) :adresse = -1  == f
+ #xs 
+ #zer 
+#position = 4 entier hj 10 ==adresse = 2  == C
+#position = 5 entier a 42 ==adresse = 3  == e
+#position = 6 entier b 0 ==adresse = 4  == e
+#position = 7 entier c 22 ==adresse = 5  == e
+#position = 8 entier d 0 ==adresse = 6  == e
+#position = 9 entier e 66 ==adresse = 7  == e
+#position = 10 entier f 0 ==adresse = 8  == e
+#position = 11 entier g 2431 ==adresse = 9  == e
+#position = 12 entier h 0 ==adresse = 10  == e
+#position = 13 chaine u NULL
+#position = 14 chaine v NULL
+#position = 15 chaine w NULL
+#position = 16 entier o 47 ==adresse = 11  == e
 #aavant seg
 #aapres seg
 JUMP	2
 LABEL	1
 #je suis passe dans lvalue
-SET	5
+SET	7
 LOADR
 PUSH
 #je suis passe dans lvalue
-SET	1
+SET	3
 LOADR
 PUSH
-#==> 1
-SET	5
+#==> 3
+SET	7
 LOADR
 PUSH
-#==>5
+#==>7
 POP
 SWAP
 POP
@@ -409,26 +591,34 @@ PUSH
 POP
 JUMPF	3
 #c bon 
-SET	1
+SET	3
 LOADR
 PUSH
 #je suis passe dans lvalue
 #et val vaut
 POP
 WRITE
-#position = 0 entier hj 10 ==adresse = 0  == C
-#position = 1 entier a 42 ==adresse = 1  == e
-#position = 2 entier b 0 ==adresse = 2  == e
-#position = 3 entier c 22 ==adresse = 3  == e
-#position = 4 entier d 0 ==adresse = 4  == e
-#position = 5 entier e 66 ==adresse = 5  == e
-#position = 6 entier f 0 ==adresse = 6  == e
-#position = 7 entier g 2431 ==adresse = 7  == e
-#position = 8 entier h 0 ==adresse = 8  == e
-#position = 9 chaine u NULL
-#position = 10 chaine v NULL
-#position = 11 chaine w NULL
-#position = 12 entier o 666 ==adresse = 9  == e
+#position = 0 entier war 47 ==adresse = 0  == c
+#position = 1 entier z 0 ==adresse = 1  == g
+#position = 2 chaine tcosta(..) :adresse = -1  == f
+ #cq 
+ #rw 
+#position = 3 chaine tfcosta(..) :adresse = -1  == f
+ #xs 
+ #zer 
+#position = 4 entier hj 10 ==adresse = 2  == C
+#position = 5 entier a 42 ==adresse = 3  == e
+#position = 6 entier b 0 ==adresse = 4  == e
+#position = 7 entier c 22 ==adresse = 5  == e
+#position = 8 entier d 0 ==adresse = 6  == e
+#position = 9 entier e 66 ==adresse = 7  == e
+#position = 10 entier f 0 ==adresse = 8  == e
+#position = 11 entier g 2431 ==adresse = 9  == e
+#position = 12 entier h 0 ==adresse = 10  == e
+#position = 13 chaine u NULL
+#position = 14 chaine v NULL
+#position = 15 chaine w NULL
+#position = 16 entier o 47 ==adresse = 11  == e
 #aavant seg
 #aapres seg
 JUMP	4
@@ -439,19 +629,27 @@ PUSH
 #et val vaut
 POP
 WRITE
-#position = 0 entier hj 10 ==adresse = 0  == C
-#position = 1 entier a 42 ==adresse = 1  == e
-#position = 2 entier b 0 ==adresse = 2  == e
-#position = 3 entier c 22 ==adresse = 3  == e
-#position = 4 entier d 0 ==adresse = 4  == e
-#position = 5 entier e 66 ==adresse = 5  == e
-#position = 6 entier f 0 ==adresse = 6  == e
-#position = 7 entier g 2431 ==adresse = 7  == e
-#position = 8 entier h 0 ==adresse = 8  == e
-#position = 9 chaine u NULL
-#position = 10 chaine v NULL
-#position = 11 chaine w NULL
-#position = 12 entier o 666 ==adresse = 9  == e
+#position = 0 entier war 47 ==adresse = 0  == c
+#position = 1 entier z 0 ==adresse = 1  == g
+#position = 2 chaine tcosta(..) :adresse = -1  == f
+ #cq 
+ #rw 
+#position = 3 chaine tfcosta(..) :adresse = -1  == f
+ #xs 
+ #zer 
+#position = 4 entier hj 10 ==adresse = 2  == C
+#position = 5 entier a 42 ==adresse = 3  == e
+#position = 6 entier b 0 ==adresse = 4  == e
+#position = 7 entier c 22 ==adresse = 5  == e
+#position = 8 entier d 0 ==adresse = 6  == e
+#position = 9 entier e 66 ==adresse = 7  == e
+#position = 10 entier f 0 ==adresse = 8  == e
+#position = 11 entier g 2431 ==adresse = 9  == e
+#position = 12 entier h 0 ==adresse = 10  == e
+#position = 13 chaine u NULL
+#position = 14 chaine v NULL
+#position = 15 chaine w NULL
+#position = 16 entier o 47 ==adresse = 11  == e
 LABEL	4
 LABEL	2
 #c bon 
@@ -460,100 +658,140 @@ PUSH
 #et val vaut
 POP
 WRITE
-#position = 0 entier hj 10 ==adresse = 0  == C
-#position = 1 entier a 42 ==adresse = 1  == e
-#position = 2 entier b 0 ==adresse = 2  == e
-#position = 3 entier c 22 ==adresse = 3  == e
-#position = 4 entier d 0 ==adresse = 4  == e
-#position = 5 entier e 66 ==adresse = 5  == e
-#position = 6 entier f 0 ==adresse = 6  == e
-#position = 7 entier g 2431 ==adresse = 7  == e
-#position = 8 entier h 0 ==adresse = 8  == e
-#position = 9 chaine u NULL
-#position = 10 chaine v NULL
-#position = 11 chaine w NULL
-#position = 12 entier o 666 ==adresse = 9  == e
+#position = 0 entier war 47 ==adresse = 0  == c
+#position = 1 entier z 0 ==adresse = 1  == g
+#position = 2 chaine tcosta(..) :adresse = -1  == f
+ #cq 
+ #rw 
+#position = 3 chaine tfcosta(..) :adresse = -1  == f
+ #xs 
+ #zer 
+#position = 4 entier hj 10 ==adresse = 2  == C
+#position = 5 entier a 42 ==adresse = 3  == e
+#position = 6 entier b 0 ==adresse = 4  == e
+#position = 7 entier c 22 ==adresse = 5  == e
+#position = 8 entier d 0 ==adresse = 6  == e
+#position = 9 entier e 66 ==adresse = 7  == e
+#position = 10 entier f 0 ==adresse = 8  == e
+#position = 11 entier g 2431 ==adresse = 9  == e
+#position = 12 entier h 0 ==adresse = 10  == e
+#position = 13 chaine u NULL
+#position = 14 chaine v NULL
+#position = 15 chaine w NULL
+#position = 16 entier o 47 ==adresse = 11  == e
 #c bon 
-SET	1
+SET	3
 LOADR
 PUSH
 #je suis passe dans lvalue
 #et val vaut
 POP
 WRITE
-#position = 0 entier hj 10 ==adresse = 0  == C
-#position = 1 entier a 42 ==adresse = 1  == e
-#position = 2 entier b 0 ==adresse = 2  == e
-#position = 3 entier c 22 ==adresse = 3  == e
-#position = 4 entier d 0 ==adresse = 4  == e
-#position = 5 entier e 66 ==adresse = 5  == e
-#position = 6 entier f 0 ==adresse = 6  == e
-#position = 7 entier g 2431 ==adresse = 7  == e
-#position = 8 entier h 0 ==adresse = 8  == e
-#position = 9 chaine u NULL
-#position = 10 chaine v NULL
-#position = 11 chaine w NULL
-#position = 12 entier o 666 ==adresse = 9  == e
+#position = 0 entier war 47 ==adresse = 0  == c
+#position = 1 entier z 0 ==adresse = 1  == g
+#position = 2 chaine tcosta(..) :adresse = -1  == f
+ #cq 
+ #rw 
+#position = 3 chaine tfcosta(..) :adresse = -1  == f
+ #xs 
+ #zer 
+#position = 4 entier hj 10 ==adresse = 2  == C
+#position = 5 entier a 42 ==adresse = 3  == e
+#position = 6 entier b 0 ==adresse = 4  == e
+#position = 7 entier c 22 ==adresse = 5  == e
+#position = 8 entier d 0 ==adresse = 6  == e
+#position = 9 entier e 66 ==adresse = 7  == e
+#position = 10 entier f 0 ==adresse = 8  == e
+#position = 11 entier g 2431 ==adresse = 9  == e
+#position = 12 entier h 0 ==adresse = 10  == e
+#position = 13 chaine u NULL
+#position = 14 chaine v NULL
+#position = 15 chaine w NULL
+#position = 16 entier o 47 ==adresse = 11  == e
 #c bon 
-SET	5
+SET	7
 LOADR
 PUSH
 #je suis passe dans lvalue
 #et val vaut
 POP
 WRITE
-#position = 0 entier hj 10 ==adresse = 0  == C
-#position = 1 entier a 42 ==adresse = 1  == e
-#position = 2 entier b 0 ==adresse = 2  == e
-#position = 3 entier c 22 ==adresse = 3  == e
-#position = 4 entier d 0 ==adresse = 4  == e
-#position = 5 entier e 66 ==adresse = 5  == e
-#position = 6 entier f 0 ==adresse = 6  == e
-#position = 7 entier g 2431 ==adresse = 7  == e
-#position = 8 entier h 0 ==adresse = 8  == e
-#position = 9 chaine u NULL
-#position = 10 chaine v NULL
-#position = 11 chaine w NULL
-#position = 12 entier o 666 ==adresse = 9  == e
+#position = 0 entier war 47 ==adresse = 0  == c
+#position = 1 entier z 0 ==adresse = 1  == g
+#position = 2 chaine tcosta(..) :adresse = -1  == f
+ #cq 
+ #rw 
+#position = 3 chaine tfcosta(..) :adresse = -1  == f
+ #xs 
+ #zer 
+#position = 4 entier hj 10 ==adresse = 2  == C
+#position = 5 entier a 42 ==adresse = 3  == e
+#position = 6 entier b 0 ==adresse = 4  == e
+#position = 7 entier c 22 ==adresse = 5  == e
+#position = 8 entier d 0 ==adresse = 6  == e
+#position = 9 entier e 66 ==adresse = 7  == e
+#position = 10 entier f 0 ==adresse = 8  == e
+#position = 11 entier g 2431 ==adresse = 9  == e
+#position = 12 entier h 0 ==adresse = 10  == e
+#position = 13 chaine u NULL
+#position = 14 chaine v NULL
+#position = 15 chaine w NULL
+#position = 16 entier o 47 ==adresse = 11  == e
 #je suis passe dans lvalue
 #a == e
-#position = 0 entier hj 10 ==adresse = 0  == C
-#position = 1 entier a 66 ==adresse = 1  == e
-#position = 2 entier b 0 ==adresse = 2  == e
-#position = 3 entier c 22 ==adresse = 3  == e
-#position = 4 entier d 0 ==adresse = 4  == e
-#position = 5 entier e 66 ==adresse = 5  == e
-#position = 6 entier f 0 ==adresse = 6  == e
-#position = 7 entier g 2431 ==adresse = 7  == e
-#position = 8 entier h 0 ==adresse = 8  == e
-#position = 9 chaine u NULL
-#position = 10 chaine v NULL
-#position = 11 chaine w NULL
-#position = 12 entier o 666 ==adresse = 9  == e
-#adresse=1 val =66
-SET	1
+#position = 0 entier war 47 ==adresse = 0  == c
+#position = 1 entier z 0 ==adresse = 1  == g
+#position = 2 chaine tcosta(..) :adresse = -1  == f
+ #cq 
+ #rw 
+#position = 3 chaine tfcosta(..) :adresse = -1  == f
+ #xs 
+ #zer 
+#position = 4 entier hj 10 ==adresse = 2  == C
+#position = 5 entier a 66 ==adresse = 3  == e
+#position = 6 entier b 0 ==adresse = 4  == e
+#position = 7 entier c 22 ==adresse = 5  == e
+#position = 8 entier d 0 ==adresse = 6  == e
+#position = 9 entier e 66 ==adresse = 7  == e
+#position = 10 entier f 0 ==adresse = 8  == e
+#position = 11 entier g 2431 ==adresse = 9  == e
+#position = 12 entier h 0 ==adresse = 10  == e
+#position = 13 chaine u NULL
+#position = 14 chaine v NULL
+#position = 15 chaine w NULL
+#position = 16 entier o 47 ==adresse = 11  == e
+#adresse=3 val =66
+SET	3
 SWAP
 SET	66
 SAVER
 #c bon 
-SET	1
+SET	3
 LOADR
 PUSH
 #je suis passe dans lvalue
 #et val vaut
 POP
 WRITE
-#position = 0 entier hj 10 ==adresse = 0  == C
-#position = 1 entier a 66 ==adresse = 1  == e
-#position = 2 entier b 0 ==adresse = 2  == e
-#position = 3 entier c 22 ==adresse = 3  == e
-#position = 4 entier d 0 ==adresse = 4  == e
-#position = 5 entier e 66 ==adresse = 5  == e
-#position = 6 entier f 0 ==adresse = 6  == e
-#position = 7 entier g 2431 ==adresse = 7  == e
-#position = 8 entier h 0 ==adresse = 8  == e
-#position = 9 chaine u NULL
-#position = 10 chaine v NULL
-#position = 11 chaine w NULL
-#position = 12 entier o 666 ==adresse = 9  == e
+#position = 0 entier war 47 ==adresse = 0  == c
+#position = 1 entier z 0 ==adresse = 1  == g
+#position = 2 chaine tcosta(..) :adresse = -1  == f
+ #cq 
+ #rw 
+#position = 3 chaine tfcosta(..) :adresse = -1  == f
+ #xs 
+ #zer 
+#position = 4 entier hj 10 ==adresse = 2  == C
+#position = 5 entier a 66 ==adresse = 3  == e
+#position = 6 entier b 0 ==adresse = 4  == e
+#position = 7 entier c 22 ==adresse = 5  == e
+#position = 8 entier d 0 ==adresse = 6  == e
+#position = 9 entier e 66 ==adresse = 7  == e
+#position = 10 entier f 0 ==adresse = 8  == e
+#position = 11 entier g 2431 ==adresse = 9  == e
+#position = 12 entier h 0 ==adresse = 10  == e
+#position = 13 chaine u NULL
+#position = 14 chaine v NULL
+#position = 15 chaine w NULL
+#position = 16 entier o 47 ==adresse = 11  == e
 HALT
