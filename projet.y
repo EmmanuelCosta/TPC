@@ -72,7 +72,7 @@ fonction my_funct=NULL;
 %%
 PROGRAMME 			:	/* rien */ | PROGRAMME Prog
 						; 
-Prog            	:   DeclConst DeclVarPuisFonct {instarg("CALL",jump_label++);instarg("LABEL", 0);} SAVEGLOBAVAR {gmap=chargeFunctionToGmap(my_funct,gmap);} DeclMain
+Prog            	:   DeclConst DeclVarPuisFonct {instarg("CALL",jump_label++);instarg("LABEL", jump_label-1);} SAVEGLOBAVAR {gmap=chargeFunctionToGmap(my_funct,gmap);} DeclMain
 						;
 DeclConst			:	DeclConst CONST ListConst PV
 						|/*rien*/
@@ -88,7 +88,7 @@ ListConst			:	 ListConst VRG IDENT EGAL Litteral {
 															
 																}else if(lconst==1){
 																	gmap=ajouter(gmap,"entier",ytype_auxi.name,"NULL",atoi(ytype_auxi.value),0,'C',depl,NULL);
-																	instarg("ALLOC",10);
+																	instarg("ALLOC",1);
 																	sauvegardeEntier2(atoi(ytype_auxi.value),getAdresse(gmap,ytype_auxi.name));
 
 																	depl++;	
@@ -186,12 +186,12 @@ DeclMain  			: 	EnTeteMain Corps
 						;
 EnTeteMain			:	 MAIN LPAR RPAR
 						;
-DeclFonct 			:	 DeclFonct DeclUneFonct
-						| DeclUneFonct
+DeclFonct 			:	 DeclFonct DeclUneFonct {instarg("LABEL", jump_label++);}
+						| DeclUneFonct  {instarg("LABEL", jump_label++);}
 						;
 DeclUneFonct		: 	EnTeteFonct Corps
 						;
-EnTeteFonct			:	TYPE IDENT LPAR Parametres RPAR {printf("#=============\n");ajoutFonction(&my_funct,$2,$1,param); afficheFonction(my_funct);  freeListvar(&param);}
+EnTeteFonct			:	TYPE IDENT LPAR Parametres RPAR {ajoutFonction(&my_funct,$2,$1,param);   freeListvar(&param);}
 						| VOID IDENT LPAR Parametres RPAR { ajoutFonction(&my_funct,$2,"void",param);  freeListvar(&param);}
 						;
 Parametres			: 	VOID 
