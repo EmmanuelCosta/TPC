@@ -1,7 +1,10 @@
 const war=47;
 entier z;
+entier k;
 entier costa(entier au, chaine brr){
+const eghj=5;
   entier dfghjk;
+
 }
 chaine tcosta(entier cq, chaine rw){
   
@@ -11,45 +14,6 @@ chaine tfcosta(entier xs, chaine zer){
 }
 
 main() {
-	const hj=10;
-  entier a,b,c,d,e,f,g,h ;
-  chaine u,v,w ;
-  entier o ;
-
-
-
-    a = 42 ;
-      e = 66 ;
-  g = 2431 ;
-  o = 1 ;
-  c = 909 ;
-  print(a);
-
-  print(g) ;
-  print(e) ;
-  print(o) ;
-  o = war ;
-    print(o) ;
-  print(o+a+14+10) ;
-
-  
-
-c=22;
-  print(c) ;
-  if( 25 < 5 ) {
-    print(255);
-  }
-  else { 
-    if ( a < e ) {
-      print(a);
-    }
-    else {
-    print(7878);
-    }
-   }
-  print(10000);
-
-  print(a) ; print(e) ;
-  a = e ;
-  print(a) ;
+  entier a,b,c;
+  costa(a,b,20,p);
 }

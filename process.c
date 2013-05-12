@@ -45,8 +45,116 @@ my_map* alloue_map(char* type,char *ident,char *valchaine,int v,int taille,char 
 
 }
 
+void freeMap(my_map *map){
+ int i=0;
+  if(map==NULL)return;
+  while(i<TAILLE){
+   if(map[i].typevallex=='f'){
+      freeListvar(&(map[i].vallex.var));
+
+    }
+    i++;
+  }
+    free(map);
+}
+
+my_map* copyGlobalVar(my_map *cible,my_map* source){
+  int i=0;
+  int j=0;
+  listvar var=NULL;
+  
+  if(source==NULL)
+      return NULL;
+    cible=(my_map*)malloc(sizeof(my_map)*TAILLE);
+  while(i<TAILLE){
+   
+    if(source[i].typevallex!='e' && source[i].typevallex!='s' && source[i].typevallex!='C' &&source[i].typevallex!='n'){
+      cible[j].typevallex=source[i].typevallex;
+      strcpy(cible[j].type,source[i].type);
+      strcpy(cible[j].ident,source[i].ident);
+          if(cible[j].typevallex!='f'){
+
+            if(strcmp(cible[j].type,"chaine")==0)
+                 strcpy(cible[j].vallex.val_chaine,source[i].vallex.val_chaine);
+            else
+                  cible[j].vallex.val=source[i].vallex.val;
+          }
+          else{
+            var = source[i].vallex.var;
+              while(var!=NULL){
+               ajoutListvar(&(cible[j].vallex.var),var->name,var->value,var->type);
+               var=var->next;
+              }
+
+      }
+        cible[j].define=source[i].define;
+        cible[j].adresse = source[i].adresse;
+        j++;
+    }
+  
+      
+      i++;
 
 
+  }
+
+  for(;j<TAILLE;j++){
+    cible[j].define='f';
+      cible[j].adresse = -1;
+      cible[j].typevallex = 'n';
+  }
+  printf("#          fin\n");
+  return cible;
+
+
+    
+
+}
+
+my_map* copyGlobalVarOnly(my_map *cible,my_map* source){
+  int i=0;
+  int j=0;
+  
+  if(source==NULL)
+      return NULL;
+    cible=(my_map*)malloc(sizeof(my_map)*TAILLE);
+  while(i<TAILLE){
+   
+    if(source[i].typevallex=='c'||source[i].typevallex=='g'){
+      cible[j].typevallex=source[i].typevallex;
+      strcpy(cible[j].type,source[i].type);
+      strcpy(cible[j].ident,source[i].ident);
+         
+
+            if(strcmp(cible[j].type,"chaine")==0)
+                 strcpy(cible[j].vallex.val_chaine,source[i].vallex.val_chaine);
+            else
+                  cible[j].vallex.val=source[i].vallex.val;
+         
+          
+        cible[j].define=source[i].define;
+        cible[j].adresse = source[i].adresse;
+        j++;
+    }
+  
+      
+      i++;
+
+
+  }
+
+  for(;j<TAILLE;j++){
+    cible[j].define='f';
+      cible[j].adresse = -1;
+      cible[j].typevallex = 'n';
+  }
+  printf("#          fin\n");
+  return cible;
+
+
+    
+
+}
 void affiche(my_map *map){
   int i=0;
   if(map == NULL){printf("#la map est NULL\n");return;}
@@ -139,13 +247,15 @@ my_map* chargeFunctionToGmap(fonction func,my_map *map){
   if(map==NULL){
     map=alloue_map(func->type,func->name,NULL,0,1,'f',func->var);
     map[0].adresse = -1;
+    func=func->next;
     
   }
-  func=func->next;
+  
   while(func!=NULL){
-    map=ajouter(map,func->type,func->name,NULL,0,1,'f',-1,func->var);
+     map=ajouter(map,func->type,func->name,NULL,0,1,'f',-1,func->var);
     func=func->next;
   }
+
   return map;
 
 }
@@ -233,6 +343,7 @@ my_map * ajouter(my_map *map,char* type,char *ident,char *valchaine,int v,int ta
 
     }
     else{
+
       map[i].vallex.var=var;
       strcpy(map[i].type,type);
       strcpy(map[i].ident,ident);
@@ -488,7 +599,7 @@ void afficheListvar(listvar var){
     printf("#je suis null dans affiche list var\n");
   }
   while(var!=NULL){
-    printf(" #%s \n",var->name );
+    printf(" #%s=%s type is %s \n",var->name,var->value,var->type );
     var=var->next;
   }
 }

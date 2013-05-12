@@ -9,7 +9,7 @@
 #include <string.h>
 
 
-#define TAILLE 1024
+#define TAILLE 2048
 #define N 100
 
 /***gestion des fonctions **/
@@ -88,6 +88,9 @@ typedef struct _typeexp_{
   }type;
 
 }TYPE_EXP;
+
+
+
 /*************************************/
 
 
@@ -97,6 +100,11 @@ my_map* ajouter(my_map *map,char* type,char *ident,char *valchaine,int v,int tai
 void affiche(my_map *map);
 my_map* updateEntier(my_map *map,int v,int k,int adresse);
 my_map* updateString(my_map *map,char* valchaine,int k,int adresse);
+void freeMap(my_map *map);
+my_map* copyGlobalVar(my_map *cible,my_map* source);
+my_map* copyGlobalVarOnly(my_map *cible,my_map* source);
+
+
 float getValue(my_map *m,char* ident);
 void setValue(my_map *m,char *ident,float val);
 void sup(my_map* m,char *id1,char *id2);

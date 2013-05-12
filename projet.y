@@ -18,9 +18,10 @@ void chargerString(int adresse);
 void storeGlobal();
 
 
- int depl=0;
- int p=0;
- int tas=0;
+ int depl=0;	/*deplacement dans la pile courante*/
+ int p=0;		/*afin de distinguer les types dans lvalue venant de exp*/
+ int tas=0; /*position dans le tas*/
+ int ldep=0; /*position dans pile de chaque fonction*/
 
 
 storeIdentValue ytype;
@@ -32,10 +33,13 @@ fonction my_funct=NULL;
 
 
  my_map * gmap=NULL;
- my_map * gmap2=NULL;
+ my_map * lmap=NULL;
+
  int test=0;
  int reg=0;
- int lconst=0;
+ int lconst=0; /*0 pour local a fonction 1 pour global*/
+ int setarg=0; /*si je suis dans fonctio 1 sinon =0*/
+ char recupChaineArg[100];
  char recupIdent[100];
  %}
 
@@ -72,7 +76,7 @@ fonction my_funct=NULL;
 %%
 PROGRAMME 			:	/* rien */ | PROGRAMME Prog
 						; 
-Prog            	:   DeclConst DeclVarPuisFonct {instarg("CALL",jump_label++);instarg("LABEL", jump_label-1);} SAVEGLOBAVAR {gmap=chargeFunctionToGmap(my_funct,gmap);} DeclMain
+Prog            	:   DeclConst DeclVarPuisFonct {instarg("CALL",jump_label++);instarg("LABEL", jump_label-1);} SAVEGLOBAVAR STOREGLOBALMAP DeclMain
 						;
 DeclConst			:	DeclConst CONST ListConst PV
 						|/*rien*/
@@ -157,7 +161,9 @@ ListVar				: 	ListVar VRG IDENT {
 												AjoutStoreIdentValue(&ytype,$3);
 											}
 											else if(ytype_auxi.typey == ENTIER){
+
 												gmap=ajouter(gmap,"entier",$3,NULL,0,0,'e',depl,NULL);
+												printf("#\t\t ===> %s\n",$3);
 												instarg("ALLOC",1);
 												depl++;
 											}
@@ -173,6 +179,9 @@ ListVar				: 	ListVar VRG IDENT {
 											else if(ytype_auxi.typey == ENTIER){
 												gmap=ajouter(gmap,"entier",$1,NULL,0,0,'e',depl,NULL);
 												instarg("ALLOC",1);
+
+											printf("#\t\t ===> %s\n",$1);
+
 												
 												depl++;
 											}
@@ -182,16 +191,25 @@ ListVar				: 	ListVar VRG IDENT {
 
 											}
 						;
-DeclMain  			: 	EnTeteMain Corps
+DeclMain  			: 	EnTeteMain Corps 
 						;
 EnTeteMain			:	 MAIN LPAR RPAR
 						;
 DeclFonct 			:	 DeclFonct DeclUneFonct {instarg("LABEL", jump_label++);}
 						| DeclUneFonct  {instarg("LABEL", jump_label++);}
 						;
-DeclUneFonct		: 	EnTeteFonct Corps
+DeclUneFonct		: 	EnTeteFonct {
+									test=1;
+									reg=1;
+										
+
+
+
+									} Corps {
+												
+											}
 						;
-EnTeteFonct			:	TYPE IDENT LPAR Parametres RPAR {ajoutFonction(&my_funct,$2,$1,param);   freeListvar(&param);}
+EnTeteFonct			:	TYPE IDENT LPAR Parametres RPAR {ajoutFonction(&my_funct,$2,$1,param);  freeListvar(&param);}
 						| VOID IDENT LPAR Parametres RPAR { ajoutFonction(&my_funct,$2,"void",param);  freeListvar(&param);}
 						;
 Parametres			: 	VOID 
@@ -260,7 +278,10 @@ Instr 				: 	LValue {strcpy(recupIdent,ytype_auxi.name);} EGAL Exp PV {
 						| WHILE ANCRE LPAR Exp RPAR  FIXIF Instr { instarg("JUMP", $2);instarg("LABEL",$6);}
 						| RETURN Exp PV
 						| RETURN PV
-						| IDENT LPAR Arguments RPAR PV
+						| IDENT LPAR {printf("#je suis argument\n"); setarg=1;} Arguments RPAR PV {
+																						printf("# la fonction a appelle est %s\n",$1);
+																						afficheListvar(param);
+																						setarg=0; }
 						| READ LPAR IDENT RPAR PV { 
 													/*instarg("ALLOC",1);*/
 													printf("#ident=%s\n",$3);
@@ -290,7 +311,7 @@ Instr 				: 	LValue {strcpy(recupIdent,ytype_auxi.name);} EGAL Exp PV {
 						| PV
 						| InstrComp
 						;
-Arguments			: 	ListExp
+Arguments			: 	ListExp 
 						| /*rien*/
 						;
 LValue				: 	IDENT /* MODIF DU 25 04 2013*/
@@ -299,16 +320,38 @@ LValue				: 	IDENT /* MODIF DU 25 04 2013*/
 							AjoutStoreIdentValue(&ytype,ytype_auxi.name);ytype_auxi.typey=3;
 							ytype->typey=3;
 							strcpy(ytype->value,ytype_auxi.value);
-							if(p==1){
+							if(p==1 && setarg==0){
 								
 								chargerEntier(getAdresse(gmap,$1));
 								p=0;
 							}
+							else if(p==1)
+										p=0;
 						}
 						| IDENT LSQB Exp RSQB {comment("DECLARATION D' UN TABLEAU\n");}
 						;
-ListExp				: 	ListExp VRG Exp
-						| Exp
+ListExp				: 	ListExp VRG Exp {
+									if(setarg==1){
+										printf("#==> 1 dans fonction argument = %s\n",ytype_auxi.name);
+										ajoutListvar(&param,ytype_auxi.name,"0","3");
+									}
+									else{
+										printf("#==> 1.2 dans fonction argument = %s\n",recupChaineArg);
+										ajoutListvar(&param,recupChaineArg,"0","0");
+									}
+										setarg=1;
+									}
+						| Exp 	{printf("#===> 2 dans fonction argument = %s\n",ytype_auxi.name);
+									if(setarg==1){
+										printf("#==> 1 dans fonction argument = %s\n",ytype_auxi.name);
+										ajoutListvar(&param,ytype_auxi.name,"0","3");
+									}
+									else{
+										printf("#==> 1.2 dans fonction argument = %s\n",recupChaineArg);
+										ajoutListvar(&param,recupChaineArg,"0","0");
+									}
+										setarg=1;
+								}
 						;
 Exp 				:	Exp ADDSUB Exp {	
 
@@ -824,10 +867,17 @@ Exp 				:	Exp ADDSUB Exp {
 								AjoutStoreIdentValue(&ytype,ytype_auxi.value);
 								ytype->typey=ENTIER;
 
-								
-								
-								instarg("SET",$1);
-	                   			inst("PUSH");
+									if(setarg!=1){
+										instarg("SET",$1);
+			                   			inst("PUSH");
+		                   			}
+		                   			else{
+
+		                   				setarg=0;
+		                   				strcpy(recupChaineArg,ytype_auxi.value);
+		                   				printf("#==> vaut %d\n",atoi(ytype_auxi.value));
+
+		                   			}
 
 
 
@@ -870,6 +920,7 @@ ANCRE	:
 SAVEGLOBAVAR :		{
 					printf("#je suis entree\n");
 					storeGlobal();
+					reg=0;
 					if(gmap!=NULL){
 							while(gmap[reg].define!='f' && reg<TAILLE){
 
@@ -884,6 +935,20 @@ SAVEGLOBAVAR :		{
 							}
 						}	
 						reg=1;
+					}
+STOREGLOBALMAP  :	{
+						if(test==1){
+							gmap=chargeFunctionToGmap(my_funct,gmap);
+							printf("########## avant recopie\n");
+							lmap=copyGlobalVar(lmap,gmap);
+							free(gmap); gmap=NULL; 
+							 printf("########## avant recopie\n");
+							 gmap=copyGlobalVar(gmap,lmap);
+							 affiche(lmap);
+							 printf("#############this is gmap\n");
+							 affiche(gmap);
+						}
+						test=0;
 					}
 						;
 %%
@@ -915,14 +980,14 @@ int yyerror(char* s) {
 void storeGlobal(){
 
   while(ytype!=NULL){
-  		printf("#in storeg() depl =%d\n",depl);
+  		printf("#in storeg() depl =%d  %s \n",depl,ytype->name);
     gmap=ajouter(gmap,"entier",ytype->name,NULL,0,0,'g',depl,NULL);
     printf("# %s @ vaut= %d\n",ytype->name,getAdresse(gmap,ytype->name));
   	/*instarg("ALLOC",1);*/
     depl++;
     ytype=ytype->next;
   }
-  
+  libere_storeIdentValue(&ytype);
 }
 
 void sauvegardeEntier(int valeur){
